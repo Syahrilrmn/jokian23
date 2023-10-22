@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="col-12 ">
                                     <label for="tanggal" class="form-label">Tanggal</label>
-                                    <input type="datetime" class="form-control" id="tanggal"
+                                    <input type="date" class="form-control" id="tanggal"
                                          name="tanggal">
                                 </div>
                                 <div class=""col-122">

@@ -76,13 +76,13 @@
                                     </td>
                                     <td>
                                         <center>
-                                            <a href="<?= base_url('pengumuman/edit/' . $isi->ID_Pengumuman); ?>"><button
+                                            <a href="<?= base_url('notifikasi/edit/' . $isi->ID_Pengumuman); ?>"><button
                                                     class="btn btn-success"><i class="fa fa-edit"></i></button></a>
                                         </center>
                                     </td>
                                     <td>
                                         <center>
-                                            <a href="<?= base_url('pengumuman/delete/' . $isi->ID_Pengumuman); ?>"
+                                            <a href="<?= base_url('notifikasi/delete/' . $isi->ID_Pengumuman); ?>"
                                                 onclick="return confirm('Anda yakin Anggota akan dihapus ?');">
                                                 <button class="btn btn-danger"><i class="fa fa-trash"></i></button></a>
                                         </center>
