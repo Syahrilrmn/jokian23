@@ -26,7 +26,6 @@
                         <div class="menu-title">Data Pengguna</div>
                     </a>
                 </li>
-              
                 <li class="menu-label">Data Master</li>
                 <li>
                     <a href="widgets.html">
@@ -36,10 +35,17 @@
                     </a>
                 </li>
                 <li>
-                    <a href="widgets.html">
+                    <a href="<?php echo base_url("Solar");?>">
                         <div class="parent-icon"><i class='bx bx-cookie'></i>
                         </div>
                         <div class="menu-title">Data Solar</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url("Notifikasi");?>">
+                        <div class="parent-icon"><i class='bx bx-cookie'></i>
+                        </div>
+                        <div class="menu-title">Data Pengumuman Tugas</div>
                     </a>
                 </li>
                 <li class="menu-label">Data Transaksi</li>
@@ -76,6 +82,15 @@
                         </li>
                     </ul>
                 </li> -->
+                <li>
+                <li>
+                    <a href="<?php echo base_url("Notifikasi");?>">
+                        <div class="parent-icon"><i class='bx bx-cookie'></i>
+                        </div>
+                        <div class="menu-title">Pengumuman Tugas</div>
+                    </a>
+                </li>
+                </li>
                 <li>
                     <a class="has-arrow" href="javascript:;">
                         <div class="parent-icon"> <i class="bx bx-printer"></i>
