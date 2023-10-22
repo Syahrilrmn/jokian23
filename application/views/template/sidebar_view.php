@@ -28,7 +28,7 @@
                 </li>
                 <li class="menu-label">Data Master</li>
                 <li>
-                    <a href="widgets.html">
+                    <a href="<?php echo base_url("barang");?>">
                         <div class="parent-icon"><i class='bx bx-cookie'></i>
                         </div>
                         <div class="menu-title">Data Barang</div>
