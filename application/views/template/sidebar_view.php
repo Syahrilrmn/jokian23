@@ -56,7 +56,7 @@
                         <div class="menu-title">Transaksi</div>
                     </a>
                     <ul>
-                        <li> <a href="ecommerce-products.html"><i class='bx bx-radio-circle'></i>Products</a>
+                        <li> <a href="<?php echo base_url("TransaksiBarang");?>"><i class='bx bx-radio-circle'></i>Peminjaman Barang</a>
                         </li>
                         <li> <a href="ecommerce-products-details.html"><i class='bx bx-radio-circle'></i>Product Details</a>
                         </li>

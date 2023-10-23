@@ -20,7 +20,7 @@
             </span>
             <div class="ms-auto">
                 <div class="btn-group">
-                    <a href="<?php echo base_url("BARANG/tambah");?>" class="btn btn-success px-5" >
+                    <a href="<?php echo base_url("barang/tambah");?>" class="btn btn-success px-5" >
                         <i class='fa fa-plus mr-1'></i> Tambah Data 
                     </a>
                 </div>
@@ -38,6 +38,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>Kode Barang</th>
                                 <th>Nama Barang</th>
                                 <th>Jumlah Stok</th>
                                 <th>Edit</th>
@@ -50,6 +51,9 @@
                                 <tr>
                                     <td>
                                         <?= $no; ?>
+                                    </td>
+                                    <td>
+                                        <?= $isi['kode_barang']; ?>
                                     </td>
                                     <td>
                                         <?= $isi['Nama_Barang']; ?>

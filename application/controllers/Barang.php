@@ -146,9 +146,8 @@ class Barang extends CI_Controller
 		// tambah aksi form proses buku
 		if (!empty($this->input->post('tambah'))) {
 			$post = $this->input->post();
-
 			$data = array(
-
+				'kode_barang' => $this->M_Admin->generate_kode_barang(),
 				'Nama_Barang' => htmlentities($post['Nama_Barang']),
 				'Stok' => htmlentities($post['Stok']),
 			);

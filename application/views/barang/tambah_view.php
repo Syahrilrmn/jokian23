@@ -49,7 +49,7 @@
                                 <div class="d-md-flex d-grid align-items-center gap-3">
                                 <input type="hidden" name="tambah" value="tambah">
                                     <button type="submit" class="btn btn-primary px-4">Submit</button>
-                                    <button type="button" class="btn btn-danger  px-4">Kembali</button>
+                                    <a href="<?= base_url('barang');?>"  class="btn btn-danger  px-4">Kembali</a>
                                 </div>
                             </div>
                         </form>

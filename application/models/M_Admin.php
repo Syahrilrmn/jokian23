@@ -247,13 +247,13 @@ class M_Admin extends CI_Model
 
 
   // -------------------------------------new revisi-------------------------------------------
-  public function generate_kode_pengunjung()
+  public function generate_kode_barang()
   {
-    $query = $this->db->query("SELECT MAX(RIGHT(kode_pengunjung,4)) as max_kode FROM tbl_pengunjung");
+    $query = $this->db->query("SELECT MAX(RIGHT(kode_barang,4)) as max_kode FROM barang");
     $kode = intval($query->row()->max_kode);
     $kode = $kode + 1;
     $kode_max = str_pad($kode, 4, "0", STR_PAD_LEFT);
-    $kode_barang = "PGJ" . $kode_max;
+    $kode_barang = "BRG" . $kode_max;
     return $kode_barang;
   }
   public function generate_kode_bukumasuk()
