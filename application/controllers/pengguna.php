@@ -58,7 +58,7 @@ class Pengguna extends CI_Controller {
     public function add()
     {
 		
-        $nama = htmlentities($this->input->post('nama',TRUE));
+       
         $user = htmlentities($this->input->post('user',TRUE));
         $pass = md5(htmlentities($this->input->post('pass',TRUE)));
         $jenkel = htmlentities($this->input->post('jenkel',TRUE));
@@ -72,7 +72,7 @@ class Pengguna extends CI_Controller {
 		if($dd->num_rows() > 0)
 		{
 			$this->session->set_flashdata('pesan','<div id="notifikasi"><div class="alert alert-warning">
-			<p> Gagal Update Anggota : '.$nama.' !, Username / Email Anda Sudah Terpakai</p>
+			<p> Gagal Update Anggota : '.$user.' !, Username / Email Anda Sudah Terpakai</p>
 			</div></div>');
 			redirect(base_url('pengguna/tambah')); 
 		}else{
@@ -89,8 +89,8 @@ class Pengguna extends CI_Controller {
             $result = array('foto'=>$result1);
             $data1 = array('upload_data' => $this->upload->data());
             $data = array(
-				// 'anggota_id' => $this->M_Admin->generate_kode_pengguna(),
-                'nama'=>$nama,
+				'anggota_id' => $this->M_Admin->generate_kode_pengguna(),
+                
                 'user'=>$user,
                 'pass'=>$pass,
                 // 'level'=>$level,
@@ -196,6 +196,7 @@ class Pengguna extends CI_Controller {
 		{
 			
 				$data = array(
+                    
 					// 'nama'=>$nama,
 					'user'=>$user,
 					'pass'=>md5($pass),
@@ -211,7 +212,7 @@ class Pengguna extends CI_Controller {
 				
 
 					$this->session->set_flashdata('pesan','<div id="notifikasi"><div class="alert alert-success">
-					<p> Berhasil Update Anggota: '.$nama.' !</p>
+					<p> Berhasil Update Anggota: '.$user.' !</p>
 					</div></div>');
 					redirect(base_url('pengguna')); 
 				

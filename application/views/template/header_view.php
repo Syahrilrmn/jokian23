@@ -30,7 +30,8 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/header-colors.css" />
   <!-- new pop up -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/plugins/apexcharts-bundle/apexcharts.js"></script>
   <title>SISTEM INFORMASI MANAJEMEN</title>
 </head>
 
@@ -127,3 +128,7 @@
         </nav>
       </div>
     </header>
+
+
+
+    

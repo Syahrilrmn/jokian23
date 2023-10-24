@@ -68,7 +68,8 @@ class TransaksiBarang extends CI_Controller
 		// 		ORDER BY `peminjamanbarang`.`ID_Peminjaman` ASC"
 		// 	);
 		// }
-		$query = $this->db->query("
+		$query = $this->db->query(
+			"
 				SELECT DISTINCT 
 				`peminjamanbarang`.`ID_Peminjaman`, 
 				`tbl_login`.`user`,  
@@ -100,10 +101,11 @@ class TransaksiBarang extends CI_Controller
 	public function pinjam()
 	{
 
-		// $this->data['nop'] = $this->M_Admin->buat_kode('tbl_pinjam', 'PJ', 'id_pinjam', 'ORDER BY id_pinjam DESC LIMIT 1');
+		$this->data['nop'] = $this->M_Admin->buat_kode('peminjamanbarang', 'PJ', 'ID_Peminjaman', 'ORDER BY ID_Peminjaman DESC LIMIT 1');
 		$this->data['idbo'] = $this->session->userdata('ses_id');
 		$this->data['user'] = $this->M_Admin->get_table('tbl_login');
-		$this->data['databarang'] = $this->db->query("SELECT * FROM barang ORDER BY ID_Barang DESC");
+		$this->data['databarang'] = $this->db->query("SELECT * FROM barang ORDER BY ID_Barang DESC")->result_array();
+
 		$this->data['title_web'] = 'Tambah Pinjam Buku ';
 		$this->load->view('template/header_view', $this->data);
 		$this->load->view('template/sidebar_view', $this->data);
@@ -112,10 +114,11 @@ class TransaksiBarang extends CI_Controller
 	}
 	public function edit()
 	{
-		$this->data['nop'] = $this->M_Admin->buat_kode('tbl_pinjam', 'PJ', 'id_pinjam', 'ORDER BY id_pinjam DESC LIMIT 1');
+		$this->data['nop'] = $this->M_Admin->buat_kode('peminjamanbarang', 'PJ', 'ID_Peminjaman', 'ORDER BY ID_Peminjaman DESC LIMIT 1');
 		$this->data['idbo'] = $this->session->userdata('ses_id');
 		$this->data['user'] = $this->M_Admin->get_table('tbl_login');
-		$this->data['buku'] = $this->db->query("SELECT * FROM tbl_buku ORDER BY id_buku DESC");
+		$this->data['databarang'] = $this->db->query("SELECT * FROM barang ORDER BY ID_Barang DESC")->result_array();
+
 		$id_pinjam = $this->uri->segment('3');
 
 		// Mengambil data pinjam buku berdasarkan id_pinjam
@@ -986,39 +989,62 @@ class TransaksiBarang extends CI_Controller
 	}
 
 
+	// public function result()
+	// {
+	// 	$user = $this->M_Admin->get_tableid_edit('tbl_login', 'anggota_id', $this->input->post('anggota_id'));
+
+	// 	if ($user->user != null) {
+	// 		echo '<table class="table table-striped">
+	//                 <tr>
+	//                     <td>Nama Anggota</td>
+	//                     <td>:</td>
+	//                     <td>' . $user->user . '</td>
+	//                 </tr>
+
+	//                 <tr>
+	//                     <td>E-mail</td>
+	//                     <td>:</td>
+	//                     <td>' . $user->alamat . '</td>
+	//                 </tr>
+	//                 <tr>
+	//                     <td>Alamat</td>
+	//                     <td>:</td>
+	//                     <td>' . $user->jenkel . '</td>
+	//                 </tr>
+
+	//             </table>';
+	// 	} else {
+	// 		echo 'Anggota Tidak Ditemukan!';
+	// 	}
+	// }
+
+
 	public function result()
 	{
 
-		$user = $this->M_Admin->get_tableid_edit('tbl_login', 'anggota_id', $this->input->post('kode_anggota')); //mengubah Kode buku pencarian jadi nama
+		$data = $this->M_Admin->get_tableid_edit('tbl_login', 'anggota_id', $this->input->post('kode_anggota')); //mengubah Kode buku pencarian jadi nama
 		error_reporting(0);
-		if ($user->nama != null) {
-			echo '<table class="table table-striped">
-						<tr>
-							<td>Nama Anggota</td>
-							<td>:</td>
-							<td>' . $user->nama . '</td>
-						</tr>
-						<tr>
-							<td>Telepon</td>
-							<td>:</td>
-							<td>' . $user->telepon . '</td>
-						</tr>
-						<tr>
-							<td>E-mail</td>
-							<td>:</td>
-							<td>' . $user->email . '</td>
-						</tr>
-						<tr>
-							<td>Alamat</td>
-							<td>:</td>
-							<td>' . $user->alamat . '</td>
-						</tr>
-						<tr>
-							<td>Level</td>
-							<td>:</td>
-							<td>' . $user->level . '</td>
-						</tr>
-					</table>';
+		if ($data->user != null) {
+			echo '<div class="container mt-2">
+       
+            <table class="table table-striped">
+                <tr>
+                    <td>Nama Anggota</td>
+                    <td>:</td>
+                    <td>' . $data->user . '</td>
+                </tr>
+                <tr>
+                    <td>Telepon</td>
+                    <td>:</td>
+                    <td>' . $data->alamat . '</td>
+                </tr>
+                <tr>
+                    <td>Jenis Kelamin</td>
+                    <td>:</td>
+                    <td>' . $data->jenkel . '</td>
+                </tr>
+            </table>
+    </div>';
 		} else {
 			echo 'Anggota Tidak Ditemukan !';
 		}
@@ -1058,7 +1084,7 @@ class TransaksiBarang extends CI_Controller
 
 	public function buku_list()
 	{
-		?>
+?>
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -1086,27 +1112,26 @@ class TransaksiBarang extends CI_Controller
 							<?= $items['options']['thn']; ?>
 						</td>
 						<td style="width:17%">
-							<a href="javascript:void(0)" id="delete_buku<?= $no; ?>" data_<?= $no; ?>="<?= $items['id']; ?>"
-								class="btn btn-danger btn-sm">
+							<a href="javascript:void(0)" id="delete_buku<?= $no; ?>" data_<?= $no; ?>="<?= $items['id']; ?>" class="btn btn-danger btn-sm">
 								<i class="fa fa-trash"></i></a>
 						</td>
 					</tr>
 					<script>
-						$(document).ready(function () {
-							$("#delete_buku<?= $no; ?>").click(function (e) {
+						$(document).ready(function() {
+							$("#delete_buku<?= $no; ?>").click(function(e) {
 								$.ajax({
 									type: "POST",
 									url: "<?php echo base_url('transaksi/del_cart'); ?>",
 									data: 'kode_buku=' + $(this).attr("data_<?= $no; ?>"),
-									beforeSend: function () { },
-									success: function (html) {
+									beforeSend: function() {},
+									success: function(html) {
 										$("#tampil").html(html);
 									}
 								});
 							});
 						});
 					</script>
-					<?php $no++;
+				<?php $no++;
 				} ?>
 			</tbody>
 		</table>
@@ -1114,7 +1139,7 @@ class TransaksiBarang extends CI_Controller
 			<input type="hidden" value="<?= $items['id']; ?>" name="idbuku[]">
 		<?php } ?>
 		<div id="tampil"></div>
-		<?php
+<?php
 	}
 
 	public function del_cart()

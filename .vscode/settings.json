@@ -2,7 +2,7 @@
 	"editor.formatOnSave": true,
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"[php]": {
-		"editor.defaultFormatter": "DEVSENSE.phptools-vscode"
+		"editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
 	},
 	"php.version": "8.3"
 }
