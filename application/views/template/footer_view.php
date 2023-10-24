@@ -149,6 +149,14 @@
 				.appendTo( '#example2_wrapper .col-md-6:eq(0)' );
 		} );
 	</script>
+  <script>
+  // notifikasi gagal di hide
+  //$("#notifikasi").hide();
+  var logingagal = function () {
+    $("#notifikasi").fadeOut('slow');
+  };
+  setTimeout(logingagal, 4000);
+</script>
 </body>
 
 

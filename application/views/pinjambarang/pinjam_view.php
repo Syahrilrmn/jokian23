@@ -39,9 +39,11 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama Peminjam</th>
+                                <th>Kode Barang</th>
+                                <th>Nama Barang</th>
                                 <th>Tanggal Peminjaman</th>
                                 <th>Tanggal Pengembalian</th>
-                                <th>Jumlah</th>
+                                <th>Jumlah Pinjam</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -53,7 +55,13 @@
                                         <?= $no; ?>
                                     </td>
                                     <td>
-                                        <?= $isi['Nama_Peminjam']; ?>
+                                        <?= $isi['user']; ?>
+                                    </td>
+                                    <td>
+                                        <?= $isi['kode_barang']; ?>
+                                    </td>
+                                    <td>
+                                        <?= $isi['Nama_Barang']; ?>
                                     </td>
                                     <td>
                                         <?= $isi['Tanggal_Peminjaman']; ?>
@@ -67,17 +75,17 @@
 
                                     <td>
                                         <center>
-                                            <a href="<?= base_url('barang/edit/' . $isi['ID_Barang']); ?>"><button
-                                                    class="btn btn-success"><i class="fa fa-edit"></i></button></a>
+                                            <a href="#"><button
+                                                    class="btn btn-warning"></i>Kembalikan</button></a>
                                         </center>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <center>
                                             <a href="<?= base_url('barang/del/' . $isi['ID_Barang']); ?>"
                                                 onclick="return confirm('Anda yakin Anggota akan dihapus ?');">
                                                 <button class="btn btn-danger"><i class="fa fa-trash"></i></button></a>
                                         </center>
-                                    </td>
+                                    </td> -->
                                 </tr>
                                 <?php $no++;
                             } ?>

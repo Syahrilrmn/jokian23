@@ -151,10 +151,10 @@ class M_Admin extends CI_Model
     $get_anggota = $this->db->get('tbl_login');
     return $get_anggota->row();
   }
-  public function get_buku($buku)
+  public function get_barang($barang)
   {
-    $this->db->where('id_buku', $buku);
-    $get_buku = $this->db->get('tbl_buku');
+    $this->db->where('ID_Barang', $barang);
+    $get_buku = $this->db->get('barang');
     return $get_buku->row();
   }
   public function get_pengunjung($pengunjung)

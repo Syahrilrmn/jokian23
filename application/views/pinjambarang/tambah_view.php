@@ -38,7 +38,7 @@
 						<?php
 						$d = $this->db->query("SELECT * FROM tbl_login WHERE id_login")->row();
 						?>
-						<form form action="<?php echo base_url('barang/prosesbarang'); ?>" method="POST" enctype="multipart/form-data" class="row g-3">
+						<form form action="<?php echo base_url('transaksibarang/prosespinjam'); ?>" method="POST" enctype="multipart/form-data" class="row g-3">
 							<div class="input-group mb-3">
 								<tr>
 									<td>
@@ -51,8 +51,8 @@
 									</td>
 								</tr>
 							</div>
-							<div class="container-fluid mt-2">
-								<div class="input-group mb-2">
+							<div class="container-fluid ">
+								<div class="input-group ">
 									<table class="table table-striped">
 										<tr>
 											<td>Biodata</td>
@@ -67,37 +67,68 @@
 									</table>
 								</div>
 							</div>
-
-							<!-- <label for="basic-url" class="form-label">Biodata *</label> -->
-							<div class="input-group mb-3">
+							<div class="input-group ">
 								<span class="input-group-text" id="basic-addon3">Nomor Peminjaman</span>
 								<input type="text" name="nopinjam" value="<?= $nop; ?>" class="form-control" id="basic-url" aria-describedby="basic-addon3" disabled>
 							</div>
 
-							<div class="input-group mb-3">
+							<!-- <div class="input-group mb-3">
 								<div class="input-group-prepend">
 									<label class="input-group-text" for="inputTanggalPinjam">Tanggal Pinjam</label>
+									<input type="date"  name="Tanggal_Peminjaman" class="form-control" aria-label="Tanggal Pinjam" >
 								</div>
-								<input type="date" value="<?= date('Y-m-d'); ?>" name="tgl" class="form-control" id="inputTanggalPinjam" placeholder="Tanggal Pinjam" aria-label="Tanggal Pinjam" disabled>
+								
 								<div class="input-group-prepend">
 									<span class="input-group-text">Tanggal Kembali</span>
 								</div>
-								<input type="date" class="form-control" id="inputTanggalKembali" placeholder="Tanggal Kembali" aria-label="Tanggal Kembali">
+								<input type="date" class="form-control" name="Tanggal_Pengembalian" id="inputTanggalKembali" placeholder="Tanggal Kembali" aria-label="Tanggal Kembali">
+							</div> -->
+							<div class="col-md-6">
+								<label for="input1" class="form-label">Tanggal Pinjam</label>
+								<input type="date" name="Tanggal_Peminjaman" class="form-control" id="input1" placeholder="First Name">
+							</div>
+							<div class="col-md-6">
+								<label for="input2" class="form-label">Tanggal Kembali</label>
+								<input type="date" name="Tanggal_Pengembalian" class="form-control" id="input2" placeholder="Last Name">
 							</div>
 							<div class="input-group mb-3">
-								<input type="text" class="form-control" placeholder="Masukan Kode Barang....." aria-label="Recipient's username" aria-describedby="button-addon2">
-								<button class="btn btn-outline-secondary" type="button" id="button-addon2" data-bs-toggle="modal" data-bs-target="#TableBarang">
-									<i class="fa fa-search"></i> Cari
-								</button>
+
+								<tr>
+									<td>
+										<div class="input-group"><span class="input-group-text" id="basic-addon3">Kode Barang :</span>
+											<input type="text" class="form-control" required autocomplete="off" name="kode_barang" id="barang-search" placeholder="Contoh Kode Barang : AGT0001" type="text" aria-label="Recipient's username" aria-describedby="button-addon2">
+											<span class="input-group-btn">
+												<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#TableBarang"><i class="fa fa-search"></i> Cari </button>
+											</span>
+										</div>
+									</td>
+								</tr>
+							</div>
+							<div class="container-fluid ">
+								<div class="input-group ">
+									<table class="table table-striped">
+										<tr>
+											<td>Biodata</td>
+											<td>:</td>
+											<td>
+												<div id="result_tunggu_barang">
+													<p style="color:red">* Belum Ada Hasil</p>
+												</div>
+												<div id="result_barang"></div>
+											</td>
+										</tr>
+									</table>
+								</div>
 							</div>
 							<div class="input-group"> <span class="input-group-text">Jumlah</span>
-								<input type="text" class="form-control" id="inputjumlah" placeholder="Jumlah......" aria-label="Jumlah">
+								<input type="text" class="form-control" name="Jumlah" id="inputjumlah" placeholder="Jumlah......" aria-label="Jumlah">
 							</div>
 							<div class="col-md-12">
 								<div class="d-md-flex d-grid align-items-center gap-3">
 									<input type="hidden" name="tambah" value="tambah">
 									<button type="submit" class="btn btn-primary px-4">Submit</button>
 									<a href="<?= base_url('Transaksibarang'); ?>" class="btn btn-danger  px-4">Kembali</a>
+									<button type="reset" class="btn btn-secondary">Reset</button>
 								</div>
 							</div>
 						</form>
@@ -108,6 +139,8 @@
 		</div>
 		<!--end row-->
 	</div>
+	<!-- modal anggota -->
+
 	<div class="modal fade" id="TableAnggota" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -164,157 +197,113 @@
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
 				</div>
 			</div>
-			<!-- /.modal-content -->
 		</div>
-		<!-- /.modal-dialog -->
 	</div>
 
-	<!-- buat modal -->
-	<!-- <div class="modal fade" id="TableAnggota" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
+	<!-- modal barang -->
+	<div class="modal fade" id="TableBarang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Add Anggota</h5>
+					<h5 class="modal-title">Daftar Barang</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
-					<table id="example3" class="table table-bordered table-striped">
+				<div id="modal_body" class="modal-body fileSelection2">
+					<table id="example2" class="table table-bordered table-striped">
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>ID</th>
-								<th>User</th>
-								<th>Alamat</th>
-								<th>Jenkel</th>
+								<th>Kode Barang</th>
+								<th>Nama Barang</th>
+								<th>Jumlah Stok</th>
 								<th>Aksi</th>
 							</tr>
 						</thead>
 						<tbody>
 							<?php $no = 1;
-							foreach ($user as $isi) {
+							foreach ($databarang as $isi) {
 							?>
 								<tr>
 									<td>
 										<?= $no; ?>
 									</td>
 									<td>
-										<?= $isi['anggota_id']; ?>
+										<?= $isi['kode_barang']; ?>
 									</td>
 									<td>
-										<?= $isi['user']; ?>
+										<?= $isi['Nama_Barang']; ?>
 									</td>
 									<td>
-										<?= $isi['alamat']; ?>
-									</td>
-									<td>
-										<?= $isi['jenkel']; ?>
+										<?= $isi['Stok']; ?>
 									</td>
 									<td style="width:20%;">
-										<button class="btn btn-primary select-file1" data-id="<?= $isi['anggota_id']; ?>">
+										<button class="btn btn-primary" id="Select_File2" data-id="<?= $isi['kode_barang']; ?>">
 											<i class="fa fa-check"></i> Pilih
 										</button>
 									</td>
 
 								</tr>
-								<?php $no++;
+
+							<?php $no++;
 							} ?>
 						</tbody>
 					</table>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
 				</div>
 			</div>
 		</div>
-	</div> -->
-	<!-- end modal -->
-</div>
-<!-- modal barang -->
-<!-- <div class="modal fade" id="TableBarang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Cari Barang</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<table id="example3" class="table table-bordered table-striped">
-					<thead>
-						<tr>
-							<th>No</th>
-							<th>ID_Barang</th>
-							<th>Nama_Barang</th>
-							<th>Stok</th>
-							<th>Aksi</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php $no = 1;
-						foreach ($databarang as $isi) {
-						?>
-							<tr>
-								<td>
-									<?= $no; ?>
-								</td>
-								<td>
-									<?= $isi['ID_Barang']; ?>
-								</td>
-								<td>
-									<?= $isi['Nama_Barang']; ?>
-								</td>
-								<td>
-									<?= $isi['Stok']; ?>
-								</td>
-								<td style="width:20%;">
-									<button class="btn btn-primary select-file" data-id="<?= $isi['ID_Barang']; ?>">
-										<i class="fa fa-check"></i> Pilih
-									</button>
-								</td>
-							</tr>
-							<?php $no++;
-						} ?>
-					</tbody>
-				</table>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-			</div>
-		</div>
 	</div>
-</div> -->
-<!-- end modal -->
-
-<!-- select modal -->
-<!-- /.modal -->
-
-<script>
-	$(".fileSelection1 #Select_File1").click(function(e) {
-		document.getElementsByName('anggota_id')[0].value = $(this).attr("data-id");
-		$('#TableAnggota').modal('hide');
-		$.ajax({
-			type: "POST",
-			url: "<?php echo base_url('transaksibarang/result'); ?>",
-			data: 'kode_anggota=' + $(this).attr("data-id"),
-			beforeSend: function() {
-				$("#result").html("");
-				$("#result_tunggu").html('<p style="color:green"><blink>tunggu sebentar</blink></p>');
-			},
-			success: function(html) {
-				$("#result").html(html);
-				$("#result_tunggu").html('');
-			}
+	<!-- script barang -->
+	<script>
+		$(".fileSelection2 #Select_File2").click(function(e) {
+			document.getElementsByName('kode_barang')[0].value = $(this).attr("data-id");
+			$('#TableBarang').modal('hide');
+			$.ajax({
+				type: "POST",
+				url: "<?php echo base_url('transaksibarang/barang'); ?>",
+				data: 'kode_buku=' + $(this).attr("data-id"),
+				beforeSend: function() {
+					$("#result_barang").html("");
+					$("#result_tunggu_barang").html('<p style="color:green"><blink>tunggu sebentar</blink></p>');
+				},
+				success: function(html) {
+					$("#result_barang").load("<?= base_url('transaksibarang/barang_list'); ?>");
+					$("#result_tunggu_barang").html('');
+				}
+			});
 		});
-	});
-</script>
+	</script>
 
-<script>
-	// AJAX call for autocomplete 
-	$(document).ready(function() {
-		$("#search-box").keyup(function() {
+	<script>
+		// AJAX call for autocomplete 
+		$(document).ready(function() {
+			$("#barang-search").keyup(function() {
+				$.ajax({
+					type: "POST",
+					url: "<?php echo base_url('transaksibarang/barang'); ?>",
+					data: 'kode_buku=' + $(this).val(),
+					beforeSend: function() {
+						$("#result_tunggu_barang").html('<p style="color:green"><blink>tunggu sebentar</blink></p>');
+					},
+					success: function(html) {
+						$("#result_barang").load("<?= base_url('transaksibarang/barang_list'); ?>");
+						$("#result_tunggu_barang").html('');
+					}
+				});
+			});
+		});
+	</script>
+	<!-- script otomatis anggota -->
+	<script>
+		$(".fileSelection1 #Select_File1").click(function(e) {
+			document.getElementsByName('anggota_id')[0].value = $(this).attr("data-id");
+			$('#TableAnggota').modal('hide');
 			$.ajax({
 				type: "POST",
 				url: "<?php echo base_url('transaksibarang/result'); ?>",
-				data: 'kode_anggota=' + $(this).val(),
+				data: 'kode_anggota=' + $(this).attr("data-id"),
 				beforeSend: function() {
 					$("#result").html("");
 					$("#result_tunggu").html('<p style="color:green"><blink>tunggu sebentar</blink></p>');
@@ -325,19 +314,38 @@
 				}
 			});
 		});
-	});
-</script>
+	</script>
+
+	<script>
+		// AJAX call for autocomplete 
+		$(document).ready(function() {
+			$("#search-box").keyup(function() {
+				$.ajax({
+					type: "POST",
+					url: "<?php echo base_url('transaksibarang/result'); ?>",
+					data: 'kode_anggota=' + $(this).val(),
+					beforeSend: function() {
+						$("#result").html("");
+						$("#result_tunggu").html('<p style="color:green"><blink>tunggu sebentar</blink></p>');
+					},
+					success: function(html) {
+						$("#result").html(html);
+						$("#result_tunggu").html('');
+					}
+				});
+			});
+		});
+	</script>
+	<!--end script anggota -->
 
 
 
-
-<!--end page wrapper -->
-<!--start overlay-->
-<div class="overlay toggle-icon"></div>
-<!--end overlay-->
-<!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-<!--End Back To Top Button-->
-<footer class="page-footer">
-	<p class="mb-0">Copyright © 2023. All right reserved.</p>
-</footer>
+	<!--start overlay-->
+	<div class="overlay toggle-icon"></div>
+	<!--end overlay-->
+	<!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
+	<!--End Back To Top Button-->
+	<footer class="page-footer">
+		<p class="mb-0">Copyright © 2023. All right reserved.</p>
+	</footer>
 </div>

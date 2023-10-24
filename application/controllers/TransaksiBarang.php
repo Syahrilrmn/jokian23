@@ -83,8 +83,7 @@ class TransaksiBarang extends CI_Controller
 				`barang`.`stok`
 				FROM `peminjamanbarang` 
 				JOIN `tbl_login` ON `peminjamanbarang`.`anggota_id` = `tbl_login`.`anggota_id`
-				JOIN `barang` ON `peminjamanbarang`.`ID_Barang` = `barang`.`ID_Barang`
-				-- WHERE `peminjamanbarang`.`status` = 'Dipinjam'
+				JOIN `barang` ON `peminjamanbarang`.`kode_barang` = `barang`.`kode_barang`
 				ORDER BY `peminjamanbarang`.`ID_Peminjaman` ASC"
 		);
 
@@ -659,40 +658,38 @@ class TransaksiBarang extends CI_Controller
 
 		if (!empty($post['tambah'])) {
 
-			$tgl = $post['tgl'];
-			$tgl2 = date('Y-m-d', strtotime('+' . $post['lama'] . ' days', strtotime($tgl)));
+			// $tgl = $post['tgl'];
+			// $tgl2 = date('Y-m-d', strtotime('+' . $post['lama'] . ' days', strtotime($tgl)));
 
 			$hasil_cart = array_values(unserialize($this->session->userdata('cart')));
 			foreach ($hasil_cart as $isi) {
 
 				// Check stock buku
-				$buku_id = $isi['id'];
-				$buku = $this->db->get_where('tbl_buku', array('buku_id' => $buku_id))->row();
-				$stok = $buku->jml;
-				if ($stok < 1 && $post['status'] !== 'Booking') {
-					// Redirect jika stok buku habis, kecuali jika status adalah 'Booking'
-					$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-danger">
-                    <p>Maaf, stok buku ' . $buku->title . ' sudah habis. Silakan pilih buku lain.</p>
-                    </div></div>');
-					redirect(base_url('transaksi/pinjam'));
-				}
+				// $buku_id = $isi['id'];
+				// $buku = $this->db->get_where('peminjamanbarang', array('kode_barang' => $buku_id))->row();
+				// $stok = $buku->jml;
+				// if ($stok < 1 && $post['status'] !== 'Booking') {
+				// 	$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-danger">
+                //     <p>Maaf, stok buku ' . $buku->title . ' sudah habis. Silakan pilih buku lain.</p>
+                //     </div></div>');
+				// 	redirect(base_url('transaksibarang/pinjam'));
+				// }
 
 				$data[] = array(
-					'pinjam_id' => htmlentities($post['nopinjam']),
+					'Pinjam_id' => htmlentities($post['nopinjam']),
 					'anggota_id' => htmlentities($post['anggota_id']),
-					'buku_id' => $buku_id,
-					'status' => 'Booking',
-					'tgl_pinjam' => htmlentities($post['tgl']),
-					'lama_pinjam' => htmlentities($post['lama']),
-					'jml_pinjam' => htmlentities($post['jml_pinjam']),
-					'tgl_balik' => $tgl2,
-					'tgl_kembali' => '0',
+					'kode_barang' => htmlentities($post['kode_barang']),
+					'Tanggal_Peminjaman' => htmlentities($post['Tanggal_Peminjaman']),
+					'Tanggal_Pengembalian' => htmlentities($post['Tanggal_Pengembalian']),
+					'Jumlah' => htmlentities($post['Jumlah']),
+					// 'Tanggal_Peminjaman' => $tgl2,
+					// 'tgl_kembali' => '0',
 				);
 			}
 
 			$total_array = count($data);
 			if ($total_array != 0) {
-				$this->db->insert_batch('tbl_pinjam', $data);
+				$this->db->insert_batch('peminjamanbarang', $data);
 
 				$cart = array_values(unserialize($this->session->userdata('cart')));
 				for ($i = 0; $i < count($cart); $i++) {
@@ -703,7 +700,7 @@ class TransaksiBarang extends CI_Controller
 			$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
             <p> Tambah Pinjam Buku Sukses !</p>
         </div></div>');
-			redirect(base_url('transaksi'));
+			redirect(base_url('transaksibarang'));
 		}
 
 
@@ -987,38 +984,6 @@ class TransaksiBarang extends CI_Controller
 			redirect(base_url('transaksi/denda'));
 		}
 	}
-
-
-	// public function result()
-	// {
-	// 	$user = $this->M_Admin->get_tableid_edit('tbl_login', 'anggota_id', $this->input->post('anggota_id'));
-
-	// 	if ($user->user != null) {
-	// 		echo '<table class="table table-striped">
-	//                 <tr>
-	//                     <td>Nama Anggota</td>
-	//                     <td>:</td>
-	//                     <td>' . $user->user . '</td>
-	//                 </tr>
-
-	//                 <tr>
-	//                     <td>E-mail</td>
-	//                     <td>:</td>
-	//                     <td>' . $user->alamat . '</td>
-	//                 </tr>
-	//                 <tr>
-	//                     <td>Alamat</td>
-	//                     <td>:</td>
-	//                     <td>' . $user->jenkel . '</td>
-	//                 </tr>
-
-	//             </table>';
-	// 	} else {
-	// 		echo 'Anggota Tidak Ditemukan!';
-	// 	}
-	// }
-
-
 	public function result()
 	{
 
@@ -1050,10 +1015,10 @@ class TransaksiBarang extends CI_Controller
 		}
 	}
 
-	public function buku()
+	public function barang()
 	{
 		$id = $this->input->post('kode_buku');
-		$row = $this->db->query("SELECT * FROM tbl_buku WHERE buku_id ='$id'");
+		$row = $this->db->query("SELECT * FROM barang WHERE kode_barang ='$id'");
 
 		if ($row->num_rows() > 0) {
 			$tes = $row->row();
@@ -1062,7 +1027,7 @@ class TransaksiBarang extends CI_Controller
 				'qty' => 1,
 				'price' => '1000',
 				'name' => $tes->title,
-				'options' => array('isbn' => $tes->isbn, 'thn' => $tes->thn_buku, 'penerbit' => $tes->penerbit)
+				'options' => array( 'Nama_Barang' => $tes->Nama_Barang, 'Stok' => $tes->Stok)
 			);
 			if (!$this->session->has_userdata('cart')) {
 				$cart = array($item);
@@ -1082,16 +1047,15 @@ class TransaksiBarang extends CI_Controller
 		}
 	}
 
-	public function buku_list()
+	public function barang_list()
 	{
 ?>
 		<table class="table table-striped">
 			<thead>
 				<tr>
 					<th>No</th>
-					<th>Title</th>
-					<th>Penerbit</th>
-					<th>Tahun</th>
+					<th>Nama Barang</th>
+					<th>Stok</th>
 					<th>Aksi</th>
 				</tr>
 			</thead>
@@ -1103,13 +1067,10 @@ class TransaksiBarang extends CI_Controller
 							<?= $no; ?>
 						</td>
 						<td>
-							<?= $items['name']; ?>
+							<?= $items['options']['Nama_Barang']; ?>
 						</td>
 						<td>
-							<?= $items['options']['penerbit']; ?>
-						</td>
-						<td>
-							<?= $items['options']['thn']; ?>
+							<?= $items['options']['Stok']; ?>
 						</td>
 						<td style="width:17%">
 							<a href="javascript:void(0)" id="delete_buku<?= $no; ?>" data_<?= $no; ?>="<?= $items['id']; ?>" class="btn btn-danger btn-sm">
@@ -1121,7 +1082,7 @@ class TransaksiBarang extends CI_Controller
 							$("#delete_buku<?= $no; ?>").click(function(e) {
 								$.ajax({
 									type: "POST",
-									url: "<?php echo base_url('transaksi/del_cart'); ?>",
+									url: "<?php echo base_url('transaksibarang/del_cart'); ?>",
 									data: 'kode_buku=' + $(this).attr("data_<?= $no; ?>"),
 									beforeSend: function() {},
 									success: function(html) {
@@ -1145,13 +1106,13 @@ class TransaksiBarang extends CI_Controller
 	public function del_cart()
 	{
 		error_reporting(0);
-		$id = $this->input->post('buku_id');
+		$id = $this->input->post('kode_barang');
 		$index = $this->exists($id);
 		$cart = array_values(unserialize($this->session->userdata('cart')));
 		unset($cart[$index]);
 		$this->session->set_userdata('cart', serialize($cart));
 		// redirect('jual/tambah');
-		echo '<script>$("#result_buku").load("' . base_url('transaksi/buku_list') . '");</script>';
+		echo '<script>$("#result_barang").load("' . base_url('transaksibarang/barang_list') . '");</script>';
 	}
 
 	private function exists($id)
