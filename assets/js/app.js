@@ -1,9 +1,5 @@
 $(function() {
 	"use strict";
-	new PerfectScrollbar(".app-container"),
-	new PerfectScrollbar(".header-message-list"),
-	new PerfectScrollbar(".header-notifications-list"),
-
 
 	    $(".mobile-search-icon").on("click", function() {
 			$(".search-bar").addClass("full-search-bar")
@@ -21,7 +17,6 @@ $(function() {
 
 
 		$(".dark-mode").on("click", function() {
-
 			if($(".dark-mode-icon i").attr("class") == 'bx bx-sun') {
 				$(".dark-mode-icon i").attr("class", "bx bx-moon");
 				$("html").attr("class", "light-theme")

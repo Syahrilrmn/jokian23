@@ -31,7 +31,7 @@
   <!-- new pop up -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/plugins/apexcharts-bundle/apexcharts.js"></script>
+  <!-- <script src="<?php echo base_url(); ?>assets/plugins/apexcharts-bundle/apexcharts.js"></script> -->
   <title>  <?php echo $title_web ?></title>
 </head>
 
@@ -56,42 +56,9 @@
 
           <div class="top-menu ms-auto">
             <ul class="navbar-nav align-items-center gap-1">
-              <li class="nav-item mobile-search-icon d-flex d-lg-none" data-bs-toggle="modal" data-bs-target="#SearchModal">
-                <a class="nav-link" href="avascript:;"><i class='bx bx-search'></i>
-                </a>
-              </li>
+              
 
-
-              <li class="nav-item dropdown dropdown-app">
-                <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown" href="javascript:;">
-                  <div class="dropdown-menu dropdown-menu-end p-0">
-                    <div class="app-container p-2 my-2">
-                      <div class="row gx-0 gy-2 row-cols-3 justify-content-center p-2">
-
-
-                      </div>
-
-                    </div>
-                  </div>
-              </li>
-
-              <li class="nav-item dropdown dropdown-large">
-
-                <div class="dropdown-menu dropdown-menu-end">
-
-                  <div class="header-notifications-list">
-
-                  </div>
-              </li>
-              <li class="nav-item dropdown dropdown-large">
-
-                <div class="dropdown-menu dropdown-menu-end">
-
-                  <div class="header-message-list">
-
-              </li>
-
-              <li class="nav-item dark-mode d-none d-sm-flex">
+              <li class="nav-item dark-mode d-none d-sm-flex" onClick="handleClickDarkMode()">
                 <a class="nav-link dark-mode-icon" href="javascript:;"><i class='bx bx-moon'></i>
                 </a>
               </li>
@@ -128,6 +95,11 @@
         </nav>
       </div>
     </header>
+    <script>
+      const handleClickDarkMode= ()=>{
+        console.log("runnning");
+      }
+    </script>
 
 
 

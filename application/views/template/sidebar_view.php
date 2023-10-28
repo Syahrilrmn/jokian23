@@ -78,7 +78,7 @@
                 </li> -->
                 <li>
                 <li>
-                    <a href="<?php echo base_url("Notifikasi");?>">
+                    <a href="<?php echo base_url("Notifikasi/listPengumuman");?>">
                         <div class="parent-icon"><i class='bx bx-message-alt-detail'></i>
                         </div>
                         <div class="menu-title">Pengumuman Tugas</div>
