@@ -11,11 +11,11 @@ class Barang extends CI_Controller
 		$this->load->helper(array('form', 'url'));
 		$this->load->model('M_Admin');
 		$this->load->model('FilterModel');
-		if ($this->session->userdata('masuk_perpus') != TRUE) {
-			$url = base_url('eror');
-			redirect($url);
-		}
-		$this->load->library('pdf');
+		// if ($this->session->userdata('masuk_perpus') != TRUE) {
+		// 	$url = base_url('eror');
+		// 	redirect($url);
+		// }
+		// $this->load->library('pdf');
 	}
 
 	public function index()
@@ -32,48 +32,55 @@ class Barang extends CI_Controller
 
 	public function laporan()
 	{
-		$tgl_awal = $this->input->get('tgl_awal'); // Ambil data tgl_awal sesuai input (kalau tidak ada set kosong)
-		$tgl_akhir = $this->input->get('tgl_akhir'); // Ambil data tgl_awal sesuai input (kalau tidak ada set kosong)
-		if (empty($tgl_awal) or empty($tgl_akhir)) { // Cek jika tgl_awal atau tgl_akhir kosong, maka :
-			$transaksi = $this->FilterModel->view_semuabuku(); // Panggil fungsi view_all yang ada di FilterModel
-			$url_cetak = 'cetak';
-			$label = 'Semua Data Buku Masuk';
-		} else { // Jika terisi
-			$transaksi = $this->FilterModel->view_by_tanggal($tgl_awal, $tgl_akhir); // Panggil fungsi view_by_date yang ada di FilterModel
-			$url_cetak = 'cetak?tgl_awal=' . $tgl_awal . '&tgl_akhir=' . $tgl_akhir;
-			$tgl_awal = date('d-m-Y', strtotime($tgl_awal)); // Ubah format tanggal jadi dd-mm-yyyy
-			$tgl_akhir = date('d-m-Y', strtotime($tgl_akhir)); // Ubah format tanggal jadi dd-mm-yyyy
-			$label = 'Periode Tanggal ' . $tgl_awal . ' S/d ' . $tgl_akhir;
-		}
-		$this->data['buku_masuk'] = $transaksi;
-		$this->data['url_cetak'] = base_url('buku_masuk/' . $url_cetak);
-		$this->data['label'] = $label;
+		// $tgl_awal = $this->input->get('tgl_awal'); // Ambil data tgl_awal sesuai input (kalau tidak ada set kosong)
+		// $tgl_akhir = $this->input->get('tgl_akhir'); // Ambil data tgl_awal sesuai input (kalau tidak ada set kosong)
+		// if (empty($tgl_awal) or empty($tgl_akhir)) { // Cek jika tgl_awal atau tgl_akhir kosong, maka :
+		// 	$transaksi = $this->FilterModel->view_semuabuku(); // Panggil fungsi view_all yang ada di FilterModel
+		// 	$url_cetak = 'cetak';
+		// 	$label = 'Semua Data Buku Masuk';
+		// } else { // Jika terisi
+		// 	$transaksi = $this->FilterModel->view_by_tanggal($tgl_awal, $tgl_akhir); // Panggil fungsi view_by_date yang ada di FilterModel
+		// 	$url_cetak = 'cetak?tgl_awal=' . $tgl_awal . '&tgl_akhir=' . $tgl_akhir;
+		// 	$tgl_awal = date('d-m-Y', strtotime($tgl_awal)); // Ubah format tanggal jadi dd-mm-yyyy
+		// 	$tgl_akhir = date('d-m-Y', strtotime($tgl_akhir)); // Ubah format tanggal jadi dd-mm-yyyy
+		// 	$label = 'Periode Tanggal ' . $tgl_awal . ' S/d ' . $tgl_akhir;
+		// }
+		// $this->data['buku_masuk'] = $transaksi;
+		// $this->data['url_cetak'] = base_url('buku_masuk/' . $url_cetak);
+		// $this->data['label'] = $label;
+		// $this->data['idbo'] = $this->session->userdata('ses_id');
+		// // $this->data['pengunjung'] = $this->M_Pengunjung->get_table('tbl_pengunjung');
 		$this->data['idbo'] = $this->session->userdata('ses_id');
-		// $this->data['pengunjung'] = $this->M_Pengunjung->get_table('tbl_pengunjung');
-
+		// $this->data['databarang'] = $this->M_Admin->get_table('barang');
+		$this->data['databarang'] = $this->db->get('barang')->result_array();
 		$this->data['title_web'] = 'Data Buku Masuk';
-		$this->load->view('header_view', $this->data);
-		$this->load->view('sidebar_view', $this->data);
-		$this->load->view('buku_masuk/laporan_buku', $this->data);
-		$this->load->view('footer_view', $this->data);
+		$this->load->view('template/header_view', $this->data);
+		$this->load->view('template/sidebar_view', $this->data);
+		$this->load->view('barang/laporan_barang', $this->data);
+		$this->load->view('template/footer_view', $this->data);
 	}
 	public function cetak()
 	{
-		$tgl_awal = $this->input->get('tgl_awal'); // Ambil data tgl_awal sesuai input (kalau tidak ada set kosong)
-		$tgl_akhir = $this->input->get('tgl_akhir'); // Ambil data tgl_awal sesuai input (kalau tidak ada set kosong)
-		if (empty($tgl_awal) or empty($tgl_akhir)) { // Cek jika tgl_awal atau tgl_akhir kosong, maka :
-			$transaksi = $this->FilterModel->view_semuabuku(); // Panggil fungsi view_all yang ada di FilterModel
-			$label = 'Semua Data Buku Masuk ';
-		} else { // Jika terisi
-			$transaksi = $this->FilterModel->view_by_tanggal($tgl_awal, $tgl_akhir); // Panggil fungsi view_by_date yang ada di FilterModel
-			// $url_cetak = 'cetak?tgl_awal=' . $tgl_awal.'&tgl_akhir='.$tgl_akhir;
-			$tgl_awal = date('d-m-Y', strtotime($tgl_awal)); // Ubah format tanggal jadi dd-mm-yyyy
-			$tgl_akhir = date('d-m-Y', strtotime($tgl_akhir)); // Ubah format tanggal jadi dd-mm-yyyy
-			$label = ' Periode Tanggal ' . $tgl_awal . ' S/d ' . $tgl_akhir;
-		}
-		$data['label'] = $label;
-		$data['buku_masuk'] = $transaksi;
-		$this->load->view('buku_masuk/buku_print', $data);
+		// $tgl_awal = $this->input->get('tgl_awal'); // Ambil data tgl_awal sesuai input (kalau tidak ada set kosong)
+		// $tgl_akhir = $this->input->get('tgl_akhir'); // Ambil data tgl_awal sesuai input (kalau tidak ada set kosong)
+		// if (empty($tgl_awal) or empty($tgl_akhir)) { // Cek jika tgl_awal atau tgl_akhir kosong, maka :
+		// 	$transaksi = $this->FilterModel->view_semuabuku(); // Panggil fungsi view_all yang ada di FilterModel
+		// 	$label = 'Semua Data Buku Masuk ';
+		// } else { // Jika terisi
+		// 	$transaksi = $this->FilterModel->view_by_tanggal($tgl_awal, $tgl_akhir); // Panggil fungsi view_by_date yang ada di FilterModel
+		// 	// $url_cetak = 'cetak?tgl_awal=' . $tgl_awal.'&tgl_akhir='.$tgl_akhir;
+		// 	$tgl_awal = date('d-m-Y', strtotime($tgl_awal)); // Ubah format tanggal jadi dd-mm-yyyy
+		// 	$tgl_akhir = date('d-m-Y', strtotime($tgl_akhir)); // Ubah format tanggal jadi dd-mm-yyyy
+		// 	$label = ' Periode Tanggal ' . $tgl_awal . ' S/d ' . $tgl_akhir;
+		// }
+		// $data['label'] = $label;
+		// $data['buku_masuk'] = $transaksi;
+		// $this->load->view('buku_masuk/buku_print', $data);
+		$this->data['idbo'] = $this->session->userdata('ses_id');
+		$this->data['title_web'] = 'Cetak Barang';
+		// $this->data['databarang'] = $this->M_Admin->get_table('barang');
+		$this->data['databarang'] = $this->db->get('barang')->result_array();
+		$this->load->view('barang/barang_print', $this->data);
 	}
 
 	public function detail()

@@ -52,7 +52,7 @@ class Dashboard extends CI_Controller
 
     public function index()
     {
-        // $this->data['idbo'] = $this->session->userdata('ses_id');
+        $this->data['idbo'] = $this->session->userdata('ses_id');
         // $visitor_data = $this->M_Admin->getVisitorStatistics();
         // $gender_data = $this->M_Admin->getGenderStatistics();
 
@@ -61,8 +61,10 @@ class Dashboard extends CI_Controller
 
         // $userId = $this->session->userData('ses_id');
         // $this->data['title_web'] = 'Dashboard ';
-        // $this->data['count_pengguna'] = $this->db->query("SELECT * FROM tbl_login")->num_rows();
-        // $this->data['count_buku'] = $this->db->query("SELECT * FROM tbl_buku")->num_rows();
+        $this->data['count_pengguna'] = $this->db->query("SELECT * FROM tbl_login")->num_rows();
+        $this->data['count_barang'] = $this->db->query("SELECT * FROM barang")->num_rows();
+        $this->data['count_solar'] = $this->db->query("SELECT * FROM solar")->num_rows();
+        $this->data['count_pinjam'] = $this->db->query("SELECT * FROM peminjamanbarang")->num_rows();
         // $this->data['count_pinjam'] = $this->db->query("SELECT * FROM tbl_pinjam WHERE status = 'Dipinjam'")->num_rows();
         // $this->data['count_kembali'] = $this->db->query("SELECT * FROM tbl_pinjam WHERE status = 'Di Kembalikan'")->num_rows();
         

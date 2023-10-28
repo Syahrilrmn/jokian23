@@ -70,7 +70,7 @@
     }
 </script>
 
-<title>Laporan Buku_Masuk</title>
+<title>Laporan Barang</title>
 
 <div class="container-fluid">
     <center>
@@ -94,13 +94,12 @@
     <center>
         <br>
         <table class="kop">
-            <td style="font-size: 30px; font-weight: bold;">Laporan Data Buku Masuk</td>
+            <td style="font-size: 30px; font-weight: bold;">Laporan Data Barang</td>
         </table>
-        <?php echo $label ?>
     </center>
 
     <!-- <span style="padding-left:200px;">
-    <?php echo $label ?>
+   
     </span> -->
 
 
@@ -110,17 +109,10 @@
             <thead style="line-height: 20px;">
 
                 <tr>
-                    <th>No</th>
-                    <!-- <th>Buku_ID</th> -->
-                    <th>Kode Buku</th>
-                    <th>Judul Buku</th>
-                    <th>Pengarang</th>
-                    <th>Penerbit</th>
-                    <th>Tahun Buku</th>
-                    <th>Tanggal masuk</th>
-                    <th>Jumlah Buku</th>
-                    <th>Status</th>
-                    <th>Sumber Bantuan</th>
+                <th>No</th>
+                                <th>Kode Barang</th>
+                                <th>Nama Barang</th>
+                                <th>Jumlah Stok</th>
 
                 </tr>
 
@@ -142,22 +134,23 @@
                     11 => 'November',
                     12 => 'Desember'
                 ];
-                if (empty($buku_masuk)) {
+                if (empty($databarang)) {
                     echo "<tr><td colspan='5'>Data tidak ada</td></tr>";
                 } else {
-                    foreach ($buku_masuk as $isi) { ?>
+                    foreach ($databarang as $isi) { ?>
                         <tr>
-                            <td><?= $no; ?></td>
-                            <!-- <td><?= $isi['buku_id']; ?></td> -->
-                            <td><?= $isi['kode_buku']; ?></td>
-                            <td><?= $isi['judul']; ?></td>
-                            <td><?= $isi['pengarang']; ?></td>
-                            <td><?= $isi['penerbit']; ?></td>
-                            <td><?= $isi['tahun']; ?></td>
-                            <td><?= date('d', strtotime($isi['tanggal'])); ?> <?= $namaBulan[date('n', strtotime($isi['tanggal']))]; ?> <?= date('Y', strtotime($isi['tanggal'])); ?></td>
-                            <td><?= $isi['jumlah_buku']; ?></td>
-                            <td><?= $isi['status']; ?></td>
-                            <td><?= $isi['sumber_bantuan']; ?></td>
+                        <td>
+                                        <?= $no; ?>
+                                    </td>
+                                    <td>
+                                        <?= $isi['kode_barang']; ?>
+                                    </td>
+                                    <td>
+                                        <?= $isi['Nama_Barang']; ?>
+                                    </td>
+                                    <td>
+                                        <?= $isi['Stok']; ?>
+                                    </td>
 
                         </tr>
                 <?php $no++;
@@ -184,7 +177,7 @@
         <?php
         $d = $this->db->query("SELECT * FROM tbl_login WHERE id_login")->row();
         ?>
-        <span style="font-size:16px; font-weight:bold; font-family: Times New Roman;"><?= $d->nama; ?></span>
+        <span style="font-size:16px; font-weight:bold; font-family: Times New Roman;"><?= $d->user; ?></span>
         <hr size="2px" color="black" style="margin-top: 1px;">
         <h4 style="margin-top: 1px; margin-right:120px;">NIP .</h4>
 

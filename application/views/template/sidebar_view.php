@@ -29,21 +29,21 @@
                 <li class="menu-label">Data Master</li>
                 <li>
                     <a href="<?php echo base_url("barang");?>">
-                        <div class="parent-icon"><i class='bx bx-cookie'></i>
+                        <div class="parent-icon"><i class='bx bx-briefcase'></i>
                         </div>
                         <div class="menu-title">Data Barang</div>
                     </a>
                 </li>
                 <li>
                     <a href="<?php echo base_url("Solar");?>">
-                        <div class="parent-icon"><i class='bx bx-cookie'></i>
+                        <div class="parent-icon"><i class='bx bx-color-fill'></i>
                         </div>
                         <div class="menu-title">Data Solar</div>
                     </a>
                 </li>
                 <li>
                     <a href="<?php echo base_url("Notifikasi");?>">
-                        <div class="parent-icon"><i class='bx bx-cookie'></i>
+                        <div class="parent-icon"><i class='bx bx-message-rounded-check'></i>
                         </div>
                         <div class="menu-title">Data Pengumuman Tugas</div>
                     </a>
@@ -51,18 +51,12 @@
                 <li class="menu-label">Data Transaksi</li>
                 <li>
                     <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class='bx bx-cart'></i>
+                        <div class="parent-icon"><i class='bx bx-shuffle'></i>
                         </div>
                         <div class="menu-title">Transaksi</div>
                     </a>
-                    <ul>
+                    <ul>                        
                         <li> <a href="<?php echo base_url("TransaksiBarang");?>"><i class='bx bx-radio-circle'></i>Peminjaman Barang</a>
-                        </li>
-                        <li> <a href="ecommerce-products-details.html"><i class='bx bx-radio-circle'></i>Product Details</a>
-                        </li>
-                        <li> <a href="ecommerce-add-new-products.html"><i class='bx bx-radio-circle'></i>Add New Products</a>
-                        </li>
-                        <li> <a href="ecommerce-orders.html"><i class='bx bx-radio-circle'></i>Orders</a>
                         </li>
                     </ul>
                 </li>
@@ -85,7 +79,7 @@
                 <li>
                 <li>
                     <a href="<?php echo base_url("Notifikasi");?>">
-                        <div class="parent-icon"><i class='bx bx-cookie'></i>
+                        <div class="parent-icon"><i class='bx bx-message-alt-detail'></i>
                         </div>
                         <div class="menu-title">Pengumuman Tugas</div>
                     </a>
@@ -98,11 +92,11 @@
                         <div class="menu-title">Laporan</div>
                     </a>
                     <ul>
-                        <li> <a href="icons-line-icons.html"><i class='bx bx-radio-circle'></i>Line Icons</a>
+                        <li> <a href="<?php echo base_url("barang/laporan");?>"><i class='bx bx-radio-circle'></i>Barang</a>
                         </li>
-                        <li> <a href="icons-boxicons.html"><i class='bx bx-radio-circle'></i>Boxicons</a>
+                        <li> <a href="icons-boxicons.html"><i class='bx bx-radio-circle'></i>Solar</a>
                         </li>
-                        <li> <a href="icons-feather-icons.html"><i class='bx bx-radio-circle'></i>Feather Icons</a>
+                        <li> <a href="icons-feather-icons.html"><i class='bx bx-radio-circle'></i>Peminjaman Barang</a>
                         </li>
                     </ul>
                 </li>
