@@ -193,26 +193,25 @@ class M_Admin extends CI_Model
 
 
   public function buat_kode($table_name, $kodeawal, $idkode, $orderbylimit)
-  {
-    $query = $this->db->query("select * from $table_name $orderbylimit"); // cek dulu apakah ada sudah ada kode di tabel.
+{
+    $query = $this->db->query("SELECT * FROM $table_name $orderbylimit"); // cek apakah ada sudah ada kode di tabel.
 
     if ($query->num_rows() > 0) {
-      //jika kode ternyata sudah ada.
-      $hasil = $query->row();
-      $kd = $hasil->$idkode;
-      $cd = $kd;
-      $nomor = $query->num_rows();
-      $kode = $cd + 1;
-      $kodejadi = $kodeawal . "00" . $kode;    // hasilnya CUS-0001 dst.
-      $kdj = $kodejadi;
+        // jika kode ternyata sudah ada.
+        $hasil = $query->row();
+        $kd = $hasil->$idkode;
+        $cd = substr($kd, strlen($kodeawal) + 1); // ambil angka dari kode yang ada
+        $kode = $cd + 1;
+        $kodejadi = $kodeawal . "-" . sprintf("%04d", $kode); // hasilnya PJ-0001 dst.
     } else {
-      //jika kode belum ada
-      $kode = 0 + 1;
-      $kodejadi = $kodeawal . "00" . $kode;    // hasilnya CUS-0001 dst.
-      $kdj = $kodejadi;
+        // jika kode belum ada
+        $kode = 1;
+        $kodejadi = $kodeawal . "-" . sprintf("%04d", $kode); // hasilnya PJ-0001 dst.
     }
-    return $kdj;
-  }
+
+    return $kodejadi;
+}
+
 
   public function buat_kode_join($table_name, $kodeawal, $idkode)
   {

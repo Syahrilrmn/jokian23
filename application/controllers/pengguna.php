@@ -21,9 +21,9 @@ class Pengguna extends CI_Controller
     {
         $this->data['idbo'] = $this->session->userdata('ses_id');
         $this->data['user'] = $this->M_Admin->get_table('tbl_login');
-        // $this->data['user'] = $this->M_Admin->get_table("tbl_login WHERE level = 'Anggota'");
+        // $this->data['user'] = $this->M_Admin->get_table("tbl_login WHERE level = 'Pengguna'");
 
-        $this->data['title_web'] = 'Data Anggota ';
+        $this->data['title_web'] = 'Data Pengguna ';
         $this->load->view('template/header_view', $this->data);
         $this->load->view('template/sidebar_view', $this->data);
         $this->load->view('user/user_view', $this->data);
@@ -32,8 +32,8 @@ class Pengguna extends CI_Controller
     public function laporan()
     {
         $this->data['idbo'] = $this->session->userdata('ses_id');
-        $this->data['user'] = $this->M_Admin->get_table("tbl_login WHERE level = 'Anggota'");
-        $this->data['title_web'] = 'Data Anggota ';
+        $this->data['user'] = $this->M_Admin->get_table("tbl_login WHERE level = 'Pengguna'");
+        $this->data['title_web'] = 'Data Pengguna ';
         $this->load->view('header_view', $this->data);
         $this->load->view('sidebar_view', $this->data);
         $this->load->view('user/laporan_user', $this->data);
@@ -41,7 +41,8 @@ class Pengguna extends CI_Controller
     }
     public function cetak()
     {
-        $this->data['user'] = $this->M_Admin->get_table("tbl_login WHERE level = 'Anggota'");
+        $this->data['title_web'] = 'Cetak Pengguna ';
+        $this->data['user'] = $this->M_Admin->get_table("tbl_login WHERE level = 'Pengguna'");
         $this->load->view('user/user_print', $this->data);
     }
     public function tambah()
@@ -49,7 +50,7 @@ class Pengguna extends CI_Controller
         $this->data['idbo'] = $this->session->userdata('ses_id');
         $this->data['user'] = $this->M_Admin->get_table('tbl_login');
 
-        $this->data['title_web'] = 'Tambah Anggota ';
+        $this->data['title_web'] = 'Tambah Pengguna ';
         $this->load->view('template/header_view', $this->data);
         $this->load->view('template/sidebar_view', $this->data);
         $this->load->view('user/tambah_view', $this->data);
@@ -72,7 +73,7 @@ class Pengguna extends CI_Controller
         $dd = $this->db->query("SELECT * FROM tbl_login WHERE user = '$user' OR email = '$email'");
         if ($dd->num_rows() > 0) {
             $this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-warning">
-			<p> Gagal Update Anggota : ' . $user . ' !, Username / Email Anda Sudah Terpakai</p>
+			<p> Gagal Update Pengguna : ' . $user . ' !, Username / Email Anda Sudah Terpakai</p>
 			</div></div>');
             redirect(base_url('pengguna/tambah'));
         } else {
@@ -89,7 +90,7 @@ class Pengguna extends CI_Controller
             $result = array('foto' => $result1);
             $data1 = array('upload_data' => $this->upload->data());
             $data = array(
-                'anggota_id' => $this->M_Admin->generate_kode_pengguna(),
+                'Pengguna_id' => $this->M_Admin->generate_kode_pengguna(),
 
                 'user' => $user,
                 'pass' => $pass,
@@ -107,7 +108,7 @@ class Pengguna extends CI_Controller
             $this->db->insert('tbl_login', $data);
 
             $this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
-            <p> Daftar Anggota telah berhasil !</p>
+            <p> Daftar Pengguna telah berhasil !</p>
             </div></div>');
             redirect(base_url('pengguna'));
         }
@@ -124,10 +125,10 @@ class Pengguna extends CI_Controller
         if ($count > 0) {
             $this->data['user'] = $this->M_Admin->get_tableid_edit('tbl_login', 'id_login', $this->uri->segment('3'));
         } else {
-            echo '<script>alert("Anggota TIDAK DITEMUKAN");window.location="' . base_url('pengguna') . '"</script>';
+            echo '<script>alert("Pengguna TIDAK DITEMUKAN");window.location="' . base_url('pengguna') . '"</script>';
         }
 
-        // }elseif($this->session->userdata('level') == 'Anggota'){
+        // }elseif($this->session->userdata('level') == 'Pengguna'){
         // 	$this->data['idbo'] = $this->session->userdata('ses_id');
         // 	$count = $this->M_Admin->CountTableId('tbl_login','id_login',$this->uri->segment('3'));
         // 	if($count > 0)
@@ -157,7 +158,7 @@ class Pengguna extends CI_Controller
             } else {
                 echo '<script>alert("Pengguna TIDAK DITEMUKAN");window.location="' . base_url('Pengguna') . '"</script>';
             }
-        } elseif ($this->session->userdata('level') == 'Anggota') {
+        } elseif ($this->session->userdata('level') == 'Pengguna') {
             $this->data['idbo'] = $this->session->userdata('ses_id');
             $count = $this->M_Admin->CountTableId('tbl_login', 'id_login', $this->session->userdata('ses_id'));
             if ($count > 0) {
@@ -166,7 +167,7 @@ class Pengguna extends CI_Controller
                 echo '<script>alert("Pengguna TIDAK DITEMUKAN");window.location="' . base_url('Pengguna') . '"</script>';
             }
         }
-        $this->data['title_web'] = 'Print Kartu Anggota ';
+        $this->data['title_web'] = 'Print Kartu Pengguna ';
         $this->load->view('user/detail', $this->data);
     }
 
@@ -211,7 +212,7 @@ class Pengguna extends CI_Controller
 
 
             $this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
-					<p> Berhasil Update Anggota: ' . $user . ' !</p>
+					<p> Berhasil Update Pengguna: ' . $user . ' !</p>
 					</div></div>');
             redirect(base_url('pengguna'));
         }
@@ -227,7 +228,7 @@ class Pengguna extends CI_Controller
         $this->M_Admin->delete_table('tbl_login', 'id_login', $this->uri->segment('3'));
 
         $this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-danger">
-		<p> Berhasil Hapus Anggota !</p>
+		<p> Berhasil Hapus Pengguna !</p>
 		</div></div>');
         redirect(base_url('pengguna'));
     }

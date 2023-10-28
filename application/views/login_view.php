@@ -121,6 +121,7 @@
     document.getElementById('loginForm').addEventListener('submit', function(event) {
         event.preventDefault();
         var formData = new FormData(this);
+		console.log(formData)
 
         // Kirim data formulir menggunakan Ajax
         fetch('<?= base_url('login/auth'); ?>', {
@@ -129,6 +130,7 @@
         })
         .then(response => response.json())
         .then(data => {
+			console.log(data)
             if (data.status === 'success') {
                 Swal.fire({
                     title: 'Login Berhasil!',

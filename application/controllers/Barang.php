@@ -23,7 +23,7 @@ class Barang extends CI_Controller
 		$this->data['idbo'] = $this->session->userdata('ses_id');
 		// $this->data['databarang'] = $this->M_Admin->get_table('barang');
 		$this->data['databarang'] = $this->db->get('barang')->result_array();
-		$this->data['title_web'] = 'Data Buku Masuk';
+		$this->data['title_web'] = 'Data Barang';
 		$this->load->view('template/header_view', $this->data);
 		$this->load->view('template/sidebar_view', $this->data);
 		$this->load->view('barang/barang_view', $this->data);
@@ -37,7 +37,7 @@ class Barang extends CI_Controller
 		// if (empty($tgl_awal) or empty($tgl_akhir)) { // Cek jika tgl_awal atau tgl_akhir kosong, maka :
 		// 	$transaksi = $this->FilterModel->view_semuabuku(); // Panggil fungsi view_all yang ada di FilterModel
 		// 	$url_cetak = 'cetak';
-		// 	$label = 'Semua Data Buku Masuk';
+		// 	$label = 'Semua Data Barang';
 		// } else { // Jika terisi
 		// 	$transaksi = $this->FilterModel->view_by_tanggal($tgl_awal, $tgl_akhir); // Panggil fungsi view_by_date yang ada di FilterModel
 		// 	$url_cetak = 'cetak?tgl_awal=' . $tgl_awal . '&tgl_akhir=' . $tgl_akhir;
@@ -53,7 +53,7 @@ class Barang extends CI_Controller
 		$this->data['idbo'] = $this->session->userdata('ses_id');
 		// $this->data['databarang'] = $this->M_Admin->get_table('barang');
 		$this->data['databarang'] = $this->db->get('barang')->result_array();
-		$this->data['title_web'] = 'Data Buku Masuk';
+		$this->data['title_web'] = 'Data Barang';
 		$this->load->view('template/header_view', $this->data);
 		$this->load->view('template/sidebar_view', $this->data);
 		$this->load->view('barang/laporan_barang', $this->data);
@@ -65,7 +65,7 @@ class Barang extends CI_Controller
 		// $tgl_akhir = $this->input->get('tgl_akhir'); // Ambil data tgl_awal sesuai input (kalau tidak ada set kosong)
 		// if (empty($tgl_awal) or empty($tgl_akhir)) { // Cek jika tgl_awal atau tgl_akhir kosong, maka :
 		// 	$transaksi = $this->FilterModel->view_semuabuku(); // Panggil fungsi view_all yang ada di FilterModel
-		// 	$label = 'Semua Data Buku Masuk ';
+		// 	$label = 'Semua Data Barang ';
 		// } else { // Jika terisi
 		// 	$transaksi = $this->FilterModel->view_by_tanggal($tgl_awal, $tgl_akhir); // Panggil fungsi view_by_date yang ada di FilterModel
 		// 	// $url_cetak = 'cetak?tgl_awal=' . $tgl_awal.'&tgl_akhir='.$tgl_akhir;
@@ -120,10 +120,10 @@ class Barang extends CI_Controller
 			// $this->data['rakbuku'] =  $this->db->query("SELECT * FROM tbl_rak ORDER BY id_rak DESC")->result_array();
 
 		} else {
-			echo '<script>alert("pengunjung TIDAK DITEMUKAN");window.location="' . base_url('barang') . '"</script>';
+			echo '<script>alert("Barang TIDAK DITEMUKAN");window.location="' . base_url('barang') . '"</script>';
 		}
 
-		$this->data['title_web'] = 'Data Buku Masuk Edit';
+		$this->data['title_web'] = 'Data Barang Edit';
 		$this->load->view('template/header_view', $this->data);
 		$this->load->view('template/sidebar_view', $this->data);
 		$this->load->view('barang/edit_view', $this->data);
@@ -135,7 +135,7 @@ class Barang extends CI_Controller
 
 		// $this->data['idbo'] = $this->session->userdata('ses_id');
 		$this->data['databarang'] = $this->M_Admin->get_table('barang');
-		$this->data['title_web'] = 'Tambah Buku Masuk';
+		$this->data['title_web'] = 'Tambah Barang';
 		$this->load->view('template/header_view', $this->data);
 		$this->load->view('template/sidebar_view', $this->data);
 		$this->load->view('barang/tambah_view', $this->data);
@@ -227,7 +227,7 @@ class Barang extends CI_Controller
 		$this->M_Admin->delete_table('barang', 'ID_Barang', $this->uri->segment('3'));
 
 		$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-danger">
-		<p> Berhasil Hapus Buku_masuk !</p>
+		<p> Berhasil Hapus Barang !</p>
 		</div></div>');
 		redirect(base_url('barang'));
 	}

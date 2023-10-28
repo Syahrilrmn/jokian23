@@ -66,7 +66,7 @@
                                     <td>
                                         <?= $isi['Tanggal_Peminjaman']; ?>
                                     </td>
-                                    <td>
+                                    <td> 
                                         <?= $isi['Tanggal_Pengembalian']; ?>
                                     </td>
                                     <td>
@@ -77,14 +77,17 @@
                                         <center>
                                             <a href="#"><button
                                                     class="btn btn-warning"></i>Kembalikan</button></a>
+                                                   
+                                                <a href="<?= base_url('transaksibarang/prosespinjam?ID_Peminjaman=' . $isi['ID_Peminjaman']); ?>" onclick="return confirm('Anda yakin Peminjaman Ini akan dihapus ?');" class="btn btn-primary btn-sm" title="Batal">
+															<i class="fa fa-edit"></i> 
+														</a>
+                                                <a href="<?= base_url('transaksibarang/prosespinjam?ID_Peminjaman=' . $isi['ID_Peminjaman']); ?>" onclick="return confirm('Anda yakin Peminjaman Ini akan dihapus ?');" class="btn btn-danger btn-sm" title="Batal">
+															<i class="fa fa-trash"></i> 
+														</a>
                                         </center>
                                     </td>
                                     <!-- <td>
-                                        <center>
-                                            <a href="<?= base_url('barang/del/' . $isi['ID_Barang']); ?>"
-                                                onclick="return confirm('Anda yakin Anggota akan dihapus ?');">
-                                                <button class="btn btn-danger"><i class="fa fa-trash"></i></button></a>
-                                        </center>
+                                        
                                     </td> -->
                                 </tr>
                                 <?php $no++;

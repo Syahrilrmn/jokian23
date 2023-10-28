@@ -39,11 +39,15 @@
 						$d = $this->db->query("SELECT * FROM tbl_login WHERE id_login")->row();
 						?>
 						<form form action="<?php echo base_url('transaksibarang/prosespinjam'); ?>" method="POST" enctype="multipart/form-data" class="row g-3">
+							<div class="input-group">
+								<span class="input-group-text" id="basic-addon3">Nomor Peminjaman</span>
+								<input type="text" name="Pinjam_id" value="<?= $nop; ?>" class="form-control" readonly>
+							</div>
 							<div class="input-group mb-3">
 								<tr>
 									<td>
-										<div class="input-group"><span class="input-group-text" id="basic-addon3">Anggota ID :</span>
-											<input type="text" class="form-control" required autocomplete="off" name="anggota_id" id="search-box" placeholder="Contoh ID Anggota : AGT0001" type="text" value="<?= $d->anggota_id; ?>" aria-label="Recipient's username" aria-describedby="button-addon2">
+										<div class="input-group"><span class="input-group-text" id="basic-addon3">Masukan ID Pengguna  :</span>
+											<input type="text" class="form-control" required autocomplete="off" name="anggota_id" id="search-box" placeholder="Contoh ID Pengguna : AGT0001" type="text" value="<?= $d->anggota_id; ?>" aria-label="Recipient's username" aria-describedby="button-addon2">
 											<span class="input-group-btn">
 												<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#TableAnggota"><i class="fa fa-search"></i> Cari </button>
 											</span>
@@ -67,10 +71,6 @@
 									</table>
 								</div>
 							</div>
-							<div class="input-group ">
-								<span class="input-group-text" id="basic-addon3">Nomor Peminjaman</span>
-								<input type="text" name="nopinjam" value="<?= $nop; ?>" class="form-control" id="basic-url" aria-describedby="basic-addon3" disabled>
-							</div>
 
 							<!-- <div class="input-group mb-3">
 								<div class="input-group-prepend">
@@ -85,7 +85,7 @@
 							</div> -->
 							<div class="col-md-6">
 								<label for="input1" class="form-label">Tanggal Pinjam</label>
-								<input type="date" name="Tanggal_Peminjaman" class="form-control" id="input1" placeholder="First Name">
+								<input type="date" name="Tanggal_Peminjaman" class="form-control" id="input1"  value="<?= date('Y-m-d'); ?>">
 							</div>
 							<div class="col-md-6">
 								<label for="input2" class="form-label">Tanggal Kembali</label>
@@ -95,7 +95,7 @@
 
 								<tr>
 									<td>
-										<div class="input-group"><span class="input-group-text" id="basic-addon3">Kode Barang :</span>
+										<div class="input-group"><span class="input-group-text" id="basic-addon3">Masukan Kode Barang :</span>
 											<input type="text" class="form-control" required autocomplete="off" name="kode_barang" id="barang-search" placeholder="Contoh Kode Barang : AGT0001" type="text" aria-label="Recipient's username" aria-describedby="button-addon2">
 											<span class="input-group-btn">
 												<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#TableBarang"><i class="fa fa-search"></i> Cari </button>

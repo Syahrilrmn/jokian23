@@ -21,7 +21,7 @@ class TransaksiBarang extends CI_Controller
 
 	public function index()
 	{
-		$this->data['title_web'] = 'Data Pinjam Buku';
+		$this->data['title_web'] = 'Data Pinjam Barang';
 		$this->data['idbo'] = $this->session->userdata('ses_id');
 
 		// if ($this->session->userdata('level') == 'Anggota') {
@@ -72,6 +72,7 @@ class TransaksiBarang extends CI_Controller
 			"
 				SELECT DISTINCT 
 				`peminjamanbarang`.`ID_Peminjaman`, 
+				`peminjamanbarang`.`Pinjam_id`, 
 				`tbl_login`.`user`,  
 				`tbl_login`.`anggota_id`,  
 				`peminjamanbarang`.`Tanggal_Peminjaman`,
@@ -100,12 +101,12 @@ class TransaksiBarang extends CI_Controller
 	public function pinjam()
 	{
 
-		$this->data['nop'] = $this->M_Admin->buat_kode('peminjamanbarang', 'PJ', 'ID_Peminjaman', 'ORDER BY ID_Peminjaman DESC LIMIT 1');
+		$this->data['nop'] = $this->M_Admin->buat_kode('peminjamanbarang', 'PJ', 'Pinjam_id', 'ORDER BY Pinjam_id DESC LIMIT 1');
 		$this->data['idbo'] = $this->session->userdata('ses_id');
 		$this->data['user'] = $this->M_Admin->get_table('tbl_login');
 		$this->data['databarang'] = $this->db->query("SELECT * FROM barang ORDER BY ID_Barang DESC")->result_array();
 
-		$this->data['title_web'] = 'Tambah Pinjam Buku ';
+		$this->data['title_web'] = 'Tambah Pinjam Barang '; 
 		$this->load->view('template/header_view', $this->data);
 		$this->load->view('template/sidebar_view', $this->data);
 		$this->load->view('pinjambarang/tambah_view', $this->data);
@@ -660,7 +661,7 @@ class TransaksiBarang extends CI_Controller
 
 			// $tgl = $post['tgl'];
 			// $tgl2 = date('Y-m-d', strtotime('+' . $post['lama'] . ' days', strtotime($tgl)));
-
+			$Pinjam_id = htmlentities($this->input->post('Pinjam_id', TRUE));
 			$hasil_cart = array_values(unserialize($this->session->userdata('cart')));
 			foreach ($hasil_cart as $isi) {
 
@@ -676,7 +677,8 @@ class TransaksiBarang extends CI_Controller
 				// }
 
 				$data[] = array(
-					'Pinjam_id' => htmlentities($post['nopinjam']),
+					'Pinjam_id' => $Pinjam_id,
+					// 'Pinjam_id' => htmlentities($post['Pinjam_id']),
 					'anggota_id' => htmlentities($post['anggota_id']),
 					'kode_barang' => htmlentities($post['kode_barang']),
 					'Tanggal_Peminjaman' => htmlentities($post['Tanggal_Peminjaman']),
@@ -698,7 +700,7 @@ class TransaksiBarang extends CI_Controller
 			}
 
 			$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
-            <p> Tambah Pinjam Buku Sukses !</p>
+            <p> Tambah Pinjam Barang Sukses !</p>
         </div></div>');
 			redirect(base_url('transaksibarang'));
 		}
@@ -753,20 +755,20 @@ class TransaksiBarang extends CI_Controller
 			}
 
 			$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
-				<p>Edit Pinjam Buku Sukses !</p>
+				<p>Edit Pinjam Barang Sukses !</p>
 				</div></div>');
 			redirect(base_url('transaksi'));
 		}
 		// ------------------------hapus peminjam---------------
 
-		if ($this->input->get('pinjam_id')) {
-			$this->M_Admin->delete_table('tbl_pinjam', 'pinjam_id', $this->input->get('pinjam_id'));
-			$this->M_Admin->delete_table('tbl_denda', 'pinjam_id', $this->input->get('pinjam_id'));
+		if ($this->input->get('ID_Peminjaman')) {
+			$this->M_Admin->delete_table('peminjamanbarang', 'ID_Peminjaman', $this->input->get('ID_Peminjaman'));
+			// $this->M_Admin->delete_table('tbl_denda', 'pinjam_id', $this->input->get('pinjam_id'));
 
 			$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-warning">
-			<p>  Hapus Transaksi Pinjam Buku Sukses !</p>
+			<p>  Hapus Transaksi Pinjam Barang Sukses !</p>
 			</div></div>');
-			redirect(base_url('transaksi'));
+			redirect(base_url('transaksibarang'));
 		}
 		// ----------------------kembali dulu----------------------------
 		// if ($this->input->get('kembali')) {

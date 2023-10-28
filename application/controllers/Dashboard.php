@@ -60,7 +60,7 @@ class Dashboard extends CI_Controller
         // $this->data['gender_data'] = $gender_data;
 
         // $userId = $this->session->userData('ses_id');
-        // $this->data['title_web'] = 'Dashboard ';
+        $this->data['title_web'] = 'Dashboard ';
         $this->data['count_pengguna'] = $this->db->query("SELECT * FROM tbl_login")->num_rows();
         $this->data['count_barang'] = $this->db->query("SELECT * FROM barang")->num_rows();
         $this->data['count_solar'] = $this->db->query("SELECT * FROM solar")->num_rows();
