@@ -12,10 +12,10 @@ class Dashboard extends CI_Controller
         $this->load->model('M_Admin');
         $this->load->model('Statistik');
         $this->load->model('M_login');
-        // if ($this->session->userdata('masuk_perpus') != true) {
-        //     $url = base_url('eror');
-        //     redirect($url);
-        // }
+        if ($this->session->userdata('masuk') != true) {
+            $url = base_url('login');
+            redirect($url);
+        }
 
         // Memeriksa waktu tidak aktif
         $this->check_session();

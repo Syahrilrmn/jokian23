@@ -38,72 +38,54 @@
 							<div class="card-body">
 								<div class="p-4">
 									<div class="mb-3 text-center">
-										<img src="<?php echo base_url(); ?>assets/images/logo-icon.png" width="60"
-											alt="" />
+										<img src="<?php echo base_url(); ?>assets/images/logo-icon.png" width="60" alt="" />
 									</div>
 									<div class="text-center mb-4">
 										<h5 class="">Syndron Admin</h5>
 										<p class="mb-0">Please log in to your account</p>
 									</div>
 									<div class="form-body">
-										<form action="<?= base_url('login/auth'); ?>" method="POST" class="row g-3"
-											id="loginForm">
+										<form action="<?= base_url('login/auth'); ?>" method="POST" class="row g-3" id="loginForm">
 											<div class="col-12">
 												<label for="inputEmailAddress" class="form-label">Email</label>
-												<input type="email" class="form-control" name="email"
-													id="inputEmailAddress" placeholder="jhon@example.com">
+												<input type="email" class="form-control" name="email" id="inputEmailAddress" placeholder="Masukan Gmail Anda.......">
 											</div>
 											<div class="col-12">
 												<label for="inputChoosePassword" class="form-label">Password</label>
 												<div class="input-group" id="show_hide_password">
-													<input type="password" class="form-control border-end-0" name="pass"
-														id="inputChoosePassword" placeholder="Enter Password"> <a
-														href="javascript:;" class="input-group-text bg-transparent"><i
-															class='bx bx-hide'></i></a>
+													<input type="password" class="form-control border-end-0" name="pass" id="inputChoosePassword" placeholder="Enter Password"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-check form-switch">
-													<input class="form-check-input" type="checkbox"
-														id="flexSwitchCheckChecked">
-													<label class="form-check-label"
-														for="flexSwitchCheckChecked">Remember Me</label>
+													<input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+													<label class="form-check-label" for="flexSwitchCheckChecked">Remember Me</label>
 												</div>
 											</div>
-											<div class="col-md-6 text-end"> <a
-													href="auth-basic-forgot-password.html">Forgot Password ?</a>
+											<div class="col-md-6 text-end"> <a href="auth-basic-forgot-password.html">Forgot Password ?</a>
 											</div>
 											<div class="col-12">
 												<div class="d-grid">
-													<button type="submit" class="btn btn-primary" id="loginButton">Sign
-														in</button>
+													<button type="submit" class="btn btn-primary" id="loginButton">Login</button>
 												</div>
 											</div>
 											<div class="col-12">
 												<div class="text-center ">
-													<p class="mb-0">Don't have an account yet? <a
-															href="auth-basic-signup.html">Sign up here</a>
+													<p class="mb-0">Don't have an account yet? <a href="<?= base_url('login/register'); ?>">Register</a>
 													</p>
 												</div>
 											</div>
 										</form>
 									</div>
-									<div class="login-separater text-center mb-5"> <span>OR SIGN IN WITH</span>
+									<div class="login-separater text-center mb-5">
+										<span>OR SIGN IN WITH</span>
 										<hr />
 									</div>
 									<div class="list-inline contacts-social text-center">
-										<a href="javascript:;"
-											class="list-inline-item bg-facebook text-white border-0 rounded-3"><i
-												class="bx bxl-facebook"></i></a>
-										<a href="javascript:;"
-											class="list-inline-item bg-twitter text-white border-0 rounded-3"><i
-												class="bx bxl-twitter"></i></a>
-										<a href="javascript:;"
-											class="list-inline-item bg-google text-white border-0 rounded-3"><i
-												class="bx bxl-google"></i></a>
-										<a href="javascript:;"
-											class="list-inline-item bg-linkedin text-white border-0 rounded-3"><i
-												class="bx bxl-linkedin"></i></a>
+										<a href="javascript:;" class="list-inline-item bg-facebook text-white border-0 rounded-3"><i class="bx bxl-facebook"></i></a>
+										<a href="javascript:;" class="list-inline-item bg-twitter text-white border-0 rounded-3"><i class="bx bxl-twitter"></i></a>
+										<a href="javascript:;" class="list-inline-item bg-google text-white border-0 rounded-3"><i class="bx bxl-google"></i></a>
+										<a href="javascript:;" class="list-inline-item bg-linkedin text-white border-0 rounded-3"><i class="bx bxl-linkedin"></i></a>
 									</div>
 
 								</div>
@@ -117,45 +99,45 @@
 	</div>
 	<!-- ... Bagian HTML lainnya ... -->
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-<script>
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        var formData = new FormData(this);
-		console.log(formData)
+	<script>
+		document.getElementById('loginForm').addEventListener('submit', function(event) {
+			event.preventDefault();
+			var formData = new FormData(this);
+			console.log(formData)
 
-        // Kirim data formulir menggunakan Ajax
-        fetch('<?= base_url('login/auth'); ?>', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-			console.log(data)
-            if (data.status === 'success') {
-                Swal.fire({
-                    title: 'Login Berhasil!',
-                    text: 'Selamat Datang, ' + data.user + '!', // Menampilkan nama pengguna
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then(function() {
-                    window.location.href = '<?= base_url('dashboard'); ?>';
-                });
-            } else {
-                Swal.fire({
-                    title: 'Login Gagal!',
-                    text: data.message,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    });
-</script>
+			// Kirim data formulir menggunakan Ajax
+			fetch('<?= base_url('login/auth'); ?>', {
+					method: 'POST',
+					body: formData
+				})
+				.then(response => response.json())
+				.then(data => {
+					console.log(data)
+					if (data.status === 'success') {
+						Swal.fire({
+							title: 'Login Berhasil!',
+							text: 'Selamat Datang, ' + data.user + '!', // Menampilkan nama pengguna
+							icon: 'success',
+							confirmButtonText: 'OK'
+						}).then(function() {
+							window.location.href = '<?= base_url('dashboard'); ?>';
+						});
+					} else {
+						Swal.fire({
+							title: 'Login Gagal!',
+							text: data.message,
+							icon: 'error',
+							confirmButtonText: 'OK'
+						});
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+		});
+	</script>
 
-<!-- ... Bagian HTML lainnya ... -->
+	<!-- ... Bagian HTML lainnya ... -->
 
 	<!--end wrapper-->
 	<!-- Bootstrap JS -->
@@ -167,8 +149,8 @@
 	<script src="<?php echo base_url(); ?>assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
 	<!--Password show & hide js -->
 	<script>
-		$(document).ready(function () {
-			$("#show_hide_password a").on('click', function (event) {
+		$(document).ready(function() {
+			$("#show_hide_password a").on('click', function(event) {
 				event.preventDefault();
 				if ($('#show_hide_password input').attr("type") == "text") {
 					$('#show_hide_password input').attr('type', 'password');

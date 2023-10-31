@@ -75,7 +75,7 @@
                                         <option selected disabled>Pilih Jenis Kelamin</option>
                                         <option value="Laki-Laki">Laki-Laki</option>
                                         <option value="Perempuan">Perempuan</option>
-                                        <!-- Tambahkan opsi lainnya sesuai kebutuhan -->
+                                        <!-- Tambahkan opsi lainnya sesuai kebutuhan --> 
                                     </select>
                                 </div>
                                 <div class="col-12">

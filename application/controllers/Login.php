@@ -39,86 +39,86 @@ class Login extends CI_Controller
 			$nama_pengguna = $hasil_login['user'];
 
 			// Create session
-			$this->session->set_userdata('masuk_perpus', TRUE);
+			$this->session->set_userdata('masuk', TRUE);
+			$this->session->set_userdata('level', $hasil_login['level']);
 			$this->session->set_userdata('ses_id', $hasil_login['id_login']);
 			$this->session->set_userdata('last_activity', time()); // Set waktu login terakhir
 
 			$d = $this->db->query("SELECT * FROM tbl_login WHERE id_login='" . $hasil_login['id_login'] . "'")->row();
 
 			$response = [
-                'status' => 'success',
-                'message' => 'Login Berhasil!',
-                'user' => $nama_pengguna
-            ];
-        } else {
-            // Menggunakan SweetAlert2 untuk menampilkan pesan login gagal
-            $response = [
-                'status' => 'error',
-                'message' => 'Login Gagal! Periksa Kembali Gmail dan Password Anda'
-            ];
-        }
+				'status' => 'success',
+				'message' => 'Login Berhasil!',
+				'user' => $nama_pengguna
+			];
+		} else {
+			// Menggunakan SweetAlert2 untuk menampilkan pesan login gagal
+			$response = [
+				'status' => 'error',
+				'message' => 'Login Gagal! Periksa Kembali Gmail dan Password Anda'
+			];
+		}
 
-        echo json_encode($response);
-    
+		echo json_encode($response);
 	}
 
 
 	public function do_register()
-	{
-		$user = htmlspecialchars($this->input->post('user', TRUE), ENT_QUOTES);
-		$pass = htmlspecialchars($this->input->post('pass', TRUE), ENT_QUOTES);
-		$email = htmlspecialchars($this->input->post('email', TRUE), ENT_QUOTES);
-		$nama = htmlspecialchars($this->input->post('nama', TRUE), ENT_QUOTES);
+    {
 
-		// Check if user already exists
-		$check_user = $this->M_login->cek_user($user);
-		if ($check_user > 0) {
-			echo '<script>alert("Username already exists!");
-        window.location="' . base_url() . 'login/register";</script>';
-			return;
-		}
 
-		// Generate a unique anggota_id
-		$anggota_id = $this->M_Admin->generate_kode_pengguna();
-
-		// Upload photo
-		$nmfile = "user_" . time();
-		$config['upload_path'] = './assets_style/image/pengguna/';
-		$config['allowed_types'] = 'gif|jpg|jpeg|png';
-		$config['file_name'] = $nmfile;
-		$this->load->library('upload', $config);
-
-		if (!$this->upload->do_upload('gambar')) {
-			echo '<script>alert("Failed to upload photo! Please try again.");
-        window.location="' . base_url() . 'login/register";</script>';
-			return;
-		}
-
-		$photo_path = $this->upload->data('file_name');
-
-		// Prepare data for new user
-		$data = array(
-			'anggota_id' => $anggota_id,
-			'user' => $user,
-			'pass' => md5($pass),
-			// assuming the password will be stored as MD5 hash in the database
-			'email' => $email,
-			'nama' => $nama,
-			'foto' => $photo_path,
-			'tgl_bergabung' => date('Y-m-d')
-		);
-
-		// Insert new user
-		$result = $this->M_login->insertTable('tbl_login', $data);
+        $anggota_id = htmlentities($this->input->post('anggota_id', TRUE));
+        $user = htmlentities($this->input->post('user', TRUE));
+        $pass = md5(htmlentities($this->input->post('pass', TRUE)));
+        $jenkel = htmlentities($this->input->post('jenkel', TRUE));
+        $alamat = htmlentities($this->input->post('alamat', TRUE));
+        $email = $_POST['email'];
+        $dd = $this->db->query("SELECT * FROM tbl_login WHERE user = '$user' OR email = '$email'");
+        if ($dd->num_rows() > 0) {
+            $this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-warning">
+			<p> Gagal Update Pengguna : ' . $user . ' !, Username / Email Anda Sudah Terpakai</p>
+			</div></div>');
+            redirect(base_url('pengguna/tambah'));
+        } else {
+            // setting konfigurasi upload
+            $nmfile = "user_" . time();
+            $config['upload_path'] = './assets/images/pengguna/';
+            $config['allowed_types'] = 'gif|jpg|jpeg|png';
+            $config['file_name'] = $nmfile;
+            // load library upload
+            $this->load->library('upload', $config);
+            // upload foto 1
+            $this->upload->do_upload('foto');
+            $result1 = $this->upload->data();
+            $result = array('foto' => $result1);
+            $data1 = array('upload_data' => $this->upload->data());
+            $data = array(
+                'anggota_id' => $anggota_id,
+                'user' => $user,
+                'pass' => $pass,
+                'email' => $_POST['email'],
+                'foto' => $data1['upload_data']['file_name'],
+                'jenkel' => $jenkel,
+                'alamat' => $alamat,
+                'tgl_bergabung' => date('Y-m-d')
+            );
+			$result = $this->db->insert('tbl_login', $data);
 
 		if ($result) {
-			echo '<script>alert("Registration successful! Please login.");
-        window.location="' . base_url() . 'login";</script>';
+			$response = [
+				'status' => 'success',
+				'message' => 'Registration Successful! Please login.'
+			];
 		} else {
-			echo '<script>alert("Registration failed! Please try again.");
-        window.location="' . base_url() . 'login/register";</script>';
+			$response = [
+				'status' => 'error',
+				'message' => 'Registration Failed! Please try again.'
+			];
 		}
+
+		echo json_encode($response);
 	}
+    }
 
 	public function logout()
 	{

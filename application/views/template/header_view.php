@@ -32,7 +32,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- <script src="<?php echo base_url(); ?>assets/plugins/apexcharts-bundle/apexcharts.js"></script> -->
-  <title>  <?php echo $title_web ?></title>
+  <title> <?php echo $title_web ?></title>
 </head>
 
 <body>
@@ -56,7 +56,7 @@
 
           <div class="top-menu ms-auto">
             <ul class="navbar-nav align-items-center gap-1">
-              
+
 
               <li class="nav-item dark-mode d-none d-sm-flex" onClick="handleClickDarkMode()">
                 <a class="nav-link dark-mode-icon" href="javascript:;"><i class='bx bx-moon'></i>
@@ -66,11 +66,20 @@
           </div>
 
           <div class="user-box dropdown px-3">
+           
             <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="<?php echo base_url(); ?>assets/images/avatars/avatar-2.png" class="user-img" alt="user avatar">
+            <?php
+            $d = $this->db->query("SELECT * FROM tbl_login WHERE id_login='$idbo'")->row();
+            if (isset($d->foto)) {
+            ?>
+              <img src="<?php echo base_url(); ?>assets/images/pengguna/<?php echo $d->foto; ?>" class="user-img" alt="user avatar">
+              <?php } else { ?>
+              <!--<img src="" alt="#" class="user-image" style="border:2px solid #fff;"/>-->
+              <i class="fa fa-user fa-4x" style="color:#fff;"></i>
+            <?php } ?>
               <div class="user-info">
-                <p class="user-name mb-0">Pauline Seitz</p>
-                <p class="designattion mb-0">Web Designer</p>
+                <p class="user-name mb-0"><?php echo $d->user; ?></p>
+                <p class="designattion mb-0"><?= $d->level; ?></p>
               </div>
             </a>
 
@@ -96,11 +105,7 @@
       </div>
     </header>
     <script>
-      const handleClickDarkMode= ()=>{
+      const handleClickDarkMode = () => {
         console.log("runnning");
       }
     </script>
-
-
-
-    

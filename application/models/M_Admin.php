@@ -341,4 +341,15 @@ class M_Admin extends CI_Model
 
       return $query->result();
   }
+
+  // new 
+  public function get_pengguna_by_id($id_login) {
+    // Ambil data pengguna dari tabel 'tbl_login' berdasarkan 'id_login'
+    $this->db->where('id_login', $id_login);
+    $query = $this->db->get('tbl_login');
+
+    // Kembalikan hasil query sebagai objek
+    return $query->row();
+}
+
 }

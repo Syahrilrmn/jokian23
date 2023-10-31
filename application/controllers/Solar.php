@@ -3,6 +3,7 @@ class Solar extends CI_Controller
 {
     public function index()
     {
+        $this->data['idbo'] = $this->session->userdata('ses_id');
 		$this->load->model('Solar_Model');
         $data = $this->Solar_Model->get_solar_list();
         $this->data['title_web'] = 'Data Solar';

@@ -3,6 +3,7 @@ class Notifikasi extends CI_Controller
 {
     public function index()
     {
+        $this->data['idbo'] = $this->session->userdata('ses_id');
         $this->load->model('Pengumuman_Model');
         $data = $this->Pengumuman_Model->get_pengumuman_list();
         $this->data['title_web'] = 'Data Pengumuman';
@@ -13,6 +14,7 @@ class Notifikasi extends CI_Controller
     }
     public function listPengumuman()
     {
+        $this->data['idbo'] = $this->session->userdata('ses_id');
         $this->load->model('Pengumuman_Model');
 
         // Konfigurasi paginasi
