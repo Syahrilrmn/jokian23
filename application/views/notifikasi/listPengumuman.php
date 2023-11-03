@@ -50,7 +50,6 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama Pegawai</th>
                                 <th>Isi Pengumuman</th>
                                 <th>Tanggal</th>
                                 <th>Edit</th>
@@ -65,12 +64,26 @@
                                     <td>
                                         <?= $no; ?>
                                     </td>
+
                                     <td>
-                                        <?= $isi->Pegawai_Tujuan; ?>
+                                        <?php
+                                        $jsonData = $isi->Isi_Pengumuman;
+                                        $decodedData = json_decode($jsonData, true);
+                                        foreach ($decodedData as $item):
+                                            ?>
+                                            <details>
+                                                <summary>Pegawai :
+                                                    <?= $item['Pegawai_Tujuan']; ?>
+                                                </summary>
+                                                <p>Deskripsi Job:
+                                                    <?= $item['Isi_Pengumuman']; ?>
+                                                </p>
+                                            </details>
+                                            <?php
+                                        endforeach
+                                        ?>
                                     </td>
-                                    <td>
-                                        <?= $isi->Isi_Pengumuman; ?>
-                                    </td>
+
                                     <td>
                                         <?= $isi->Tanggal; ?>
                                     </td>

@@ -32,6 +32,7 @@
   <!-- new pop up -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/jquery-circle-progress-1.2.2/dist/circle-progress.js"></script>
   <!-- <script src="<?php echo base_url(); ?>assets/plugins/apexcharts-bundle/apexcharts.js"></script> -->
   <title> <?php echo $title_web ?></title>
 </head>

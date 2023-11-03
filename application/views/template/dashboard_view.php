@@ -1,26 +1,25 @@
 <!--end header -->
 <!--start page wrapper -->
 <div class="page-wrapper">
-    <div class="page-content">
-        
-            <div class="card radius-10 w-100">
-                <div class="card-body d-flex justify-content-center align-items-center">
-                        <input id="speed" type="text" />
-                    <div class="speedbox">
-                        <div class="speedbox__score" id="speedbox-score"></div>
-                        <div class="speedbox__groove"></div>
-                        <div class="speedbox__odo">
-                            <div class="speedbox__ping"><i class="fa fa-clock-o"></i> 28<span>ms</span></div>
-                            <div class="speedbox__up"><i class="fa fa-arrow-circle-up"></i> 1.1<span>mb/s</span></div>
-                            <div class="speedbox__down"><i class="fa fa-arrow-circle-down"></i> 8.7<span>mb/s</span>
-                            </div>
-                        </div>
-                        <div class="speedbox__base"></div>
+    <div class="page-content container">
+
+        <div class="card radius-10 w-100 ">
+            <div class="card-body row row-cols-1 ">
+                <div id="circle"
+                    style="display: flex; justify-content: center; align-items: center; position: relative;">
+                    <div class="d-flex flex-column justify-content-center align-items-center"
+                        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                        <strong class="display-4"></strong>
+                        <div>
+                            <p>
+                                <?= $count_solar->jumlah_stok ?> Liter
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-        
+        </div>
+
         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
             <div class="col">
                 <div class="card radius-10">
@@ -82,5 +81,53 @@
             </div>
         </div>
 
+        <div class="card p-3">
+            <?php
+            
+            
+            foreach ($dataPengumuman as $item) {
+                $isiPengumuman = json_decode($item->Isi_Pengumuman, true);
+                
+               
+                   
+                    foreach ($isiPengumuman as $pengumuman) {
+                        $pegawaiTujuan = $pengumuman['Pegawai_Tujuan'];
+                        $isi = $pengumuman['Isi_Pengumuman'];
+                        ?>
+                        <details>
+                            <summary class="display-6">
+                                <?= $pegawaiTujuan; ?>
+                            </summary>
+                            <p>Deskripsi Job:
+                                <?= $isi; ?>
+                            </p>
+                        </details>
+                        <?php
+                    }
+                    ?>
+               
+                <?php
+            }
+            ?>
+        </div>
+
     </div>
 </div>
+<?php $jumlahStokSolar = $count_solar->jumlah_stok; ?>
+<script>
+    var jumlahStokSolar = <?= $jumlahStokSolar; ?>;
+    var maxJumlahStok = 10000; // Atur nilai maksimal yang sesuai
+
+    var progres = jumlahStokSolar / maxJumlahStok;
+
+    $('#circle').circleProgress({
+        value: progres,
+        size: 300,
+        fill: {
+            gradient: ["red", "orange"]
+        }
+    }).on('circle-animation-progress', function (event, progress) {
+        // Mengisi tag <strong> dengan nilai progres (bukan persentase)
+        $(this).find('strong').html(Math.round(progres * 100) + '<i>%</i>');
+    });
+</script>

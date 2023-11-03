@@ -59,7 +59,8 @@ class Notifikasi extends CI_Controller
     public function create()
     {
         $this->data['title_web'] = 'Tambah Pengumuman';
-        $this->load->view('template/header_view');
+
+        $this->load->view('template/header_view', $this->data);
         $this->load->view('template/sidebar_view');
         $this->load->view('notifikasi/createPengumuman');
         $this->load->view('template/footer_view');
@@ -69,7 +70,7 @@ class Notifikasi extends CI_Controller
     public function store()
     {
         $this->load->model('Pengumuman_Model');
-        $this->Pengumuman_Model->storePengumuman();
+        $tes  = $this->Pengumuman_Model->storePengumuman();
         redirect('Notifikasi');
     }
 

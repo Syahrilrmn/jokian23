@@ -21,7 +21,7 @@
                             <div class="row g-3">
                                 <div class="col-12 col-lg-6">
                                     <label for="jumlahSolar" class="form-label">Jumlah Solar</label>
-                                    <input type="number" class="form-control" id="jumlahSolar" placeholder="Jumlah Solar" name="jumlahSolar" value="<?= $data->Jumlah_Stok ?>">
+                                    <input type="number" class="form-control" id="jumlahSolar" placeholder="Jumlah Solar" name="jumlahSolar" value="<?= $data->Jumlah_Stok ?>" min="0" max="10000">
                                 </div>
                                 <div class="col-12">
                                     <br>

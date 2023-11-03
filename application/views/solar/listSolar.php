@@ -28,19 +28,7 @@
         }
         ?>
 
-        <!--breadcrumb-->
-        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="ms-auto">
-                <div class="btn-group">
-                <?php if ($this->session->userdata('level') == 'Admin') { ?>
-                    <a href="<?php echo base_url("solar/create"); ?>" class="btn btn-success px-5">
-                        <i class='fa fa-plus mr-1'></i> Tambah Data
-                    </a>
-                    <?php }?>
-                </div>
-            </div>
-
-        </div>
+       
         <!--end breadcrumb-->
 
         <h6 class="mb-0 text-uppercase">DataTable Import</h6>
@@ -53,10 +41,9 @@
                             <tr>
                                 <th>No</th>
                                 <th>Jumlah Stok</th>
-                                <th>Tanggal</th>
+                                <th>Updated At</th>
                                 <?php if ($this->session->userdata('level') == 'Admin') { ?>
                                 <th>Edit</th>
-                                <th>Hapus</th>
                                 <?php } ?>
                             </tr>
                         </thead>
@@ -72,7 +59,7 @@
                                         <?= $isi->Jumlah_Stok; ?>
                                     </td>
                                     <td>
-                                        <?= $isi->created_at; ?>
+                                        <?= $isi->updatedat; ?>
                                     </td>
                                     <?php if ($this->session->userdata('level') == 'Admin') { ?>
                                     <td>
@@ -81,27 +68,10 @@
                                                     class="btn btn-success"><i class="fa fa-edit"></i></button></a>
                                         </center>
                                     </td>
-                                    <td>
-                                        <center>
-                                            <a href="<?= base_url('solar/delete/' . $isi->ID_Solar); ?>"
-                                                onclick="return confirm('Anda yakin Anggota akan dihapus ?');">
-                                                <button class="btn btn-danger"><i class="fa fa-trash"></i></button></a>
-                                        </center>
-                                    </td>
                                     <?php }?>
                                 </tr>
                                 <?php $no++; endforeach; ?>
                         </tbody>
-                        <!-- <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </tfoot> -->
                     </table>
                 </div>
             </div>
