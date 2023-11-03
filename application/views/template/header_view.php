@@ -19,6 +19,7 @@
   <link href="<?php echo base_url(); ?>assets/css/pace.min.css" rel="stylesheet" />
   <script src="<?php echo base_url(); ?>assets/js/pace.min.js"></script>
   <!-- Bootstrap CSS -->
+  
   <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="<?php echo base_url(); ?>assets/css/bootstrap-extended.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
