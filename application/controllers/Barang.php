@@ -7,15 +7,15 @@ class Barang extends CI_Controller
 	{
 		parent::__construct();
 		//validasi jika user belum login
-		$this->data['CI'] =& get_instance();
+		$this->data['CI'] = &get_instance();
 		$this->load->helper(array('form', 'url'));
 		$this->load->model('M_Admin');
 		$this->load->model('FilterModel');
-		// if ($this->session->userdata('masuk_perpus') != TRUE) {
-		// 	$url = base_url('eror');
-		// 	redirect($url);
-		// }
-		// $this->load->library('pdf');
+		if ($this->session->userdata('masuk') != TRUE) {
+			$url = base_url('login');
+			redirect($url);
+		}
+		$this->load->library('pdf');
 	}
 
 	public function index()
@@ -145,10 +145,10 @@ class Barang extends CI_Controller
 
 	public function prosesbarang()
 	{
-		// if ($this->session->userdata('masuk_perpus') != TRUE) {
-		//     $url = base_url('login');
-		//     redirect($url);
-		// }
+		if ($this->session->userdata('masuk') != TRUE) {
+			$url = base_url('login');
+			redirect($url);
+		}
 
 		// tambah aksi form proses buku
 		if (!empty($this->input->post('tambah'))) {
@@ -160,15 +160,20 @@ class Barang extends CI_Controller
 			);
 
 			$this->db->insert('barang', $data);
-
-			$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
-        <p> Tambah Barang Sukses !</p>
-        </div></div>');
+			if ($this->db->affected_rows() > 0) {
+				$status = 'Berhasil';
+				$pesan = 'Data Barang Berhasil diTambahkan';
+			} else {
+				$status = 'Gagal';
+				$pesan = 'Data Barang Gagal diTambahkan';
+			}
+			$this->session->set_flashdata('status', $status);
+			$this->session->set_flashdata('pesan', $pesan);
 			redirect(base_url('Barang'));
+		
 		}
-		// edit aksi form proses buku
-		if(!empty($this->input->post('edit')))
-		{
+		// edit aksi form proses 
+		if (!empty($this->input->post('edit'))) {
 			$post = $this->input->post();
 			$data = array(
 
@@ -176,17 +181,21 @@ class Barang extends CI_Controller
 				'Stok' => htmlentities($post['Stok']),
 			);
 
-			$this->db->where('ID_Barang',htmlentities($post['edit']));
+			$this->db->where('ID_Barang', htmlentities($post['edit']));
 			$this->db->update('barang', $data);
-
-			$this->session->set_flashdata('pesan','<div id="notifikasi"><div class="alert alert-success">
-					<p> Edit Barang berhasil !</p>
-				</div></div>');
-				redirect(base_url('barang'));  
-				
+			if ($this->db->affected_rows() > 0) {
+				$status = 'Berhasil';
+				$pesan = 'Data Barang Berhasil diTambahkan';
+			} else {
+				$status = 'Gagal';
+				$pesan = 'Data Barang Gagal diTambahkan';
+			}
+			$this->session->set_flashdata('status', $status);
+			$this->session->set_flashdata('pesan', $pesan);
+			redirect(base_url('Barang'));
 		}
 	}
-	
+
 	public function proses_edit()
 	{
 		// Mendapatkan data edit barang dari form
@@ -207,9 +216,16 @@ class Barang extends CI_Controller
 		$this->db->update('barang', $data);
 
 		// Set pesan notifikasi untuk memberitahu bahwa perubahan berhasil disimpan
-		$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
-		<p>Data Barang berhasil diperbarui!</p>
-		</div></div>');
+		if ($this->db->affected_rows() > 0) {
+			$status = 'Berhasil';
+			$pesan = 'Data Barang Berhasil DiUpdate';
+		} else {
+			$status = 'Gagal';
+			$pesan = 'Data Barang Gagal DiUpdate';
+		}
+		$this->session->set_flashdata('status', $status);
+		$this->session->set_flashdata('pesan', $pesan);
+		redirect(base_url('Barang'));
 
 		// Redirect ke halaman daftar barang atau halaman lain yang diinginkan
 		redirect(base_url('Barang'));
@@ -221,14 +237,8 @@ class Barang extends CI_Controller
 		if ($this->uri->segment('3') == '') {
 			echo '<script>alert("halaman tidak ditemukan");window.location="' . base_url('barang') . '";</script>';
 		}
-
-		$user = $this->M_Admin->get_tableid_edit('barang', 'ID_Barang', $this->uri->segment('3'));
-		unlink('./assets_style/image/' . $user->foto);
-		$this->M_Admin->delete_table('barang', 'ID_Barang', $this->uri->segment('3'));
-
-		$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-danger">
-		<p> Berhasil Hapus Barang !</p>
-		</div></div>');
+		
+        $this->M_Admin->delete_table('barang', 'ID_Barang', $this->uri->segment('3'));
 		redirect(base_url('barang'));
 	}
 }

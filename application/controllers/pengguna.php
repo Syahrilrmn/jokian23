@@ -57,62 +57,6 @@ class Pengguna extends CI_Controller
         $this->load->view('template/footer_view', $this->data);
     }
 
-    public function add()
-    {
-
-
-        $user = htmlentities($this->input->post('user', TRUE));
-        $pass = md5(htmlentities($this->input->post('pass', TRUE)));
-        $jenkel = htmlentities($this->input->post('jenkel', TRUE));
-        // $level = htmlentities($this->input->post('level',TRUE));
-        // $telepon = htmlentities($this->input->post('telepon',TRUE));
-        // $status = htmlentities($this->input->post('status',TRUE));
-        $alamat = htmlentities($this->input->post('alamat', TRUE));
-        $email = $_POST['email'];
-
-        $dd = $this->db->query("SELECT * FROM tbl_login WHERE user = '$user' OR email = '$email'");
-        if ($dd->num_rows() > 0) {
-            $this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-warning">
-			<p> Gagal Update Pengguna : ' . $user . ' !, Username / Email Anda Sudah Terpakai</p>
-			</div></div>');
-            redirect(base_url('pengguna/tambah'));
-        } else {
-            // setting konfigurasi upload
-            $nmfile = "user_" . time();
-            $config['upload_path'] = './assets/images/pengguna/';
-            $config['allowed_types'] = 'gif|jpg|jpeg|png';
-            $config['file_name'] = $nmfile;
-            // load library upload
-            $this->load->library('upload', $config);
-            // upload foto 1
-            $this->upload->do_upload('foto');
-            $result1 = $this->upload->data();
-            $result = array('foto' => $result1);
-            $data1 = array('upload_data' => $this->upload->data());
-            $data = array(
-                'Pengguna_id' => $this->M_Admin->generate_kode_pengguna(),
-
-                'user' => $user,
-                'pass' => $pass,
-                // 'level'=>$level,
-                // 'tempat_lahir'=>$_POST['lahir'],
-                // 'tgl_lahir'=>$_POST['tgl_lahir'],
-                // 'level'=>$level,
-                'email' => $_POST['email'],
-                // 'telepon'=>$telepon,
-                'foto' => $data1['upload_data']['file_name'],
-                'jenkel' => $jenkel,
-                'alamat' => $alamat,
-                'tgl_bergabung' => date('Y-m-d')
-            );
-            $this->db->insert('tbl_login', $data);
-
-            $this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
-            <p> Daftar Pengguna telah berhasil !</p>
-            </div></div>');
-            redirect(base_url('pengguna'));
-        }
-    }
 
     public function edit()
     {
@@ -127,17 +71,6 @@ class Pengguna extends CI_Controller
         } else {
             echo '<script>alert("Pengguna TIDAK DITEMUKAN");window.location="' . base_url('pengguna') . '"</script>';
         }
-
-        // }elseif($this->session->userdata('level') == 'Pengguna'){
-        // 	$this->data['idbo'] = $this->session->userdata('ses_id');
-        // 	$count = $this->M_Admin->CountTableId('tbl_login','id_login',$this->uri->segment('3'));
-        // 	if($count > 0)
-        // 	{			
-        // 		$this->data['user'] = $this->M_Admin->get_tableid_edit('tbl_login','id_login',$this->session->userdata('ses_id'));
-        // 	}else{
-        // 		echo '<script>alert("Pengguna TIDAK DITEMUKAN");window.location="'.base_url('pengguna').'"</script>';
-        // 	}
-        // }
         $this->data['title_web'] = 'Edit Pengguna ';
         $this->load->view('template/header_view', $this->data);
         $this->load->view('template/sidebar_view', $this->data);
@@ -170,16 +103,61 @@ class Pengguna extends CI_Controller
         $this->data['title_web'] = 'Print Kartu Pengguna ';
         $this->load->view('user/detail', $this->data);
     }
+    public function add()
+    {
 
+
+        $user = htmlentities($this->input->post('user', TRUE));
+        $pass = md5(htmlentities($this->input->post('pass', TRUE)));
+        $jenkel = htmlentities($this->input->post('jenkel', TRUE));
+        $alamat = htmlentities($this->input->post('alamat', TRUE));
+        $email = $_POST['email'];
+        $dd = $this->db->query("SELECT * FROM tbl_login WHERE user = '$user' OR email = '$email'");
+        if ($dd->num_rows() > 0) {
+            $this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-warning">
+			<p> Gagal Update Pengguna : ' . $user . ' !, Username / Email Anda Sudah Terpakai</p>
+			</div></div>');
+            redirect(base_url('pengguna/tambah'));
+        } else {
+            // setting konfigurasi upload
+            $nmfile = "user_" . time();
+            $config['upload_path'] = './assets/images/pengguna/';
+            $config['allowed_types'] = 'gif|jpg|jpeg|png';
+            $config['file_name'] = $nmfile;
+            // load library upload
+            $this->load->library('upload', $config);
+            // upload foto 1
+            $this->upload->do_upload('foto');
+            $result1 = $this->upload->data();
+            $result = array('foto' => $result1);
+            $data1 = array('upload_data' => $this->upload->data());
+            $data = array(
+                'user' => $user,
+                'pass' => $pass,
+                'email' => $_POST['email'],
+                'foto' => $data1['upload_data']['file_name'],
+                'jenkel' => $jenkel,
+                'alamat' => $alamat,
+                'tgl_bergabung' => date('Y-m-d')
+            );
+            $this->db->insert('tbl_login', $data);
+            if ($this->db->affected_rows() > 0) {
+                $status = 'Berhasil';
+                $pesan = 'Data Pengguna Berhasil diTambahkan';
+            } else {
+                $status = 'Gagal';
+                $pesan = 'Data Pengguna Gagal diTambahkan';
+            }
+            $this->session->set_flashdata('status', $status);
+            $this->session->set_flashdata('pesan', $pesan);
+            redirect(base_url('pengguna'));
+        }
+    }
     public function upd()
     {
-        // $nama = htmlentities($this->input->post('nama',TRUE));
         $user = htmlentities($this->input->post('user', TRUE));
         $pass = htmlentities($this->input->post('pass'));
         $jenkel = htmlentities($this->input->post('jenkel', TRUE));
-        // $level = htmlentities($this->input->post('level',TRUE));
-        // $telepon = htmlentities($this->input->post('telepon',TRUE));
-        // $status = htmlentities($this->input->post('status',TRUE));
         $alamat = htmlentities($this->input->post('alamat', TRUE));
         $id_login = htmlentities($this->input->post('id_login', TRUE));
 
@@ -194,29 +172,130 @@ class Pengguna extends CI_Controller
 
 
         if (!$this->upload->do_upload('foto')) {
+            if ($this->input->post('pass') !== '') {
+                $data = array(
+                    'user' => $user,
+                    'pass' => md5($pass),
+                    'email' => $_POST['email'],
+                    'jenkel' => $jenkel,
+                    'alamat' => $alamat,
+                );
+                $this->M_Admin->update_table('tbl_login', 'id_login', $id_login, $data);
+                if ($this->session->userdata('level') == 'Admin') {
+                    if ($this->db->affected_rows() > 0) {
+                        $status = 'Berhasil';
+                        $pesan = 'Data pengguna Berhasil Di Update'  ;
+                    } else {
+                        $status = 'Gagal';
+                        $pesan = 'Data pengguna Gagal Di Update';
+                    }
+                    $this->session->set_flashdata('status', $status);
+                    $this->session->set_flashdata('pesan', $pesan);
+                    redirect(base_url('pengguna'));
+                } elseif ($this->session->userdata('level') == 'User') {
 
-            $data = array(
-
-                // 'nama'=>$nama,
-                'user' => $user,
-                'pass' => md5($pass),
-                // 'tempat_lahir'=>$_POST['lahir'],
-                // 'tgl_lahir'=>$_POST['tgl_lahir'],
-                // 'level'=>$level,
-                'email' => $_POST['email'],
-                // 'telepon'=>$telepon,
-                'jenkel' => $jenkel,
-                'alamat' => $alamat,
-            );
-            $this->M_Admin->update_table('tbl_login', 'id_login', $id_login, $data);
-
-
-            $this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
+                    $this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
 					<p> Berhasil Update Pengguna: ' . $user . ' !</p>
 					</div></div>');
-            redirect(base_url('pengguna'));
+                    redirect(base_url('pengguna/edit/' . $id_login));
+                }
+            } else {
+                $data = array(
+                    'user' => $user,
+                    'pass' => md5($pass),
+                    'email' => $_POST['email'],
+                    'jenkel' => $jenkel,
+                    'alamat' => $alamat,
+                );
+                $this->M_Admin->update_table('tbl_login', 'id_login', $id_login, $data);
+
+                if ($this->session->userdata('level') == 'Admin') {
+                    if ($this->db->affected_rows() > 0) {
+                        $status = 'Berhasil';
+                        $pesan = 'Data pengguna Berhasil Di Update';
+                    } else {
+                        $status = 'Gagal';
+                        $pesan = 'Data pengguna Gagal Di Update';
+                    }
+                    $this->session->set_flashdata('status', $status);
+                    $this->session->set_flashdata('pesan', $pesan);
+                    redirect(base_url('pengguna'));
+                } elseif ($this->session->userdata('level') == 'User') {
+
+                    $this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
+					<p> Berhasil Update Pengguna : ' . $user . ' !</p>
+					</div></div>');
+                    redirect(base_url('pengguna/edit/' . $id_login));
+                }
+            }
+        } else {
+            $result1 = $this->upload->data();
+            $result = array('foto' => $result1);
+            $data1 = array('upload_data' => $this->upload->data());
+            unlink('./assets_style/image/pengguna/' . $this->input->post('foto'));
+            if ($this->input->post('pass') !== '') {
+                $data = array(
+
+                    'user' => $user,
+                    'pass' => md5($pass),
+                    'email' => $_POST['email'],
+                    'jenkel' => $jenkel,
+                    'alamat' => $alamat,
+                    'foto' => $data1['upload_data']['file_name'],
+                );
+                $this->M_Admin->update_table('tbl_login', 'id_login', $id_login, $data);
+
+                if ($this->session->userdata('level') == 'Admin') {
+                    if ($this->db->affected_rows() > 0) {
+                        $status = 'Berhasil';
+                        $pesan = 'Data pengguna Berhasil Di Update' ;
+                    } else {
+                        $status = 'Gagal';
+                        $pesan = 'Data pengguna Gagal Di Update';
+                    }
+                    $this->session->set_flashdata('status', $status);
+                    $this->session->set_flashdata('pesan', $pesan);
+                    redirect(base_url('pengguna'));
+                } elseif ($this->session->userdata('level') == 'User') {
+
+                    $this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
+					<p> Berhasil Update User : ' . $user . ' !</p>
+					</div></div>');
+                    redirect(base_url('pengguna/edit/' . $id_login));
+                }
+            } else {
+                $data = array(
+                    'user' => $user,
+                    'pass' => md5($pass),
+                    'email' => $_POST['email'],
+                    'jenkel' => $jenkel,
+                    'alamat' => $alamat,
+                    'foto' => $data1['upload_data']['file_name'],
+                );
+                $this->M_Admin->update_table('tbl_login', 'id_login', $id_login, $data);
+
+                if ($this->session->userdata('level') == 'Admin') {
+                    if ($this->db->affected_rows() > 0) {
+                        $status = 'Berhasil';
+                        $pesan = 'Data pengguna Berhasil Di Update';
+                    } else {
+                        $status = 'Gagal';
+                        $pesan = 'Data pengguna Gagal Di Update';
+                    }
+                    $this->session->set_flashdata('status', $status);
+                    $this->session->set_flashdata('pesan', $pesan);
+                    redirect(base_url('pengguna'));
+                } elseif ($this->session->userdata('level') == 'User') {
+
+                    $this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
+					<p> Berhasil Update Pengguna : ' . $user . ' !</p>
+					</div></div>');
+                    redirect(base_url('Pengguna/edit/' . $id_login));
+                }
+            }
         }
     }
+    
     public function del()
     {
         if ($this->uri->segment('3') == '') {
@@ -226,10 +305,15 @@ class Pengguna extends CI_Controller
         $user = $this->M_Admin->get_tableid_edit('tbl_login', 'id_login', $this->uri->segment('3'));
         unlink('./assets/images/pengguna/' . $user->foto);
         $this->M_Admin->delete_table('tbl_login', 'id_login', $this->uri->segment('3'));
-
-        $this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-danger">
-		<p> Berhasil Hapus Pengguna !</p>
-		</div></div>');
+        if ($this->db->affected_rows() > 0) {
+            $status = 'Berhasil';
+            $pesan = 'Data Pengguna Berhasil DiHapus';
+        } else {
+            $status = 'Gagal';
+            $pesan = 'Data Pengguna Gagal DiHapus';
+        }
+        $this->session->set_flashdata('status', $status);
+        $this->session->set_flashdata('pesan', $pesan);
         redirect(base_url('pengguna'));
     }
 }

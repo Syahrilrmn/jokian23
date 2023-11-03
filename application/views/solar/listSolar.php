@@ -23,7 +23,7 @@
                     <h5><i class="icon fas fa-ban"></i> Gagal!</h5>
                     <?= $this->session->flashdata('pesan'); ?>
                 </div>
-                <?php
+                <?php 
             }
         }
         ?>
@@ -32,9 +32,11 @@
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
             <div class="ms-auto">
                 <div class="btn-group">
+                <?php if ($this->session->userdata('level') == 'Admin') { ?>
                     <a href="<?php echo base_url("solar/create"); ?>" class="btn btn-success px-5">
                         <i class='fa fa-plus mr-1'></i> Tambah Data
                     </a>
+                    <?php }?>
                 </div>
             </div>
 
@@ -42,7 +44,7 @@
         <!--end breadcrumb-->
 
         <h6 class="mb-0 text-uppercase">DataTable Import</h6>
-        <hr />
+        <hr /> 
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
@@ -52,8 +54,10 @@
                                 <th>No</th>
                                 <th>Jumlah Stok</th>
                                 <th>Tanggal</th>
+                                <?php if ($this->session->userdata('level') == 'Admin') { ?>
                                 <th>Edit</th>
                                 <th>Hapus</th>
+                                <?php } ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -70,6 +74,7 @@
                                     <td>
                                         <?= $isi->created_at; ?>
                                     </td>
+                                    <?php if ($this->session->userdata('level') == 'Admin') { ?>
                                     <td>
                                         <center>
                                             <a href="<?= base_url('solar/edit/' . $isi->ID_Solar); ?>"><button
@@ -83,6 +88,7 @@
                                                 <button class="btn btn-danger"><i class="fa fa-trash"></i></button></a>
                                         </center>
                                     </td>
+                                    <?php }?>
                                 </tr>
                                 <?php $no++; endforeach; ?>
                         </tbody>
