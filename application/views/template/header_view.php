@@ -19,6 +19,7 @@
   <link href="<?php echo base_url(); ?>assets/css/pace.min.css" rel="stylesheet" />
   <script src="<?php echo base_url(); ?>assets/js/pace.min.js"></script>
   <!-- Bootstrap CSS -->
+  
   <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="<?php echo base_url(); ?>assets/css/bootstrap-extended.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
@@ -31,6 +32,7 @@
   <!-- new pop up -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/jquery-circle-progress-1.2.2/dist/circle-progress.js"></script>
   <!-- <script src="<?php echo base_url(); ?>assets/plugins/apexcharts-bundle/apexcharts.js"></script> -->
   <title> <?php echo $title_web ?></title>
 </head>

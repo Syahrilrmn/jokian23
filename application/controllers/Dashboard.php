@@ -53,27 +53,25 @@ class Dashboard extends CI_Controller
     public function index()
     {
         $this->data['idbo'] = $this->session->userdata('ses_id');
-        // $visitor_data = $this->M_Admin->getVisitorStatistics();
-        // $gender_data = $this->M_Admin->getGenderStatistics();
-
-        // $this->data['visitor_data'] = $visitor_data;
-        // $this->data['gender_data'] = $gender_data;
+       
 
         // $userId = $this->session->userData('ses_id');
         $this->data['title_web'] = 'Dashboard ';
         $this->data['count_pengguna'] = $this->db->query("SELECT * FROM tbl_login")->num_rows();
         $this->data['count_barang'] = $this->db->query("SELECT * FROM barang")->num_rows();
-        $this->data['count_solar'] = $this->db->query("SELECT * FROM solar")->num_rows();
+        $this->data['count_solar'] = $this->db->query("SELECT jumlah_stok FROM solar")->row();
         $this->data['count_pinjam'] = $this->db->query("SELECT * FROM peminjamanbarang")->num_rows();
-        // $this->data['count_pinjam'] = $this->db->query("SELECT * FROM tbl_pinjam WHERE status = 'Dipinjam'")->num_rows();
-        // $this->data['count_kembali'] = $this->db->query("SELECT * FROM tbl_pinjam WHERE status = 'Di Kembalikan'")->num_rows();
+
+
+        $this->load->model('Pengumuman_Model');
+        $this->data['dataPengumuman'] = $this->Pengumuman_Model->get_pengumuman_list_for_users();
+      
         
        
         $this->load->view('template/header_view', $this->data);
         $this->load->view('template/sidebar_view', $this->data);
         $this->load->view('template/dashboard_view', $this->data);
         $this->load->view('template/footer_view', $this->data);
-        // $this->load->view('templatenew', $this->data);
     }
 
 }

@@ -36,7 +36,7 @@ class Solar_Model extends CI_Model{
         $this->db->update('solar',$data,['ID_Solar'=>$id]);
         if($this->db->affected_rows()>0){
             $this->session->set_flashdata('status','Berhasil');
-            $this->session->set_flashdata('pesan','Data Solar Berhasil diTambahkan');
+            $this->session->set_flashdata('pesan','Data Solar Berhasil Di Edit');
         }else{
             $this->session->set_flashdata('status','Gagal');
             $this->session->set_flashdata('pesan','Data Solar Gagal diTambahkan');
