@@ -16,6 +16,7 @@ class Solar extends CI_Controller
 
     public function create()
     {
+        $this->data['idbo'] = $this->session->userdata('ses_id');
         $this->load->model('Solar_Model');
         $this->data['title_web'] = 'Tambah Data Solar';
         $this->load->view('template/header_view',$this->data);
@@ -27,6 +28,7 @@ class Solar extends CI_Controller
 
 	public function store()
 	{
+        $this->data['idbo'] = $this->session->userdata('ses_id');
         $this->load->model('Solar_Model');
 		$this->Solar_Model->storeSolar();
 		redirect('Solar');
@@ -40,6 +42,7 @@ class Solar extends CI_Controller
             $this->Solar_Model->update_solar($id);
             redirect('solar');
         } else {
+            $this->data['idbo'] = $this->session->userdata('ses_id');
             $data = $this->Solar_Model->get_solar_by_id($id);
             $this->data['title_web'] = 'Edit Data Solar';
             $this->load->view('template/header_view',$this->data);
@@ -50,6 +53,7 @@ class Solar extends CI_Controller
     }
 
     public function delete($id){
+        
         $this->load->model('Solar_Model');
         $this->Solar_Model->delete_solar($id);
         redirect('solar');

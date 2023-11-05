@@ -58,16 +58,18 @@ class Notifikasi extends CI_Controller
 
     public function create()
     {
+        $this->data['idbo'] = $this->session->userdata('ses_id');
         $this->data['title_web'] = 'Tambah Pengumuman';
-        $this->load->view('template/header_view');
-        $this->load->view('template/sidebar_view');
-        $this->load->view('notifikasi/createPengumuman');
-        $this->load->view('template/footer_view');
+        $this->load->view('template/header_view', $this->data);
+        $this->load->view('template/sidebar_view', $this->data);
+        $this->load->view('notifikasi/createPengumuman', $this->data);
+        $this->load->view('template/footer_view', $this->data);
     }
 
 
     public function store()
     {
+        $this->data['idbo'] = $this->session->userdata('ses_id');
         $this->load->model('Pengumuman_Model');
         $this->Pengumuman_Model->storePengumuman();
         redirect('Notifikasi');
@@ -75,6 +77,7 @@ class Notifikasi extends CI_Controller
 
     public function edit($id)
     {
+        $this->data['idbo'] = $this->session->userdata('ses_id');
         $this->load->model('Pengumuman_Model');
         if (isset($_POST['simpan'])) {
             $this->Pengumuman_Model->update_pengumuman($id);
