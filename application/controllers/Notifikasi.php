@@ -70,7 +70,7 @@ class Notifikasi extends CI_Controller
     public function store()
     {
         $this->load->model('Pengumuman_Model');
-        $tes  = $this->Pengumuman_Model->storePengumuman();
+        $this->Pengumuman_Model->storePengumuman();
         redirect('Notifikasi');
     }
 

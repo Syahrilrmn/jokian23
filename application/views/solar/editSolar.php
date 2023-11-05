@@ -17,7 +17,7 @@
                 <div class="card-body">
 
                     <div class="bs-stepper-content">
-                        <form form action="" method="POST" enctype="multipart/form-data">
+                        <form  method="POST" enctype="multipart/form-data">
                             <div class="row g-3">
                                 <div class="col-12 col-lg-6">
                                     <label for="jumlahSolar" class="form-label">Jumlah Solar</label>
@@ -28,6 +28,7 @@
                                     <div class="d-flex align-items-center gap-3">
                                         <button class="btn btn-success px-4" name="simpan">Simpan</button>
                                     </div>
+                                    
                                 </div>
                                 <!-- <button class="btn btn-primary px-4" onclick="stepper1.previous()"><i class='bx bx-left-arrow-alt me-2'></i>Previous</button> -->
                             </div><!---end row-->

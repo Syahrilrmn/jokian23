@@ -1,8 +1,7 @@
 <!--end header -->
 <!--start page wrapper -->
 <div class="page-wrapper">
-    <div class="page-content container">
-
+    <div class="page-content">
         <div class="card radius-10 w-100 ">
             <div class="card-body row row-cols-1 ">
                 <div id="circle"
@@ -17,9 +16,67 @@
                         </div>
                     </div>
                 </div>
+                <div class="w-100 d-flex justify-content-center align-items-center p-3">
+                    <?php if ($count_solar->jumlah_stok !== "0") {
+                        ?>
+                        <button type="button" class="button3 m-2 " 
+                            data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            Ambil Solar
+                        </button>
+                        <?php
+                    } ?>
+                    <a href="#" class="button3 m-2">History Transaksi</a>
+
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Pengambilan Solar</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form action="" id="storeTransactionSolar">
+                                    <div class="modal-body">
+                                        <div class="row g-3">
+                                            <div class="col-12 col-lg-6">
+                                                <label for="jumlahSolar" class="form-label">Tanggal Pengambilan</label>
+                                                <input type="date" class="form-control" id="jumlahSolar"
+                                                    placeholder="Jumlah Solar" name="tanggalPengambilan"
+                                                    max="<?= $count_solar->jumlah_stok ?>" required>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <label for="jumlahSolar" class="form-label">Jumlah Liter</label>
+                                                <input type="number" itemtype="number" class="form-control"
+                                                    id="jumlahSolar" placeholder="Jumlah Liter" name="jumlahLiter"
+                                                    max="10000" required>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <label for="jumlahSolar" class="form-label">No Plat</label>
+                                                <input type="text" class="form-control" id="jumlahSolar"
+                                                    placeholder="No Plat" name="noPlat" max="10000" required>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <label for="jumlahSolar" class="form-label">Kendaraan</label>
+                                                <input type="text" class="form-control" id="jumlahSolar"
+                                                    placeholder="Kendaraan" name="kendaraan" max="10000" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
             <div class="col">
                 <div class="card radius-10">
@@ -80,37 +137,50 @@
                 </div>
             </div>
         </div>
+        <div class="e-card playing">
+            <div class="image"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="infotop">
+                <h4 class="text-light">
+                    Pengumuman
+                    <?= $dataPengumuman ? $dataPengumuman[0]->Tanggal : '' ?>
+                </h4>
+                <div class="name">
+                    <?php
+                    if ($dataPengumuman) {
+                        foreach ($dataPengumuman as $item) {
+                            $isiPengumuman = json_decode($item->Isi_Pengumuman, true);
+                            foreach ($isiPengumuman as $pengumuman) {
+                                $pegawaiTujuan = $pengumuman['Pegawai_Tujuan'];
+                                $isi = $pengumuman['Isi_Pengumuman'];
+                                ?>
+                                <details>
+                                    <summary class="h6 text-light">
+                                        <?= $pegawaiTujuan; ?>
+                                    </summary>
+                                    <div class="cardCustom">
+                                        <p><span class="labelDesc">Deskripsi Job:</span>
+                                            <?= $isi; ?>
+                                        </p>
+                                    </div>
+                                </details>
+                                <?php
+                            }
+                            ?>
 
-        <div class="card p-3">
-            <?php
-            
-            
-            foreach ($dataPengumuman as $item) {
-                $isiPengumuman = json_decode($item->Isi_Pengumuman, true);
-                
-               
-                   
-                    foreach ($isiPengumuman as $pengumuman) {
-                        $pegawaiTujuan = $pengumuman['Pegawai_Tujuan'];
-                        $isi = $pengumuman['Isi_Pengumuman'];
-                        ?>
-                        <details>
-                            <summary class="display-6">
-                                <?= $pegawaiTujuan; ?>
-                            </summary>
-                            <p>Deskripsi Job:
-                                <?= $isi; ?>
-                            </p>
-                        </details>
+                            <?php
+                        }
+                    } else { ?>
+                        <h5 style="text-transform: capitalize;" class="text-light">Tidak Ada Pengumuman Bray</h5>
                         <?php
+
                     }
                     ?>
-               
-                <?php
-            }
-            ?>
+                </div>
+            </div>
         </div>
-
     </div>
 </div>
 <?php $jumlahStokSolar = $count_solar->jumlah_stok; ?>
@@ -128,6 +198,40 @@
         }
     }).on('circle-animation-progress', function (event, progress) {
         // Mengisi tag <strong> dengan nilai progres (bukan persentase)
-        $(this).find('strong').html(Math.round(progres * 100) + '<i>%</i>');
+        $(this).find('strong').html(progres * 100 + '<i>%</i>');
+    });
+
+
+    document.getElementById('storeTransactionSolar').addEventListener('submit', function (event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        // Kirim data formulir menggunakan Ajax
+        fetch('<?= base_url('SolarTransaction/store'); ?>', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status) {
+                    Swal.fire({
+                        title: 'Success',
+                        text: data.message, // Menampilkan nama pengguna
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(function () {
+                        window.location.href = '<?= base_url('dashboard'); ?>';
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Failed',
+                        text: data.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     });
 </script>

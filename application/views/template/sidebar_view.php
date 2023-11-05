@@ -61,6 +61,8 @@
                 <ul>
                     <li> <a href="<?php echo base_url("TransaksiBarang"); ?>"><i class='bx bx-radio-circle'></i>Peminjaman Barang</a>
                     </li>
+                    <li> <a href="<?php echo base_url("SolarTransaction"); ?>"><i class='bx bx-radio-circle'></i>Transaksi Solar</a>
+                    </li>
                 </ul>
             </li>
 

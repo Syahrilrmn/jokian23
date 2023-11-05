@@ -1,17 +1,161 @@
-/*
+::-webkit-scrollbar {
+    width: 10px; 
+	height: 10px;
+}
 
-Template Name: Syndron Admin
+::-webkit-scrollbar-thumb {
+	background: linear-gradient(744deg, #af40ff, #5b42f3 60%, #00ddeb);
+    border-radius: 5px;
+}
 
-Author: codervent
+::-webkit-scrollbar-track {
+    background: #eee;
+}
 
-Email: codervent@gmail.com
+::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
 
-File: app.css
+/* custom style */
+.e-card {
+	
+	/* background: transparent; */
+	box-shadow: 0px 8px 28px -9px rgba(0, 0, 0, 0.45);
+	position: relative;
+	width: 100%;
+	min-height: 100vh;
+	border-radius: 16px;
+	overflow: hidden;
+	background: linear-gradient(744deg, #af40ff, #5b42f3 60%, #00ddeb);
 
-*/
+}
+
+.wave {
+	position: absolute;
+	width: 200vw;
+	height: 100vh;
+	opacity: 0.6;
+	left: 0;
+	top: 0;
+	margin-left: -50%;
+	margin-top: -70%;
+	background: linear-gradient(744deg, #af40ff, #5b42f3 60%, #00ddeb);
+}
+
+.icon {
+	width: 3em;
+	margin-top: -1em;
+	padding-bottom: 1em;
+}
+
+.infotop {
+	font-size: 20px;
+	position: absolute;
+	/* top: 5.6em; */
+	left: 0;
+	right: 0;
+	color: rgb(255, 255, 255);
+	font-weight: 600;
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	justify-content: start;
+	align-items: start;
+	flex-direction: column;
+	padding: 1.5rem;
+	overflow: auto;
+}
+.cardCustom{
+	background: white;
+	padding: 10px;
+	border-radius: 10px;
+	color: #000;
+	width: 100%;
+	box-shadow: 3px 5px 1px yellow,8px 8px 1px yellowgreen;
+}
+.labelDesc{
+	font-weight: 500;
+	text-transform: capitalize;
+}
+.name {
+	font-size: 14px;
+	font-weight: 100;
+	position: relative;
+	top: 1em;
+	text-transform: lowercase;
+}
+
+.wave:nth-child(2),
+.wave:nth-child(3) {
+	top: 210px;
+}
+
+.playing .wave {
+	border-radius: 40%;
+	animation: wave 3000ms infinite linear;
+}
+
+.wave {
+	border-radius: 40%;
+	animation: wave 55s infinite linear;
+}
+
+.playing .wave:nth-child(2) {
+	animation-duration: 4000ms;
+}
+
+.wave:nth-child(2) {
+	animation-duration: 50s;
+}
+
+.playing .wave:nth-child(3) {
+	animation-duration: 5000ms;
+}
+
+.wave:nth-child(3) {
+	animation-duration: 45s;
+}
+
+@keyframes wave {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
 
 
 
+.button3 {
+	cursor: pointer;
+	padding: 10px 30px;
+	font-weight: 700;
+	background: rgb(255, 255, 255);
+	color: blueviolet;
+	border-radius: .5rem;
+	border-bottom: 2px solid blueviolet;
+	border-right: 2px solid blueviolet;
+	border-top: 2px solid white;
+	border-left: 2px solid white;
+	transition-duration: 1s;
+	transition-property: border-top, 
+	   border-left, 
+	   border-bottom,
+	   border-right,
+	   box-shadow;
+   }
+   
+   .button3:hover {
+	border-top: 2px solid blueviolet;
+	border-left: 2px solid blueviolet;
+	border-bottom: 2px solid rgb(238, 103, 238);
+	border-right: 2px solid rgb(238, 103, 238);
+	box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px;
+   }
+
+/* end custom style */
 
 body {
 	font-size: 14px;

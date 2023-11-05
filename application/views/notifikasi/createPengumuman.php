@@ -7,16 +7,12 @@
             <div class="breadcrumb-title pe-3">Forms</div>
         </div>
         <!--end breadcrumb-->
-
         <!--start stepper one-->
-
-
         <div id="stepper1" class="bs-stepper">
             <div class="card">
 
 
                 <div class="card-body">
-
                     <div class="bs-stepper-content">
                         <form form action="<?php echo base_url('Notifikasi/store'); ?>" method="POST"
                             enctype="multipart/form-data">
@@ -31,9 +27,10 @@
                                 <div class="">
                                     <br>
                                     <div class="d-flex align-items-center gap-3">
+                                        <button class="btn btn-success px-4">Simpan</button>
                                         <button id="tambah-pekerja" type="button" class="btn btn-primary">Tambah
                                             Pekerja</button>
-                                        <button class="btn btn-success px-4">Submit</button>
+                                            
                                     </div>
                                 </div>
                             </div><!---end row-->

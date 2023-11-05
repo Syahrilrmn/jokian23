@@ -21,22 +21,34 @@ class Pengumuman_Model extends CI_Model{
         $isiPengumuman = $this->input->post('isiPengumuman');
         $tanggal = $this->input->post('tanggal');
     
-        $data = [
-            'Isi_Pengumuman' => json_encode($this->groupData($pegawaiTujuan, $isiPengumuman)),
-            'tanggal' => $tanggal
-        ];
-    
-        $this->db->insert('pengumumantugas', $data);
-        if ($this->db->affected_rows() > 0) {
-            $status = 'Berhasil';
-            $pesan = 'Data Pengumuman Berhasil diTambahkan';
-        } else {
+        // Cek apakah tanggal yang sama sudah ada di tabel
+        $this->db->where('tanggal', $tanggal);
+        $existingData = $this->db->get('pengumumantugas')->row();
+        
+        if ($existingData) {
+            // Jika data dengan tanggal yang sama sudah ada, berikan pesan kesalahan
             $status = 'Gagal';
-            $pesan = 'Data Pengumuman Gagal diTambahkan';
+            $pesan = 'Data dengan tanggal yang sama sudah ada. Silahkan edit data di tanggal yang sudah ada.';
+        } else {
+            $data = [
+                'Isi_Pengumuman' => json_encode($this->groupData($pegawaiTujuan, $isiPengumuman)),
+                'tanggal' => $tanggal
+            ];
+    
+            $this->db->insert('pengumumantugas', $data);
+            if ($this->db->affected_rows() > 0) {
+                $status = 'Berhasil';
+                $pesan = 'Data Pengumuman Berhasil ditambahkan';
+            } else {
+                $status = 'Gagal';
+                $pesan = 'Data Pengumuman Gagal ditambahkan';
+            }
         }
+        
         $this->session->set_flashdata('status', $status);
         $this->session->set_flashdata('pesan', $pesan);
     }
+    
     
     // Fungsi untuk mengelompokkan data menjadi objek array
     private function groupData($pegawaiTujuan, $isiPengumuman) {
@@ -56,12 +68,15 @@ class Pengumuman_Model extends CI_Model{
 
 
     public function update_pengumuman($id){
-        $data=[
-            'Pegawai_Tujuan'=>$this->input->post('namaPegawai'),
-            'Isi_Pengumuman'=>$this->input->post('isiPengumuman'),
-            'tanggal'=>$this->input->post('tanggal')
+        var_dump($id);
+        $pegawaiTujuan = $this->input->post('namaPegawai');
+        $isiPengumuman = $this->input->post('isiPengumuman');
+        $tanggal = $this->input->post('tanggal');
+        $data = [
+            'Isi_Pengumuman' => json_encode($this->groupData($pegawaiTujuan, $isiPengumuman)),
+            'tanggal' => $tanggal
         ];
-        $this->db->update('solar',$data,['ID_Pengumuman'=>$id]);
+        $this->db->update('pengumumantugas',$data,['ID_Pengumuman'=>$id]);
         if($this->db->affected_rows()>0){
             $this->session->set_flashdata('status','Berhasil');
             $this->session->set_flashdata('pesan','Data Pengumuman Berhasil Di Update');
