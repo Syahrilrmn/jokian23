@@ -155,17 +155,7 @@
   };
   setTimeout(logingagal, 4000);
 </script>
-<script>
-    function closeAlert() {
-        document.getElementById('alertBerhasil').style.display = 'none';
-        document.getElementById('alertGagal').style.display = 'none';
-    }
 
-    // Tambahkan kode untuk menutup otomatis setelah 3 detik
-    setTimeout(function() {
-        closeAlert();
-    }, 5000); // 5000 milidetik (5 detik)
-</script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
 

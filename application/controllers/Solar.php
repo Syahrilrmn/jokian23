@@ -47,6 +47,7 @@ class Solar extends CI_Controller
 
     public function edit($id)
     {
+        var_dump($this->session->userdata);
         $role = $this->session->userdata('level');
         if ($role != 'Admin') {
             redirect('Dashboard'); 
