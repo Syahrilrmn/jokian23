@@ -4,7 +4,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-	background: linear-gradient(744deg, #af40ff, #5b42f3 60%, #00ddeb);
+	background: rgb(243, 243, 141);
     border-radius: 5px;
 }
 

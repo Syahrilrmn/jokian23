@@ -3,19 +3,29 @@ class Solar extends CI_Controller
 {
     public function index()
     {
+        $role = $this->session->userdata('level');
+        if ($role != 'Admin') {
+            redirect('Dashboard'); 
+        }
+    
         $this->data['idbo'] = $this->session->userdata('ses_id');
-		$this->load->model('Solar_Model');
+        $this->load->model('Solar_Model');
         $data = $this->Solar_Model->get_solar_list();
         $this->data['title_web'] = 'Data Solar';
-        $this->load->view('template/header_view',$this->data);
-        $this->load->view('template/sidebar_view',$this->data);
-        $this->load->view('solar/listSolar',['data' => $data]);
-        $this->load->view('template/footer_view',$this->data);
+        $this->load->view('template/header_view', $this->data);
+        $this->load->view('template/sidebar_view', $this->data);
+        $this->load->view('solar/listSolar', ['data' => $data]);
+        $this->load->view('template/footer_view', $this->data);
     }
+    
 
 
     public function create()
     {
+        $role = $this->session->userdata('level');
+        if ($role != 'Admin') {
+            redirect('Dashboard'); 
+        }
         $this->data['idbo'] = $this->session->userdata('ses_id');
         $this->load->model('Solar_Model');
         $this->data['title_web'] = 'Tambah Data Solar';
@@ -37,6 +47,10 @@ class Solar extends CI_Controller
 
     public function edit($id)
     {
+        $role = $this->session->userdata('level');
+        if ($role != 'Admin') {
+            redirect('Dashboard'); 
+        }
         $this->load->model('Solar_Model');
         if (isset($_POST['simpan'])) {
             $this->Solar_Model->update_solar($id);

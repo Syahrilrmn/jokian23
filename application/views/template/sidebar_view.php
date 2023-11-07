@@ -59,11 +59,14 @@
                     <div class="menu-title">Transaksi</div>
                 </a>
                 <ul>
-                    <li> <a href="<?php echo base_url("TransaksiBarang"); ?>"><i class='bx bx-radio-circle'></i>Peminjaman Barang</a>
+                    <li> <a href="<?php echo base_url("TransaksiBarang"); ?>"><i class='bx bx-radio-circle'></i>Peminjaman
+                            Barang</a>
                     </li>
-                    <li> <a href="<?php echo base_url("TransaksiBarang/kembali"); ?>"><i class='bx bx-radio-circle'></i>Pengembalian Barang</a>
+                    <li> <a href="<?php echo base_url("TransaksiBarang/kembali"); ?>"><i
+                                class='bx bx-radio-circle'></i>Pengembalian Barang</a>
                     </li>
-                    <li> <a href="<?php echo base_url("SolarTransaction"); ?>"><i class='bx bx-radio-circle'></i>Transaksi Solar</a>
+                    <li> <a href="<?php echo base_url("SolarTransaction"); ?>"><i class='bx bx-radio-circle'></i>Transaksi
+                            Solar</a>
                     </li>
                 </ul>
             </li>
@@ -83,15 +86,7 @@
                         </li>
                     </ul>
                 </li> -->
-            <li>
-            <li>
-                <a href="<?php echo base_url("Notifikasi/listPengumuman"); ?>">
-                    <div class="parent-icon"><i class='bx bx-message-alt-detail'></i>
-                    </div>
-                    <div class="menu-title">Pengumuman Tugas</div>
-                </a>
-            </li>
-            </li>
+           
             <li>
                 <a class="has-arrow" href="javascript:;">
                     <div class="parent-icon"> <i class="bx bx-printer"></i>
@@ -141,20 +136,8 @@
                     <div class="menu-title">Data Barang</div>
                 </a>
             </li>
-            <li>
-                <a href="<?php echo base_url("Solar"); ?>">
-                    <div class="parent-icon"><i class='bx bx-color-fill'></i>
-                    </div>
-                    <div class="menu-title">Data Solar</div>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo base_url("Notifikasi"); ?>">
-                    <div class="parent-icon"><i class='bx bx-message-rounded-check'></i>
-                    </div>
-                    <div class="menu-title">Data Pengumuman Tugas</div>
-                </a>
-            </li>
+            
+           
             <!-- <li class="menu-label">Data Transaksi</li>
             <li>
                 <a href="javascript:;" class="has-arrow">
@@ -176,12 +159,14 @@
                     <div class="menu-title">Transaksi</div>
                 </a>
                 <ul>
-                    <li> <a href="<?php echo base_url("TransaksiBarang"); ?>"><i class='bx bx-radio-circle'></i>Peminjaman Barang</a>
+                    <li> <a href="<?php echo base_url("TransaksiBarang"); ?>"><i class='bx bx-radio-circle'></i>Peminjaman
+                            Barang</a>
                     </li>
-                    <li> <a href="<?php echo base_url("TransaksiBarang/kembali"); ?>"><i class='bx bx-radio-circle'></i>Pengembalian Barang</a>
+                    <li> <a href="<?php echo base_url("TransaksiBarang/kembali"); ?>"><i
+                                class='bx bx-radio-circle'></i>Pengembalian Barang</a>
                     </li>
-                    <!-- <li> <a href="<?php echo base_url("SolarTransaction"); ?>"><i class='bx bx-radio-circle'></i>Transaksi Solar</a>
-                    </li> -->
+                    <li> <a href="<?php echo base_url("SolarTransaction"); ?>"><i class='bx bx-radio-circle'></i>Transaksi Solar</a>
+                    </li>
                 </ul>
             </li>
 

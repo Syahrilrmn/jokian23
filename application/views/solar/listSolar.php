@@ -59,7 +59,7 @@
                                         <?= $isi->Jumlah_Stok; ?>
                                     </td>
                                     <td>
-                                        <?= $isi->updatedat; ?>
+                                    <?= date('d-m-Y H:i:s', strtotime($isi->updatedat)); ?>
                                     </td>
                                     <?php if ($this->session->userdata('level') == 'Admin') { ?>
                                     <td>
@@ -80,8 +80,13 @@
 </div>
 <script>
     function closeAlert() {
-        document.getElementById('alertBerhasil').style.display = 'none';
-        document.getElementById('alertGagal').style.display = 'none';
+        try {
+            document.getElementById('alertBerhasil').style.display = 'none';
+        document.getElementById('alertGagal').style.display = 'none';     
+        } catch (error) {
+            
+        }
+       
     }
 
     // Tambahkan kode untuk menutup otomatis setelah 3 detik

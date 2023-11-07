@@ -65,7 +65,8 @@ class Dashboard extends CI_Controller
 
         $this->load->model('Pengumuman_Model');
         $this->data['dataPengumuman'] = $this->Pengumuman_Model->get_pengumuman_list_for_users();
-      
+        $this->load->model('Solar_Transaction_Model');
+        $this->data['dataTransaksi'] = $this->Solar_Transaction_Model->get_solar_transaction_by_user_month();
         
        
         $this->load->view('template/header_view', $this->data);

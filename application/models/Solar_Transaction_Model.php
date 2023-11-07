@@ -3,11 +3,69 @@
 
 class Solar_Transaction_Model extends CI_Model
 {
-    public function get_solar_list()
+    public function get_solar_transaction_list()
     {
-        $this->db->order_by('ID_solar', 'DESC');
-        return $this->db->get('solar')->result();
+        $role = $this->session->userdata['level'];
+        $id_user = $this->session->userdata['ses_id'];
+
+        $this->db->select('ts.*, tl.user');
+        $this->db->from('transaksi_solar ts');
+        $this->db->join('tbl_login tl', 'ts.id_user = tl.id_login', 'inner');
+        $this->db->order_by('ts.id_transaksi_solar', 'DESC');
+
+        if ($role != 'Admin') {
+            $this->db->where('tl.id_login', $id_user);
+        }
+        return $this->db->get()->result();
     }
+
+
+    public function get_solar_transaction_by_user()
+    {
+        $id_user = $this->session->userdata['ses_id'];
+        $this->db->order_by('id_transaksi_solar', 'DESC');
+        return $this->db->get_where('transaksi_solar', ['id_user' => $id_user])->result();
+    }
+
+    public function get_solar_transaction_by_user_month()
+    {
+        $id_user = $this->session->userdata['ses_id'];
+
+        // Dapatkan bulan dan tahun saat ini
+        $currentMonth = date('m');
+        $currentYear = date('Y');
+
+        $this->db->where('id_user', $id_user);
+
+        // Tambahkan kondisi untuk bulan dan tahun saat ini
+        $this->db->where('MONTH(tanggal_pengambilan)', $currentMonth);
+        $this->db->where('YEAR(tanggal_pengambilan)', $currentYear);
+        $this->db->order_by('id_transaksi_solar', 'DESC');
+
+        return $this->db->get('transaksi_solar')->result();
+    }
+    public function getDataByDateRange($start_date, $end_date)
+    {
+        $role = $this->session->userdata['level'];
+        $id_user = $this->session->userdata['ses_id'];
+
+        $this->db->select('ts.id_transaksi_solar, ts.*, tl.user');
+        $this->db->from('transaksi_solar ts');
+        $this->db->join('tbl_login tl', 'ts.id_user = tl.id_login', 'left');
+        $this->db->where("ts.tanggal_pengambilan BETWEEN '$start_date' AND '$end_date'", null, false);
+        $this->db->group_by('ts.id_transaksi_solar');
+        $this->db->order_by('ts.tanggal_pengambilan', 'asc');
+
+        if ($role != 'Admin') {
+            $this->db->where('tl.id_login', $id_user);
+        }
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+
+
 
     public function storeSolar()
     {
@@ -30,7 +88,7 @@ class Solar_Transaction_Model extends CI_Model
                 $response = [
                     'status' => false,
                     'message' => 'Stok Solar Sedang Habis',
-                    
+
                 ];
                 return $response;
             }
