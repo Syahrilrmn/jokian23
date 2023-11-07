@@ -9,7 +9,7 @@
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Wizard</li>
+                        <li class="breadcrumb-item active" aria-current="page">Tambah Pengguna</li>
                     </ol>
                 </nav>
             </div>
@@ -30,7 +30,7 @@
 
         <!--start stepper one-->
 
-        <h6 class="text-uppercase">Non Linear</h6>
+        <h6 class="text-uppercase">Tambah Data Pengguna</h6>
         <hr>
         <div id="stepper1" class="bs-stepper">
             <div class="card">
@@ -40,13 +40,21 @@
 
                     <div class="bs-stepper-content">
                         <form form action="<?php echo base_url('pengguna/add'); ?>" method="POST" enctype="multipart/form-data">
-                            <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
+                            <!-- <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
                                 <h5 class="mb-1">Your Personal Information</h5>
                                 <p class="mb-4">Enter your personal information to get closer to copanies</p>
 
-                            </div>
+                            </div> -->
 
                             <div class="row g-3">
+                                <div class="col-12 col-lg-6">
+                                    <label for="Experience1" class="form-label">NRP</label>
+                                    <input type="text" class="form-control" id="Experience1" placeholder="Masukan NRP...." name="anggota_id">
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <label for="Position1" class="form-label">Tanggal Lahir</label>
+                                    <input type="date" class="form-control" id="Position1" placeholder="masukan Gmail...." required name="tanggal_lahir">
+                                </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Experience1" class="form-label">Username</label>
                                     <input type="text" class="form-control" id="Experience1" placeholder="Experience 1" name="user">
@@ -57,11 +65,11 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Experience2" class="form-label">password</label>
-                                    <input type="text" class="form-control" id="Experience2" placeholder="Experience 2" name="pass">
+                                    <input type="text" class="form-control" id="Experience2" placeholder="Masukan Password ...." name="pass">
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="PhoneNumber" class="form-label">Alamat</label>
-                                    <input type="text" class="form-control" id="PhoneNumber" placeholder="Position" name="alamat">
+                                    <input type="text" class="form-control" id="PhoneNumber" placeholder="Masukan Alamat..." name="alamat">
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Experience3" class="form-label">Gambar</label>
@@ -82,6 +90,7 @@
                                     <br>
                                     <div class="d-flex align-items-center gap-3">
                                         <button class="btn btn-success px-4">Submit</button>
+                                        <a href="<?= base_url('pengguna');?>" class="btn btn-danger btn-md">Kembali</a>
                                     </div>
                                 </div>
                                 <!-- <button class="btn btn-primary px-4" onclick="stepper1.previous()"><i class='bx bx-left-arrow-alt me-2'></i>Previous</button> -->

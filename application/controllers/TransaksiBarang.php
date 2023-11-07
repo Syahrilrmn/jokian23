@@ -36,16 +36,17 @@ class TransaksiBarang extends CI_Controller
 				`tbl_login`.`anggota_id`,  
 				`peminjamanbarang`.`Tanggal_Peminjaman`,
 				`peminjamanbarang`.`Tanggal_Pengembalian`, 
+				`peminjamanbarang`.`tgl_kembali`, 
 				`peminjamanbarang`.`status`,
 				`peminjamanbarang`.`Jumlah`,
 				`barang`.`ID_Barang`,
-				`barang`.`kode_barang`,
+				`barang`.`kode_barang`, 
 				`barang`.`Nama_Barang`,
 				`barang`.`stok`
 				FROM `peminjamanbarang` 
 				JOIN `tbl_login` ON `peminjamanbarang`.`anggota_id` = `tbl_login`.`anggota_id`
 				JOIN `barang` ON `peminjamanbarang`.`kode_barang` = `barang`.`kode_barang`
-				WHERE `peminjamanbarang`.`status` IN ('Di kembalikan', 'Dipinjam') AND `tbl_login`.`anggota_id` = ?
+				WHERE `peminjamanbarang`.`status` = 'Dipinjam' AND tbl_login.anggota_id = ?
 				ORDER BY `peminjamanbarang`.`ID_Peminjaman` ASC",
 				array($anggota_id)
 			);
@@ -138,7 +139,6 @@ class TransaksiBarang extends CI_Controller
 		}
 
 		$this->data['pinjam'] = $query->result_array();
-
 
 		$this->load->view('template/header_view', $this->data);
 		$this->load->view('template/sidebar_view', $this->data);
@@ -657,7 +657,6 @@ class TransaksiBarang extends CI_Controller
 		$this->load->view('template/header_view', $this->data);
 		$this->load->view('template/sidebar_view', $this->data);
 		$this->load->view('pinjambarang/kembali', $this->data);
-		// $this->load->view('kembali/home', $this->data);
 		$this->load->view('template/footer_view', $this->data);
 	}
 	public function hilangpinjam()
@@ -728,67 +727,74 @@ class TransaksiBarang extends CI_Controller
 					unset($cart[$i]);
 				}
 			}
-
-			$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
-            <p> Tambah Pinjam Barang Sukses !</p>
-        </div></div>');
+			if ($this->db->affected_rows() > 0) {
+				$status = 'Berhasil';
+				$pesan = 'Data Pemijaman Berhasil diTambahkan';
+			} else {
+				$status = 'Gagal';
+				$pesan = 'Data Pemijaman Gagal diTambahkan';
+			}
+			$this->session->set_flashdata('status', $status);
+			$this->session->set_flashdata('pesan', $pesan);
 			redirect(base_url('transaksibarang'));
 		}
 
 
-		// --------------edit---------------
-		$post = $this->input->post();
+		// --------------edit tidak ada fungsinya lagi ---------------
 
-		// --------------edit---------------
-		if (!empty($post['edit'])) {
-			$id = htmlentities($post['pinjam_id']);
-			$tgl = $post['tgl'];
-			$tgl2 = date('Y-m-d', strtotime('+' . $post['lama'] . ' days', strtotime($tgl)));
+		// $post = $this->input->post();
+		// if (!empty($post['edit'])) {
+		// 	$id = htmlentities($post['pinjam_id']);
+		// 	$tgl = $post['tgl'];
+		// 	$tgl2 = date('Y-m-d', strtotime('+' . $post['lama'] . ' days', strtotime($tgl)));
 
-			$hasil_cart = array_values(unserialize($this->session->userdata('cart')));
-			foreach ($hasil_cart as $isi) {
+		// 	$hasil_cart = array_values(unserialize($this->session->userdata('cart')));
+		// 	foreach ($hasil_cart as $isi) {
 
-				// Check stock buku
-				$buku_id = $isi['id'];
-				$buku = $this->db->get_where('tbl_buku', array('buku_id' => $buku_id))->row();
-				$stok = $buku->jml;
-				if ($stok < 1) {
-					// Redirect jika stok buku habis
-					$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-danger">
-					<p>Maaf, stok buku ' . $buku->title . ' sudah habis. Silakan pilih buku lain.</p>
-					</div></div>');
-					redirect(base_url('transaksi'));
-				}
+		// 		// Check stock buku
+		// 		$buku_id = $isi['id'];
+		// 		$buku = $this->db->get_where('tbl_buku', array('buku_id' => $buku_id))->row();
+		// 		$stok = $buku->jml;
+		// 		if ($stok < 1) {
+		// 			$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-danger">
+		// 			<p>Maaf, stok buku ' . $buku->title . ' sudah habis. Silakan pilih buku lain.</p>
+		// 			</div></div>');
+		// 			redirect(base_url('transaksi'));
+		// 		}
 
-				$data[] = array(
-					'pinjam_id' => htmlentities($post['nopinjam']),
-					'anggota_id' => htmlentities($post['anggota_id']),
-					'buku_id' => $buku_id,
-					'status' => 'Dipinjam',
-					'tgl_pinjam' => htmlentities($post['tgl']),
-					'lama_pinjam' => htmlentities($post['lama']),
-					'jml_pinjam' => htmlentities($post['jml_pinjam']),
-					'tgl_balik' => $tgl2,
-					'tgl_kembali' => '0',
-				);
-			}
+		// 		$data[] = array(
+		// 			'pinjam_id' => htmlentities($post['nopinjam']),
+		// 			'anggota_id' => htmlentities($post['anggota_id']),
+		// 			'buku_id' => $buku_id,
+		// 			'status' => 'Dipinjam',
+		// 			'tgl_pinjam' => htmlentities($post['tgl']),
+		// 			'lama_pinjam' => htmlentities($post['lama']),
+		// 			'jml_pinjam' => htmlentities($post['jml_pinjam']),
+		// 			'tgl_balik' => $tgl2,
+		// 			'tgl_kembali' => '0',
+		// 		);
+		// 	}
 
-			$total_array = count($data);
-			if ($total_array != 0) {
-				// Gunakan fungsi update_batch untuk melakukan update data pada tabel tbl_pinjam
-				$this->db->update_batch('tbl_pinjam', $data, 'pinjam_id');
+		// 	$total_array = count($data);
+		// 	if ($total_array != 0) {
+		// 		$this->db->update_batch('tbl_pinjam', $data, 'pinjam_id');
 
-				$cart = array_values(unserialize($this->session->userdata('cart')));
-				for ($i = 0; $i < count($cart); $i++) {
-					unset($cart[$i]);
-				}
-			}
-
-			$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
-				<p>Edit Pinjam Barang Sukses !</p>
-				</div></div>');
-			redirect(base_url('transaksi'));
-		}
+		// 		$cart = array_values(unserialize($this->session->userdata('cart')));
+		// 		for ($i = 0; $i < count($cart); $i++) {
+		// 			unset($cart[$i]);
+		// 		}
+		// 	}
+		// 	if ($this->db->affected_rows() > 0) {
+		// 		$status = 'Berhasil';
+		// 		$pesan = 'Data Pemijaman Berhasil diedit';
+		// 	} else {
+		// 		$status = 'Gagal';
+		// 		$pesan = 'Data Pemijaman Gagal diedit';
+		// 	}
+		// 	$this->session->set_flashdata('status', $status);
+		// 	$this->session->set_flashdata('pesan', $pesan);
+		// 	redirect(base_url('transaksibarang'));
+		// }
 		// ------------------------hapus peminjam---------------
 
 		if ($this->input->get('ID_Peminjaman')) {
@@ -796,26 +802,18 @@ class TransaksiBarang extends CI_Controller
 			$this->M_Admin->delete_table('peminjamanbarang', 'ID_Peminjaman', $this->input->get('ID_Peminjaman'));
 			// $this->M_Admin->delete_table('tbl_denda', 'pinjam_id', $this->input->get('pinjam_id'));
 
-			$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-warning">
-			<p>  Hapus Transaksi Pinjam Barang Sukses !</p>
-			</div></div>');
+			if ($this->db->affected_rows() > 0) {
+				$status = 'Berhasil';
+				$pesan = 'Data Pemijaman Berhasil Dihapus';
+			} else {
+				$status = 'Gagal';
+				$pesan = 'Data Pemijaman Gagal Dihapus';
+			}
+			$this->session->set_flashdata('status', $status);
+			$this->session->set_flashdata('pesan', $pesan);
 			redirect(base_url('transaksibarang'));
 		}
-
-		//  kembali new 7
-		// if ($this->input->get('kembali')) {
-		// 	$id = $this->input->get('kembali');
-		// 	$pinjam = $this->db->query("SELECT * FROM Peminjamanbarang WHERE Pinjam_id = '$id'");
-		// 	$data = array(
-		// 		'status' => 'Di Kembalikan',
-		// 		'tgl_kembali' => date('Y-m-d'),
-		// 	);
-
-		// 	$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
-		// 	<p> Pengembalian Pinjam Buku Sukses !</p>
-		// 	</div></div>');
-		// 	redirect(base_url('transaksibarang'));
-		// }
+		// kembali barang
 		if ($this->input->get('kembali')) {
 			$id = $this->input->get('kembali');
 			$pinjam = $this->db->query("SELECT * FROM Peminjamanbarang WHERE Pinjam_id = '$id'")->row();
@@ -830,11 +828,19 @@ class TransaksiBarang extends CI_Controller
 				// Update data peminjaman
 				$this->db->where('Pinjam_id', $id);
 				$this->db->update('Peminjamanbarang', $data);
-
+				if ($this->db->affected_rows() > 0) {
+					$status = 'Berhasil';
+					$pesan = 'Data pengembalian Barang Berhasil ';
+				} else {
+					$status = 'Gagal';
+					$pesan = 'Data pengembalian Barang Gagal ';
+				}
+				$this->session->set_flashdata('status', $status);
+				$this->session->set_flashdata('pesan', $pesan);
 				// Set pesan sukses
-				$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
-				<p> Pengembalian Pinjam Buku Sukses !</p>
-				</div></div>');
+				// $this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
+				// <p> Pengembalian Pinjam Buku Sukses !</p>
+				// </div></div>');
 			} else {
 				// Jika data peminjaman tidak ditemukan, tampilkan pesan error
 				$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-danger">

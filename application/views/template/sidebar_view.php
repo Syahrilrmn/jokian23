@@ -120,6 +120,11 @@
                     </div>
                     <div class="menu-title">Dashboard</div>
                 </a>
+                <a href="<?php echo base_url('pengguna/edit/' . $this->session->userdata('ses_id')); ?>">
+                    <div class="parent-icon"><i class='bx bx-user'></i>
+                    </div>
+                    <div class="menu-title">Edit Profil</div>
+                </a>
             </li>
             <!-- <li>
                 <a href="<?php echo base_url("pengguna"); ?>">

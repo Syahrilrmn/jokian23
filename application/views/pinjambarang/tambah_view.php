@@ -46,8 +46,8 @@
 							<div class="input-group mb-3">
 								<tr>
 									<td>
-										<div class="input-group"><span class="input-group-text" id="basic-addon3">Masukan ID Pengguna :</span>
-											<input type="text" class="form-control" required autocomplete="off" name="anggota_id" id="search-box" placeholder="Contoh ID Pengguna : AGT0001" type="text" value="<?= $d->anggota_id; ?>" aria-label="Recipient's username" aria-describedby="button-addon2">
+										<div class="input-group"><span class="input-group-text" id="basic-addon3">Masukan NRP Pengguna :</span>
+											<input type="text" class="form-control" required autocomplete="off" name="anggota_id" id="search-box" placeholder="Masukan atau cari kode NRP" type="text" value="<?= $d->anggota_id; ?>" aria-label="Recipient's username" aria-describedby="button-addon2">
 											<span class="input-group-btn">
 												<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#TableAnggota"><i class="fa fa-search"></i> Cari </button>
 											</span>
@@ -84,7 +84,7 @@
 								<tr>
 									<td>
 										<div class="input-group"><span class="input-group-text" id="basic-addon3">Masukan Kode Barang :</span>
-											<input type="text" class="form-control" required autocomplete="off" name="kode_barang" id="barang-search" placeholder="Contoh Kode Barang : AGT0001" type="text" aria-label="Recipient's username" aria-describedby="button-addon2">
+											<input type="text" class="form-control" required autocomplete="off" name="kode_barang" id="barang-search" placeholder="Masukan atau pilih Kode Barang " type="text" aria-label="Recipient's username" aria-describedby="button-addon2">
 											<span class="input-group-btn">
 												<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#TableBarang"><i class="fa fa-search"></i> Cari </button>
 											</span>
@@ -141,7 +141,7 @@
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>ID</th>
+								<th>NRP</th>
 								<th>User</th>
 								<th>Alamat</th>
 								<th>Jenkel</th>

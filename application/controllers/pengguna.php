@@ -107,6 +107,8 @@ class Pengguna extends CI_Controller
     {
 
 
+        $anggota_id = htmlentities($this->input->post('anggota_id', TRUE));
+        $tanggal_lahir = htmlentities($this->input->post('tanggal_lahir', TRUE));
         $user = htmlentities($this->input->post('user', TRUE));
         $pass = md5(htmlentities($this->input->post('pass', TRUE)));
         $jenkel = htmlentities($this->input->post('jenkel', TRUE));
@@ -132,6 +134,8 @@ class Pengguna extends CI_Controller
             $result = array('foto' => $result1);
             $data1 = array('upload_data' => $this->upload->data());
             $data = array(
+                'anggota_id' => $anggota_id,
+                'tanggal_lahir' => $tanggal_lahir,
                 'user' => $user,
                 'pass' => $pass,
                 'email' => $_POST['email'],
@@ -155,6 +159,8 @@ class Pengguna extends CI_Controller
     }
     public function upd()
     {
+        $anggota_id = htmlentities($this->input->post('anggota_id', TRUE));
+        $tanggal_lahir = htmlentities($this->input->post('tanggal_lahir', TRUE));
         $user = htmlentities($this->input->post('user', TRUE));
         $pass = htmlentities($this->input->post('pass'));
         $jenkel = htmlentities($this->input->post('jenkel', TRUE));
@@ -174,6 +180,8 @@ class Pengguna extends CI_Controller
         if (!$this->upload->do_upload('foto')) {
             if ($this->input->post('pass') !== '') {
                 $data = array(
+                    'anggota_id' => $anggota_id,
+                'tanggal_lahir' => $tanggal_lahir,
                     'user' => $user,
                     'pass' => md5($pass),
                     'email' => $_POST['email'],
@@ -201,6 +209,8 @@ class Pengguna extends CI_Controller
                 }
             } else {
                 $data = array(
+                    'anggota_id' => $anggota_id,
+                'tanggal_lahir' => $tanggal_lahir,
                     'user' => $user,
                     'pass' => md5($pass),
                     'email' => $_POST['email'],
@@ -235,7 +245,8 @@ class Pengguna extends CI_Controller
             unlink('./assets_style/image/pengguna/' . $this->input->post('foto'));
             if ($this->input->post('pass') !== '') {
                 $data = array(
-
+                    'anggota_id' => $anggota_id,
+                    'tanggal_lahir' => $tanggal_lahir,
                     'user' => $user,
                     'pass' => md5($pass),
                     'email' => $_POST['email'],
@@ -265,6 +276,8 @@ class Pengguna extends CI_Controller
                 }
             } else {
                 $data = array(
+                    'anggota_id' => $anggota_id,
+                'tanggal_lahir' => $tanggal_lahir,
                     'user' => $user,
                     'pass' => md5($pass),
                     'email' => $_POST['email'],

@@ -50,12 +50,19 @@
                         <label for="inputEmailAddress" class="form-label">NRP</label>
                         <input type="text" class="form-control" name="anggota_id" id="inputEmailAddress" placeholder="Masukan NRP ....">
                       </div>
+                     
                       <br>
                       <div class="col-12">
                         <label for="inputEmailAddress" class="form-label">Masukan Nama </label>
                         <input type="text" class="form-control" name="user" id="inputEmailAddress" placeholder="Masukan Nama Anda....">
                       </div>
                       <br>
+                      <div class="col-12">
+                        <label for="inputEmailAddress" class="form-label">Masukan tanggal lahir </label>
+                        <input type="date" class="form-control" name="tanggal_lahir" id="inputEmailAddress" placeholder="Masukan Nama Anda....">
+                      </div>
+                      <br>
+                      
                       <div class="col-12">
                         <label for="inputEmailAddress" class="form-label">Email</label>
                         <input type="email" class="form-control" name="email" id="inputEmailAddress" placeholder="Masukan Email Anda....">
