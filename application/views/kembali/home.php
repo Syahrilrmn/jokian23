@@ -44,10 +44,9 @@
                                 <th>Tanggal Peminjaman</th>
                                 <th>Tanggal Pengembalian</th>
                                 <th>Status</th>
+                                <th>Tanggal Di kembalikan</th>
                                 <th>Jumlah Pinjam</th>
-                                <?php if ($this->session->userdata('level') == 'Admin') { ?>
                                 <th>Aksi</th>
-                                <?php } ?> 
                             </tr>
                         </thead>
                         <tbody>
@@ -76,24 +75,21 @@
                                         <?= $isi['status']; ?>
                                     </td>
                                     <td>
+                                        <?= $isi['tgl_kembali']; ?>
+                                    </td>
+                                    <td>
                                         <?= $isi['Jumlah']; ?>
                                     </td>
-                                    <?php if ($this->session->userdata('level') == 'Admin') { ?>
+
                                     <td>
                                         <center>
                                             
-                                            <a href="<?= base_url('transaksibarang/kembalipinjam/' . $isi['Pinjam_id']); ?>" class="btn btn-warning btn-sm" title="pengembalian buku">
-                                                <i class="fa fa-sign-out"></i> Kembalikan
-                                            </a>
-                                            <!-- <a href="<?= base_url('transaksibarang/prosespinjam?ID_Peminjaman=' . $isi['ID_Peminjaman']); ?>" onclick="return confirm('Anda yakin Peminjaman Ini akan dihapus ?');" class="btn btn-primary btn-sm" title="Batal">
-                                                <i class="fa fa-edit"></i>
-                                            </a> -->
+                                            
                                             <a href="<?= base_url('transaksibarang/prosespinjam?ID_Peminjaman=' . $isi['ID_Peminjaman']); ?>" onclick="return confirm('Anda yakin Peminjaman Ini akan dihapus ?');" class="btn btn-danger btn-sm" title="Batal">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </center>
                                     </td>
-                                    <?php } ?> 
                                     <!-- <td>
                                         
                                     </td> -->

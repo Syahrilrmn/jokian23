@@ -1,362 +1,242 @@
-<?php if(! defined('BASEPATH')) exit('No direct script acess allowed');?>
-<div class="content-wrapper">
-  <section class="content-header">
-    <h1>
-      <i class="fa fa-sign-out" style="color:green"> </i>  <?= $title_web;?>
-    </h1>
-    <ol class="breadcrumb">
-			<li><a href="<?php echo base_url('dashboard');?>"><i class="fa fa-dashboard"></i>&nbsp; Dashboard</a></li>
-			<li class="active"><i class="fa fa-sign-out"></i>&nbsp;  <?= $title_web;?></li>
-    </ol>
-  </section>
-  <section class="content">
-	<div class="row">
-	    <div class="col-md-12">
-	        <div class="box box-primary">
-                <div class="box-header with-border">
-                </div>
-			    <!-- /.box-header -->
-			    <div class="box-body">
-						<div class="row">
-							<div class="col-sm-5">
-								<table class="table table-striped">
-									<tr style="background:yellowgreen">
-										<td colspan="3">Data Transaksi</td>
-									</tr>
-									<tr>
-										<td>No Peminjaman</td>
-										<td>:</td>
-										<td>
-											<?= $pinjam->pinjam_id;?>
-										</td>
-									</tr>
-									<tr>
-										<td>Tgl Peminjaman</td>
-										<td>:</td>
-										<td>
-											<?= $pinjam->tgl_pinjam;?>
-										</td>
-									</tr>
-									<tr>
-										<td>Tgl pengembalian</td>
-										<td>:</td>
-										<td>
-											<?= $pinjam->tgl_balik;?>
-										</td>
-									</tr>
-									<tr>
-										<td>ID Anggota</td>
-										<td>:</td>
-										<td>
-											<?= $pinjam->anggota_id;?>
-										</td>
-									</tr>
-									<tr>
-										<td>Biodata</td>
-										<td>:</td>
-										<td>
-											<?php
-											$anggota = $this->M_Admin->get_tableid_edit('tbl_login','anggota_id',$pinjam->anggota_id);
-											error_reporting(0);
-											if($anggota->nama != null)
-											{
-												echo '<table class="table table-striped">
-															<tr>
-																<td>Nama Anggota</td>
-																<td>:</td>
-																<td>'.$anggota->nama.'</td>
-															</tr>
-															<tr>
-																<td>Telepon</td>
-																<td>:</td>
-																<td>'.$anggota->telepon.'</td>
-															</tr>
-															<tr>
-																<td>E-mail</td>
-																<td>:</td>
-																<td>'.$anggota->email.'</td>
-															</tr>
-															<tr>
-																<td>Alamat</td>
-																<td>:</td>
-																<td>'.$anggota->alamat.'</td>
-															</tr>
-															
-														</table>';
-											}else{
-												echo 'Anggota Tidak Ditemukan !';
-											}
-											?>
-										</td>
-									</tr>
-									<tr>
-										<td>Lama Peminjaman</td>
-										<td>:</td>
-										<td>
-											<?= $pinjam->lama_pinjam;?> Hari
-										</td>
-									</tr>
-								</table>
-							</div>
-							<div class="col-sm-7">
-								<table class="table table-striped">
-									<tr style="background:yellowgreen">
-										<td colspan="3">Pinjam Buku</td>
-									</tr>
-									<tr>
-										<td>Status</td>
-										<td>:</td>
-										<td>
-											<?= $pinjam->status;?>
-										</td>
-									</tr>
-									<tr>
-										<td>Tgl Kembali</td>
-										<td>:</td>
-										<td>
-											<?php 
-												if($pinjam->tgl_kembali == '0')
-												{
-													echo '<p style="color:red;">belum dikembalikan</p>';
-												}else{
-													echo $pinjam->tgl_kembali;
-												}
-											
-											?>
-										</td>
-									</tr>
-									<tr>
-										<td>Denda</td>
-										<td>:</td>
-										<td>
-										<?php 
-												$pinjam_id = $pinjam->pinjam_id;
-												$denda = $this->db->query("SELECT * FROM tbl_denda WHERE pinjam_id = '$pinjam_id'");
-												
-												$jml = $this->db->query("SELECT * FROM tbl_pinjam WHERE pinjam_id = '$pinjam_id'")->num_rows();			
-												$date1 = date('Ymd');
-												$date2 = preg_replace('/[^0-9]/','',$pinjam->tgl_balik);	
-												$diff = $date1 - $date2;
-												/*	$datetime1 = new DateTime($date1);
-													$datetime2 = new DateTime($date2);
-													$difference = $datetime1->diff($datetime2); */
-												// echo $difference->days;
-												if($diff > 0 )
-												{
-													echo $diff.' hari';
-													$dd = $this->M_Admin->get_tableid_edit('tbl_biaya_denda','stat','Aktif'); 
-													echo '<p style="color:red;font-size:18px;">'.$this->M_Admin->rp($jml*($dd->harga_denda*$diff)).' 
-													</p><small style="color:#333;">* Untuk '.$jml.' Buku</small>';
-												}else{
-													echo '<p style="color:green;text-align:center;">
-													Tidak Ada Denda</p>';
-												}
-											?>
-										</td>
-									</tr>
-									
-									<tr>
-										<td>Kode Buku</td>
-										<td>:</td>
-										<td>
-										<?php
-											$pin = $this->M_Admin->get_tableid('tbl_pinjam','pinjam_id',$pinjam->pinjam_id);
-											$no =1;
-											foreach($pin as $isi)
-											{
-												$buku = $this->M_Admin->get_tableid_edit('tbl_buku','buku_id',$isi['buku_id']);
-												echo $no.'. '.$buku->buku_id.'<br/>';
-											$no++;}
+<?php if (!defined('BASEPATH'))
+	exit('No direct script acess allowed'); ?>
+<!DOCTYPE html>
+<html lang="en">
 
-										?>
-										</td>
-									</tr>
-									<tr>
-										<td>Data Buku</td>
-										<td>:</td>
-										<td>
-											<table class="table table-striped">
-												<thead>
-													<tr>
-														<th>No</th>
-														<th>Title</th>
-														<th>Penerbit</th>
-														<th>Tahun</th>
-													</tr>
-												</thead>
-												<tbody>
-												<?php 
-													$no=1;
-													foreach($pin as $isi)
-													{
-														$buku = $this->M_Admin->get_tableid_edit('tbl_buku','buku_id',$isi['buku_id']);
-												?>
-													<tr>
-														<td><?= $no;?></td>
-														<td><?= $buku->title;?></td>
-														<td><?= $buku->penerbit;?></td>
-														<td><?= $buku->thn_buku;?></td>
-													</tr>
-												<?php $no++;}?>
-												</tbody>
-											</table>
-										</td>
-									</tr>
-								</table>
-							</div>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.label-column {
+			width: 170px;
+			/* Lebar kolom label */
+			font-weight: bold;
+			/* Teks label bold */
+		}
+
+		.separator-column {
+			width: 40px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="page-wrapper">
+		<div class="page-content">
+			<!--breadcrumb-->
+			<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+				<div class="breadcrumb-title pe-3">Forms</div>
+				<div class="ps-3">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb mb-0 p-0">
+							<li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+							</li>
+							<li class="breadcrumb-item active" aria-current="page">Input Group</li>
+						</ol>
+					</nav>
+				</div>
+				<div class="ms-auto">
+					<div class="btn-group">
+						<button type="button" class="btn btn-primary">Settings</button>
+						<button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
+						</button>
+						<div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item" href="javascript:;">Action</a>
+							<a class="dropdown-item" href="javascript:;">Another action</a>
+							<a class="dropdown-item" href="javascript:;">Something else here</a>
+							<div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated
+								link</a>
 						</div>
-                        <div class="pull-right">
-							<a data-toggle="modal" data-target="#TableDenda" class="btn btn-primary btn-md" style="margin-left:1pc;">
-								<i class="fa fa-sign-in"></i> Kembalikan</a>
-							<a href="<?= base_url('transaksi');?>" class="btn btn-danger btn-md">Kembali</a>
+					</div>
+				</div>
+			</div>
+			<!--end breadcrumb-->
+			<div class="row">
+				<div class="col-xl-9 mx-auto">
+					<h6 class="mb-0 text-uppercase">Tamabah Transaksi Peminjaman</h6>
+					<hr />
+					<div class="card">
+						<div class="card-body">
+							<?php
+							$d = $this->db->query("SELECT * FROM tbl_login WHERE id_login")->row();
+							?>
+							<form form action="<?php echo base_url('transaksibarang/prosespinjam'); ?>" method="POST" enctype="multipart/form-data" class="row g-3">
+								<div class="input-group">
+									<span class="input-group-text" id="basic-addon3">Nomor Peminjaman</span>
+									<input type="text" name="Pinjam_id" value="<?= $this->data['pinjam']->Pinjam_id; ?>" class="form-control" readonly>
+								</div>
+								<div class="input-group mb-3">
+									<tr>
+										<td>
+											<div class="input-group"><span class="input-group-text" id="basic-addon3">Masukan ID Pengguna :</span>
+												<input type="text" class="form-control" required autocomplete="off" name="anggota_id" value="<?= $this->data['pinjam']->anggota_id; ?>" aria-label="Recipient's username" aria-describedby="button-addon2">
+
+											</div>
+										</td>
+									</tr>
+								</div>
+								<div class="container-fluid">
+									<div class="input-group">
+										<table class="table table-striped">
+											<tr>
+												<td class="label-column">Biodata</td>
+												<td class="separator-column">:</td>
+												<td class="info-column"></td>
+											</tr>
+											<tr>
+												<td class="label-column">Nama</td>
+												<td class="separator-column">:</td>
+												<td class="info-column"><?= $this->data['pinjam']->user; ?></td>
+											</tr>
+											<tr>
+												<td class="label-column">Jenis Kelamin</td>
+												<td class="separator-column">:</td>
+												<td class="info-column"><?= $this->data['pinjam']->jenkel; ?></td>
+											</tr>
+											<tr>
+												<td class="label-column">Alamat</td>
+												<td class="separator-column">:</td>
+												<td class="info-column"><?= $this->data['pinjam']->alamat; ?></td>
+											</tr>
+										</table>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<label for="input1" class="form-label">Tanggal Pinjam</label>
+									<input type="date" name="Tanggal_Peminjaman" class="form-control" id="input1" value="<?= $this->data['pinjam']->Tanggal_Peminjaman; ?>">
+								</div>
+								<div class="col-md-6">
+									<label for="input2" class="form-label">Tanggal Kembali</label>
+									<input type="date" name="Tanggal_Pengembalian" class="form-control" id="input2" value="<?= $this->data['pinjam']->Tanggal_Pengembalian; ?>">
+								</div>
+								<div class="input-group mb-3">
+
+									<tr>
+										<td>
+											<div class="input-group"><span class="input-group-text" id="basic-addon3">Masukan Kode Barang :</span>
+												<input type="text" class="form-control" required autocomplete="off" name="kode_barang" id="barang-search" value="<?= $this->data['pinjam']->kode_barang; ?>" type="text" aria-label="Recipient's username" aria-describedby="button-addon2">
+												<span class="input-group-btn">
+													<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#TableBarang"><i class="fa fa-search"></i> Cari </button>
+												</span>
+											</div>
+										</td>
+									</tr>
+								</div>
+								<div class="container-fluid">
+									<div class="input-group">
+										<table class="table table-striped">
+											<tr>
+												<td class="label-column">Data Barang</td>
+												<td class="separator-column">:</td>
+												<td class="info-column"></td>
+											</tr>
+											<tr>
+												<td class="label-column">Nama Barang</td>
+												<td class="separator-column">:</td>
+												<td class="info-column"><?= $this->data['pinjam']->Nama_Barang; ?></td>
+											</tr>
+											<tr>
+												<td class="label-column">Stock</td>
+												<td class="separator-column">:</td>
+												<td class="info-column"><?= $this->data['pinjam']->stok; ?></td>
+											</tr>
+										</table>
+									</div>
+								</div>
+
+								<div class="input-group"> <span class="input-group-text">Jumlah</span>
+									<input type="text" class="form-control" name="Jumlah" value="<?= $this->data['pinjam']->Jumlah; ?>" id="inputjumlah" placeholder="Jumlah......" aria-label="Jumlah">
+								</div>
+								<!-- tombol -->
+								<div class="col-md-12">
+									<div class="d-md-flex d-grid align-items-center gap-3">
+
+										<!-- <input type="hidden" name="tambah" value="tambah">
+										<button type="submit" class="btn btn-primary px-4">Submit</button> -->
+										<a href="<?= base_url('Transaksibarang'); ?>" class="btn btn-danger  px-4">Kembali</a>
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#TableBarang"><i class="fa fa-sign-out"></i> Kembalikan </button>
+										</span>
+									</div>
+								</div>
+							</form>
 						</div>
-		        </div>
-	        </div>
-	    </div>
-    </div>
-</section>
-</div>
 
- <!--modal import -->
-<div class="modal fade" id="TableDenda">
-<div class="modal-dialog" style="width:70%">
-<div class="modal-content">
-<div class="modal-header">
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span></button>
-<h4 class="modal-title"> Pengembalian Buku</h4>
-</div>
-<div id="modal_body" class="modal-body fileSelection1">
-	<table class="table table-striped">
-		<tr style="background:yellowgreen">
-			<td colspan="3">Data Peminjaman Buku</td>
-		</tr>
-		<tr>
-			<td>No Peminjaman</td>
-			<td>:</td>
-			<td>
-				<?= $pinjam->pinjam_id;?>
-			</td>
-		</tr>
-		<tr>
-			<td>Tgl Peminjaman</td>
-			<td>:</td>
-			<td>
-				<?= $pinjam->tgl_pinjam;?>
-			</td>
-		</tr>
-		<tr>
-			<td>Tgl pengembalian</td>
-			<td>:</td>
-			<td>
-				<?= $pinjam->tgl_balik;?>
-			</td>
-		</tr>
-		<tr>
-			<td>ID Anggota</td>
-			<td>:</td>
-			<td>
-				<?= $pinjam->anggota_id;?>
-				<?php
-					$user = $this->M_Admin->get_tableid_edit('tbl_login','anggota_id',$pinjam->anggota_id);
-					error_reporting(0);
-					if($user->nama != null)
-					{
-						echo ' ( '. $user->nama. ' )';
-					}	
-				?>
-			</td>
-		</tr>
-		<tr>
-			<td>Lama Peminjaman</td>
-			<td>:</td>
-			<td>
-				<?= $pinjam->lama_pinjam;?> Hari
-			</td>
-		</tr>
-		<tr>
-			<td>Tanggal Pengembalian</td>
-			<td>:</td>
-			<td>
-				<?= date('Y-m-d');?> ( Sekarang )
-			</td>
-		</tr>
-		<tr>
-			<td>Terlewat Masa Pengembalian</td>
-			<td>:</td>
-			<td>
-			<?php
-				
-				$date1 = date('Ymd');
-				$date2 = preg_replace('/[^0-9]/','',$pinjam->tgl_balik);
-				$diff = $date1 - $date2;
-				if($diff > 0)
-				{
-					echo abs($diff);
+					</div>
+				</div>
+			</div>
+			<!--end row-->
+		</div>
 
-				}else{
-					echo '0';
-				}
-			?> Hari
-			</td>
-		</tr>
-		<tr>
-			<td>Detail Buku</td>
-			<td>:</td>
-			<td>
-			<?php
-				$pin = $this->M_Admin->get_tableid('tbl_pinjam','pinjam_id',$pinjam->pinjam_id);
-				$no =1;
-				foreach($pin as $isi)
-				{
-					$buku = $this->M_Admin->get_tableid_edit('tbl_buku','buku_id',$isi['buku_id']);
-					echo $no.'. '.$buku->buku_id.' ( '.$buku->title.' )<br/>';
-				$no++;}
+		<div class="modal fade" id="TableBarang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Detail Peminjaman</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div id="modal_body" class="modal-body fileSelection2">
+						<table id="example2" class="table table-bordered table-striped">
+							<tr style="background:yellowgreen">
+								<td colspan="3">Data Peminjaman Buku</td>
+							</tr>
+							<tr>
+								<td>No Peminjaman</td>
+								<td>:</td>
+								<td>
+									<?= $this->data['pinjam']->Pinjam_id; ?>
+								</td>
+							</tr>
+							<tr>
+								<td>Nama Peminjam</td>
+								<td>:</td>
+								<td>
+									<?= $this->data['pinjam']->user; ?>
+								</td>
+							</tr>
+							<tr>
+								<td>Nama Barang</td>
+								<td>:</td>
+								<td>
+									<?= $this->data['pinjam']->Nama_Barang; ?>
+								</td>
+							</tr>
+							<tr>
+								<td>Tgl Peminjaman</td>
+								<td>:</td>
+								<td>
+									<?= $this->data['pinjam']->Tanggal_Peminjaman; ?>
+								</td>
+							</tr>
+							<tr>
+								<td>Tgl Pengembalian</td>
+								<td>:</td>
+								<td>
+									<?= $this->data['pinjam']->Tanggal_Pengembalian; ?>
+								</td>
+							</tr>
 
-			?>
-			</td>
-		</tr>
+							<tr>
+								<td>Tanggal Dikembalikan</td>
+								<td>:</td>
+								<td>
+									<?= date('Y-m-d'); ?> ( Sekarang )
+								</td>
+							</tr>
 
-		<tr>
-			<td>Total Denda</td>
-			<td>:</td>
-			<td>
-			<?php 
-				$pinjam_id = $pinjam->pinjam_id;
-				$denda = $this->db->query("SELECT * FROM tbl_denda WHERE pinjam_id = '$pinjam_id'");
-				
-				$jml = $this->db->query("SELECT * FROM tbl_pinjam WHERE pinjam_id = '$pinjam_id'")->num_rows();			
-				$date1 = date('Ymd');
-				$date2 = preg_replace('/[^0-9]/','',$pinjam->tgl_balik);
-				$diff = $date1 - $date2;
-				/* $datetime1 = new DateTime($date1);
-					$datetime2 = new DateTime($date2);
-					$difference = $datetime1->diff($datetime2);*/
-				// echo $difference->days;
-				if($diff >0 )
-				{
-					$dd = $this->M_Admin->get_tableid_edit('tbl_biaya_denda','stat','Aktif'); 
-					echo '<p style="color:red;font-size:18px;">'.$this->M_Admin->rp($jml*($dd->harga_denda*$diff)).' 
-					</p><small style="color:#333;">* Untuk '.$jml.' Buku</small>';
-				}else{
-					echo '<p style="color:green;text-align:center;">
-					Tidak Ada Denda</p>';
-				}
-			?>
-			</td>
-		</tr>
-	</table>
-</div>
-<div class="modal-footer">
-	<div class="pull-right">
-		<a href="<?= base_url('transaksi/prosespinjam?kembali='.$pinjam->pinjam_id);?>">
-		<button class="btn btn-primary"> Proses Pengembalian</button></a>
-		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<!--  -->
+						<a href="<?= base_url('transaksibarang/prosespinjam?kembali=' . $this->data['pinjam']->Pinjam_id); ?>">
+							<button class="btn btn-primary"> Proses Pengembalian</button></a>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-</div>
-</div>
-<!-- /.modal-content -->
-</div>
-<!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
+</body>
+
+</html>

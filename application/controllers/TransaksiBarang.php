@@ -13,10 +13,10 @@ class TransaksiBarang extends CI_Controller
 		// $this->load->model('Transaksi_model');
 		// $this->load->model('Statistik');
 		$this->load->library(array('cart'));
-		// if ($this->session->userdata('masuk_perpus') != TRUE) {
-		// 	$url = base_url('eror');
-		// 	redirect($url);
-		// }
+		if ($this->session->userdata('masuk') != TRUE) {
+			$url = base_url('login');
+			redirect($url);
+		}
 	}
 
 	public function index()
@@ -24,59 +24,19 @@ class TransaksiBarang extends CI_Controller
 		$this->data['title_web'] = 'Data Pinjam Barang';
 		$this->data['idbo'] = $this->session->userdata('ses_id');
 
-		// if ($this->session->userdata('level') == 'Anggota') {
-		// 	$this->data['pinjam'] = $this->db->query(
-		// 		"SELECT DISTINCT 
-		// 		`tbl_pinjam`.`pinjam_id`, 
-		// 		`tbl_login`.`nama`, 
-		// 		`tbl_login`.`anggota_id`, 
-		// 		`tbl_pinjam`.`status`, 
-		// 		`tbl_pinjam`.`tgl_pinjam`, 
-		// 		`tbl_pinjam`.`lama_pinjam`, 
-		// 		`tbl_pinjam`.`tgl_balik`, 
-		// 		`tbl_pinjam`.`tgl_kembali`, 
-		// 		`tbl_pinjam`.`jml_pinjam`, 
-		// 		`tbl_buku`.`id_kategori`,
-		// 		`tbl_buku`.`title`,
-		// 		`tbl_kategori`.`nama_kategori`
-		// 		FROM `tbl_pinjam` 
-		// 		JOIN `tbl_login` ON `tbl_pinjam`.`anggota_id` = `tbl_login`.`anggota_id`
-		// 		JOIN `tbl_buku` ON `tbl_pinjam`.`buku_id` = `tbl_buku`.`buku_id`
-		// 		JOIN `tbl_kategori` ON `tbl_buku`.`id_kategori` = `tbl_kategori`.`id_kategori`
-		// 		WHERE `tbl_pinjam`.`status` IN ('Booking', 'Dipinjam', 'Batal') AND `tbl_login`.`anggota_id` = ?
-		// 		ORDER BY `tbl_pinjam`.`pinjam_id` ASC",
-		// 		array($this->session->userdata('anggota_id'))
-		// 	);
-		// } else {
+		$anggota_id = $this->session->userdata('anggota_id');
 
-		// 	$this->data['pinjam'] = $this->db->query(
-		// 		"SELECT DISTINCT 
-		// 		`peminjamanbarang`.`ID_Peminjaman`, 
-		// 		`tbl_login`.`user`,  
-		// 		`tbl_login`.`anggota_id`,  
-		// 		`peminjamanbarang`.`Tanggal_Peminjaman`,
-		// 		`peminjamanbarang`.`Tanggal_Pengembalian`, 
-		// 		`peminjamanbarang`.`Jumlah`,
-		// 		`barang`.`ID_Barang`,
-		// 		`barang`.`kode_barang`,
-		// 		`barang`.`Nama_Barang`,
-		// 		`barang`.`stok`
-		// 		FROM `peminjamanbarang` 
-		// 		JOIN `tbl_login` ON `peminjamanbarang`.`anggota_id` = `tbl_login`.`anggota_id`
-		// 		JOIN `barang` ON `peminjamanbarang`.`ID_Barang` = `barang`.`ID_Barang`
-		// 		-- WHERE `peminjamanbarang`.`status` = 'Dipinjam'
-		// 		ORDER BY `peminjamanbarang`.`ID_Peminjaman` ASC"
-		// 	);
-		// }
-		$query = $this->db->query(
-			"
-				SELECT DISTINCT 
+		// Periksa apakah anggota_id ada sebelum menjalankan query
+		if ($this->session->userdata('level') == 'User' && !empty($anggota_id)) {
+			$query = $this->db->query(
+				"SELECT DISTINCT 
 				`peminjamanbarang`.`ID_Peminjaman`, 
 				`peminjamanbarang`.`Pinjam_id`, 
 				`tbl_login`.`user`,  
 				`tbl_login`.`anggota_id`,  
 				`peminjamanbarang`.`Tanggal_Peminjaman`,
 				`peminjamanbarang`.`Tanggal_Pengembalian`, 
+				`peminjamanbarang`.`status`,
 				`peminjamanbarang`.`Jumlah`,
 				`barang`.`ID_Barang`,
 				`barang`.`kode_barang`,
@@ -85,17 +45,104 @@ class TransaksiBarang extends CI_Controller
 				FROM `peminjamanbarang` 
 				JOIN `tbl_login` ON `peminjamanbarang`.`anggota_id` = `tbl_login`.`anggota_id`
 				JOIN `barang` ON `peminjamanbarang`.`kode_barang` = `barang`.`kode_barang`
+				WHERE `peminjamanbarang`.`status` IN ('Di kembalikan', 'Dipinjam') AND `tbl_login`.`anggota_id` = ?
+				ORDER BY `peminjamanbarang`.`ID_Peminjaman` ASC",
+				array($anggota_id)
+			);
+		} else {
+			$query = $this->db->query(
+				"
+				SELECT DISTINCT 
+				`peminjamanbarang`.`ID_Peminjaman`, 
+				`peminjamanbarang`.`Pinjam_id`, 
+				`tbl_login`.`user`,  
+				`tbl_login`.`anggota_id`,  
+				`peminjamanbarang`.`Tanggal_Peminjaman`,
+				`peminjamanbarang`.`Tanggal_Pengembalian`, 
+				`peminjamanbarang`.`status`,
+				`peminjamanbarang`.`Jumlah`,
+				`barang`.`ID_Barang`,
+				`barang`.`kode_barang`,
+				`barang`.`Nama_Barang`,
+				`barang`.`stok`
+				FROM `peminjamanbarang` 
+				JOIN `tbl_login` ON `peminjamanbarang`.`anggota_id` = `tbl_login`.`anggota_id`
+				JOIN `barang` ON `peminjamanbarang`.`kode_barang` = `barang`.`kode_barang`
+				WHERE `peminjamanbarang`.`status` = 'Dipinjam'
 				ORDER BY `peminjamanbarang`.`ID_Peminjaman` ASC"
-		);
+			);
+		}
 
 		$this->data['pinjam'] = $query->result_array();
-
-
-
 
 		$this->load->view('template/header_view', $this->data);
 		$this->load->view('template/sidebar_view', $this->data);
 		$this->load->view('pinjambarang/pinjam_view', $this->data);
+		$this->load->view('template/footer_view', $this->data);
+	}
+
+	public function kembali()
+	{
+		$this->data['title_web'] = 'Data Kembalian Barang';
+		$this->data['idbo'] = $this->session->userdata('ses_id');
+
+		$anggota_id = $this->session->userdata('anggota_id');
+
+		// Periksa apakah anggota_id ada sebelum menjalankan query
+		if ($this->session->userdata('level') == 'User' && !empty($anggota_id)) {
+			$query = $this->db->query(
+				"SELECT DISTINCT 
+				`peminjamanbarang`.`ID_Peminjaman`, 
+				`peminjamanbarang`.`Pinjam_id`, 
+				`tbl_login`.`user`,  
+				`tbl_login`.`anggota_id`,  
+				`peminjamanbarang`.`Tanggal_Peminjaman`,
+				`peminjamanbarang`.`Tanggal_Pengembalian`, 
+				`peminjamanbarang`.`tgl_kembali`, 
+				`peminjamanbarang`.`status`,
+				`peminjamanbarang`.`Jumlah`,
+				`barang`.`ID_Barang`,
+				`barang`.`kode_barang`, 
+				`barang`.`Nama_Barang`,
+				`barang`.`stok`
+				FROM `peminjamanbarang` 
+				JOIN `tbl_login` ON `peminjamanbarang`.`anggota_id` = `tbl_login`.`anggota_id`
+				JOIN `barang` ON `peminjamanbarang`.`kode_barang` = `barang`.`kode_barang`
+				WHERE `peminjamanbarang`.`status` = 'Di kembalikan' AND tbl_login.anggota_id = ?
+				ORDER BY `peminjamanbarang`.`ID_Peminjaman` ASC",
+				array($anggota_id)
+			);
+		} else {
+			$query = $this->db->query(
+				"
+				SELECT DISTINCT 
+				`peminjamanbarang`.`ID_Peminjaman`, 
+				`peminjamanbarang`.`Pinjam_id`, 
+				`tbl_login`.`user`,  
+				`tbl_login`.`anggota_id`,  
+				`peminjamanbarang`.`Tanggal_Peminjaman`,
+				`peminjamanbarang`.`Tanggal_Pengembalian`, 
+				`peminjamanbarang`.`tgl_kembali`, 
+				`peminjamanbarang`.`status`,
+				`peminjamanbarang`.`Jumlah`,
+				`barang`.`ID_Barang`,
+				`barang`.`kode_barang`,
+				`barang`.`Nama_Barang`,
+				`barang`.`stok`
+				FROM `peminjamanbarang` 
+				JOIN `tbl_login` ON `peminjamanbarang`.`anggota_id` = `tbl_login`.`anggota_id`
+				JOIN `barang` ON `peminjamanbarang`.`kode_barang` = `barang`.`kode_barang`
+				WHERE `peminjamanbarang`.`status` = 'Di kembalikan'
+				ORDER BY `peminjamanbarang`.`ID_Peminjaman` ASC"
+			);
+		}
+
+		$this->data['pinjam'] = $query->result_array();
+
+
+		$this->load->view('template/header_view', $this->data);
+		$this->load->view('template/sidebar_view', $this->data);
+		$this->load->view('kembali/home', $this->data);
 		$this->load->view('template/footer_view', $this->data);
 	}
 	public function pinjam()
@@ -106,7 +153,7 @@ class TransaksiBarang extends CI_Controller
 		$this->data['user'] = $this->M_Admin->get_table('tbl_login');
 		$this->data['databarang'] = $this->db->query("SELECT * FROM barang ORDER BY ID_Barang DESC")->result_array();
 
-		$this->data['title_web'] = 'Tambah Pinjam Barang '; 
+		$this->data['title_web'] = 'Tambah Pinjam Barang ';
 		$this->load->view('template/header_view', $this->data);
 		$this->load->view('template/sidebar_view', $this->data);
 		$this->load->view('pinjambarang/tambah_view', $this->data);
@@ -332,52 +379,7 @@ class TransaksiBarang extends CI_Controller
 		$this->load->view('pinjam/pinjam_print', $this->data);
 	}
 
-	public function kembali()
-	{
-		$this->data['title_web'] = 'Data Pengembalian Buku ';
-		$this->data['idbo'] = $this->session->userdata('ses_id');
-		if ($this->session->userdata('level') == 'Anggota') {
-			$this->data['pinjam'] = $this->db->query(
-				"SELECT DISTINCT 
-				`tbl_pinjam`.`pinjam_id`, 
-				`tbl_login`.`nama`, 
-				`tbl_login`.`anggota_id`, 
-				`tbl_pinjam`.`status`, 
-				`tbl_pinjam`.`tgl_pinjam`, 
-				`tbl_pinjam`.`lama_pinjam`, 
-				`tbl_pinjam`.`tgl_balik`, 
-				`tbl_pinjam`.`tgl_kembali`, 
-				`tbl_pinjam`.`jml_pinjam`
-				FROM `tbl_pinjam` 
-				JOIN `tbl_login` ON `tbl_pinjam`.`anggota_id` = `tbl_login`.`anggota_id` 
-				WHERE `tbl_pinjam`.`status` = 'Di Kembalikan' AND tbl_login.anggota_id = ?
-			    ORDER BY `tbl_pinjam`.`pinjam_id` DESC",
-				array($this->session->userdata('anggota_id'))
-			);
-		} else {
-			$this->data['pinjam'] = $this->db->query(
-				"SELECT DISTINCT 
-				`tbl_pinjam`.`pinjam_id`, 
-				`tbl_login`.`nama`, 
-				`tbl_login`.`anggota_id`, 
-				`tbl_pinjam`.`status`, 
-				`tbl_pinjam`.`tgl_pinjam`, 
-				`tbl_pinjam`.`lama_pinjam`, 
-				`tbl_pinjam`.`tgl_balik`, 
-				`tbl_pinjam`.`tgl_kembali`, 
-				`tbl_pinjam`.`jml_pinjam`
-				FROM `tbl_pinjam` 
-				JOIN `tbl_login` ON `tbl_pinjam`.`anggota_id` = `tbl_login`.`anggota_id` 
-				WHERE `tbl_pinjam`.`status` = 'Di Kembalikan'
- 				ORDER BY `tbl_pinjam`.`pinjam_id` DESC"
-			);
-		}
-
-		$this->load->view('header_view', $this->data);
-		$this->load->view('sidebar_view', $this->data);
-		$this->load->view('kembali/home', $this->data);
-		$this->load->view('footer_view', $this->data);
-	}
+	
 	public function hilang()
 	{
 		$this->data['title_web'] = 'Data Buku Hilang ';
@@ -609,26 +611,54 @@ class TransaksiBarang extends CI_Controller
 
 	public function kembalipinjam()
 	{
+		$this->data['nop'] = $this->M_Admin->buat_kode('peminjamanbarang', 'PJ', 'Pinjam_id', 'ORDER BY Pinjam_id DESC LIMIT 1');
+		$this->data['user'] = $this->M_Admin->get_table('tbl_login');
+		$this->data['databarang'] = $this->db->query("SELECT * FROM barang ORDER BY ID_Barang DESC")->result_array();
 		$this->data['idbo'] = $this->session->userdata('ses_id');
 		$id = $this->uri->segment('3');
-		$count = $this->M_Admin->CountTableId('tbl_pinjam', 'pinjam_id', $id);
+		$count = $this->M_Admin->CountTableId('peminjamanbarang', 'Pinjam_id', $id);
 		if ($count > 0) {
-			$this->data['pinjam'] = $this->db->query("SELECT DISTINCT `pinjam_id`, 
-			`anggota_id`, `status`, 
-			`tgl_pinjam`, `lama_pinjam`, 
-			`tgl_balik`, `tgl_kembali` 
-			FROM tbl_pinjam WHERE pinjam_id = '$id'")->row();
+			// Query untuk mendapatkan data dari tabel peminjamanbarang dengan informasi tambahan
+			$query = $this->db->query(
+				"
+				SELECT DISTINCT 
+				`peminjamanbarang`.`ID_Peminjaman`, 
+				`peminjamanbarang`.`Pinjam_id`, 
+				`tbl_login`.`user`,  
+				`tbl_login`.`anggota_id`,  
+				`tbl_login`.`jenkel`,  
+				`tbl_login`.`alamat`,  
+				`peminjamanbarang`.`Tanggal_Peminjaman`,
+				`peminjamanbarang`.`Tanggal_Pengembalian`, 
+				`peminjamanbarang`.`Jumlah`,
+				`barang`.`ID_Barang`,
+				`barang`.`kode_barang`,
+				`barang`.`Nama_Barang`,
+				`barang`.`stok`
+				FROM `peminjamanbarang` 
+				JOIN `tbl_login` ON `peminjamanbarang`.`anggota_id` = `tbl_login`.`anggota_id`
+				JOIN `barang` ON `peminjamanbarang`.`kode_barang` = `barang`.`kode_barang`
+				WHERE `peminjamanbarang`.`Pinjam_id` = '$id'
+				ORDER BY `peminjamanbarang`.`ID_Peminjaman` ASC"
+			);
+
+			if ($query->num_rows() > 0) {
+				// Menyimpan hasil query ke dalam $this->data['pinjam']
+				$this->data['pinjam'] = $query->row();
+			} else {
+				echo '<script>alert("DETAIL TIDAK DITEMUKAN");window.location="' . base_url('transaksibarang') . '"</script>';
+			}
 		} else {
-			echo '<script>alert("DETAIL TIDAK DITEMUKAN");window.location="' . base_url('transaksi') . '"</script>';
+			echo '<script>alert("DETAIL TIDAK DITEMUKAN");window.location="' . base_url('transaksibarang') . '"</script>';
 		}
 
 
 		$this->data['title_web'] = 'Kembali Pinjam Buku ';
-		$this->load->view('header_view', $this->data);
-		$this->load->view('sidebar_view', $this->data);
-		$this->load->view('pinjam/kembali', $this->data);
+		$this->load->view('template/header_view', $this->data);
+		$this->load->view('template/sidebar_view', $this->data);
+		$this->load->view('pinjambarang/kembali', $this->data);
 		// $this->load->view('kembali/home', $this->data);
-		$this->load->view('footer_view', $this->data);
+		$this->load->view('template/footer_view', $this->data);
 	}
 	public function hilangpinjam()
 	{
@@ -671,8 +701,8 @@ class TransaksiBarang extends CI_Controller
 				// $stok = $buku->jml;
 				// if ($stok < 1 && $post['status'] !== 'Booking') {
 				// 	$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-danger">
-                //     <p>Maaf, stok buku ' . $buku->title . ' sudah habis. Silakan pilih buku lain.</p>
-                //     </div></div>');
+				//     <p>Maaf, stok buku ' . $buku->title . ' sudah habis. Silakan pilih buku lain.</p>
+				//     </div></div>');
 				// 	redirect(base_url('transaksibarang/pinjam'));
 				// }
 
@@ -762,6 +792,7 @@ class TransaksiBarang extends CI_Controller
 		// ------------------------hapus peminjam---------------
 
 		if ($this->input->get('ID_Peminjaman')) {
+			$this->data['idbo'] = $this->session->userdata('ses_id');
 			$this->M_Admin->delete_table('peminjamanbarang', 'ID_Peminjaman', $this->input->get('ID_Peminjaman'));
 			// $this->M_Admin->delete_table('tbl_denda', 'pinjam_id', $this->input->get('pinjam_id'));
 
@@ -770,87 +801,59 @@ class TransaksiBarang extends CI_Controller
 			</div></div>');
 			redirect(base_url('transaksibarang'));
 		}
-		// ----------------------kembali dulu----------------------------
-		// if ($this->input->get('kembali')) {
-		// 	$id = $this->input->get('kembali');
-		// 	$pinjam = $this->db->query("SELECT  * FROM tbl_pinjam WHERE pinjam_id = '$id'");
-
-		// 	foreach ($pinjam->result_array() as $isi) {
-		// 		$pinjam_id = $isi['pinjam_id'];
-		// 		$denda = $this->db->query("SELECT * FROM tbl_denda WHERE pinjam_id = '$pinjam_id'");
-		// 		$jml = $this->db->query("SELECT * FROM tbl_pinjam WHERE pinjam_id = '$pinjam_id'")->num_rows();
-		// 		if ($denda->num_rows() > 0) {
-		// 			$s = $denda->row();
-		// 			echo $s->denda;
-		// 		} else {
-		// 			$date1 = date('Ymd');
-		// 			$date2 = preg_replace('/[^0-9]/', '', $isi['tgl_balik']);
-		// 			$diff = $date2 - $date1;
-		// 			if ($diff >= 0) {
-		// 				$harga_denda = 0;
-		// 				$lama_waktu = 0;
-		// 			} else {
-		// 				$dd = $this->M_Admin->get_tableid_edit('tbl_biaya_denda', 'stat', 'Aktif');
-		// 				$harga_denda = $jml * ($dd->harga_denda * abs($diff));
-		// 				$lama_waktu = abs($diff);
-		// 			}
-		// 		}
-		// 	}
 
 		//  kembali new 7
+		// if ($this->input->get('kembali')) {
+		// 	$id = $this->input->get('kembali');
+		// 	$pinjam = $this->db->query("SELECT * FROM Peminjamanbarang WHERE Pinjam_id = '$id'");
+		// 	$data = array(
+		// 		'status' => 'Di Kembalikan',
+		// 		'tgl_kembali' => date('Y-m-d'),
+		// 	);
+
+		// 	$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
+		// 	<p> Pengembalian Pinjam Buku Sukses !</p>
+		// 	</div></div>');
+		// 	redirect(base_url('transaksibarang'));
+		// }
 		if ($this->input->get('kembali')) {
 			$id = $this->input->get('kembali');
-			$pinjam = $this->db->query("SELECT * FROM tbl_pinjam WHERE pinjam_id = '$id'");
+			$pinjam = $this->db->query("SELECT * FROM Peminjamanbarang WHERE Pinjam_id = '$id'")->row();
 
-			foreach ($pinjam->result_array() as $isi) {
-				$pinjam_id = $isi['pinjam_id'];
-				$denda = $this->db->query("SELECT * FROM tbl_denda WHERE pinjam_id = '$pinjam_id'");
-				$jml = $this->db->query("SELECT * FROM tbl_pinjam WHERE pinjam_id = '$pinjam_id'")->num_rows();
+			if ($pinjam) {
+				// Ubah status dan tanggal kembali
+				$data = array(
+					'status' => 'Di Kembalikan',
+					'tgl_kembali' => date('Y-m-d'),
+				);
 
-				if ($denda->num_rows() > 0) {
-					$s = $denda->row();
-					echo $s->denda;
-				} else {
-					$date1 = date('Ymd');
-					$date2 = preg_replace('/[^0-9]/', '', $isi['tgl_balik']);
-					$dueDate = date('Ymd', strtotime("+7 days", strtotime($date2)));
+				// Update data peminjaman
+				$this->db->where('Pinjam_id', $id);
+				$this->db->update('Peminjamanbarang', $data);
 
-					if ($date1 > $dueDate) {
-						$diff = $date1 - $dueDate;
-						$dd = $this->M_Admin->get_tableid_edit('tbl_biaya_denda', 'stat', 'Aktif');
-						$harga_denda = $jml * ($dd->harga_denda * abs($diff));
-						$lama_waktu = abs($diff);
-					} else {
-						$harga_denda = 0;
-						$lama_waktu = 0;
-					}
-				}
+				// Set pesan sukses
+				$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
+				<p> Pengembalian Pinjam Buku Sukses !</p>
+				</div></div>');
+			} else {
+				// Jika data peminjaman tidak ditemukan, tampilkan pesan error
+				$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-danger">
+				<p> Data Peminjaman Tidak Ditemukan!</p>
+				</div></div>');
 			}
 
-			$data = array(
-				'status' => 'Di Kembalikan',
-				'tgl_kembali' => date('Y-m-d'),
-			);
-
-			$total_array = count($data);
-			if ($total_array != 0) {
-				$this->db->where('pinjam_id', $this->input->get('kembali'));
-				$this->db->update('tbl_pinjam', $data);
-			}
-
-			$data_denda = array(
-				'pinjam_id' => $this->input->get('kembali'),
-				'denda' => $harga_denda,
-				'lama_waktu' => $lama_waktu,
-				'tgl_denda' => date('Y-m-d'),
-			);
-			$this->db->insert('tbl_denda', $data_denda);
-
-			$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-success">
-			<p> Pengembalian Pinjam Buku Sukses !</p>
+			// Redirect ke halaman 'transaksibarang'
+			redirect(base_url('transaksibarang'));
+		} else {
+			// Jika parameter 'kembali' tidak ditemukan, tampilkan pesan error
+			$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-danger">
+			<p> Parameter Pengembalian Tidak Valid!</p>
 			</div></div>');
-			redirect(base_url('transaksi'));
+			// Redirect ke halaman 'transaksibarang'
+			redirect(base_url('transaksibarang'));
 		}
+
+
 		// hilang
 
 		if ($this->input->get('hilang')) {
@@ -996,12 +999,12 @@ class TransaksiBarang extends CI_Controller
        
             <table class="table table-striped">
                 <tr>
-                    <td>Nama Anggota</td>
+                    <td>Nama Pengguna</td>
                     <td>:</td>
                     <td>' . $data->user . '</td>
                 </tr>
                 <tr>
-                    <td>Telepon</td>
+                    <td>Alamat</td>
                     <td>:</td>
                     <td>' . $data->alamat . '</td>
                 </tr>
@@ -1029,7 +1032,7 @@ class TransaksiBarang extends CI_Controller
 				'qty' => 1,
 				'price' => '1000',
 				'name' => $tes->title,
-				'options' => array( 'Nama_Barang' => $tes->Nama_Barang, 'Stok' => $tes->Stok)
+				'options' => array('Nama_Barang' => $tes->Nama_Barang, 'Stok' => $tes->Stok)
 			);
 			if (!$this->session->has_userdata('cart')) {
 				$cart = array($item);

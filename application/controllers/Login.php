@@ -43,6 +43,7 @@ class Login extends CI_Controller
 			$this->session->set_userdata('level', $hasil_login['level']);
 			$this->session->set_userdata('ses_id', $hasil_login['id_login']);
 			$this->session->set_userdata('last_activity', time()); // Set waktu login terakhir
+			$this->session->set_userdata('anggota_id', $hasil_login['anggota_id']);
 
 			$d = $this->db->query("SELECT * FROM tbl_login WHERE id_login='" . $hasil_login['id_login'] . "'")->row();
 
@@ -64,61 +65,66 @@ class Login extends CI_Controller
 
 
 	public function do_register()
-    {
+	{
+		// Create session
+		$this->session->set_userdata('masuk', TRUE);
+		$this->session->set_userdata('level', $hasil_login['level']);
+		$this->session->set_userdata('ses_id', $hasil_login['id_login']);
+		$this->session->set_userdata('last_activity', time()); // Set waktu login terakhir
+		$this->session->set_userdata('anggota_id', $hasil_login['anggota_id']);
 
-
-        $anggota_id = htmlentities($this->input->post('anggota_id', TRUE));
-        $user = htmlentities($this->input->post('user', TRUE));
-        $pass = md5(htmlentities($this->input->post('pass', TRUE)));
-        $jenkel = htmlentities($this->input->post('jenkel', TRUE));
-        $alamat = htmlentities($this->input->post('alamat', TRUE));
-        $email = $_POST['email'];
-        $dd = $this->db->query("SELECT * FROM tbl_login WHERE user = '$user' OR email = '$email'");
-        if ($dd->num_rows() > 0) {
-            $this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-warning">
+		$anggota_id = htmlentities($this->input->post('anggota_id', TRUE));
+		$user = htmlentities($this->input->post('user', TRUE));
+		$pass = md5(htmlentities($this->input->post('pass', TRUE)));
+		$jenkel = htmlentities($this->input->post('jenkel', TRUE));
+		$alamat = htmlentities($this->input->post('alamat', TRUE));
+		$email = $_POST['email'];
+		$dd = $this->db->query("SELECT * FROM tbl_login WHERE user = '$user' OR email = '$email'");
+		if ($dd->num_rows() > 0) {
+			$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-warning">
 			<p> Gagal Update Pengguna : ' . $user . ' !, Username / Email Anda Sudah Terpakai</p>
 			</div></div>');
-            redirect(base_url('pengguna/tambah'));
-        } else {
-            // setting konfigurasi upload
-            $nmfile = "user_" . time();
-            $config['upload_path'] = './assets/images/pengguna/';
-            $config['allowed_types'] = 'gif|jpg|jpeg|png';
-            $config['file_name'] = $nmfile;
-            // load library upload
-            $this->load->library('upload', $config);
-            // upload foto 1
-            $this->upload->do_upload('foto');
-            $result1 = $this->upload->data();
-            $result = array('foto' => $result1);
-            $data1 = array('upload_data' => $this->upload->data());
-            $data = array(
-                'anggota_id' => $anggota_id,
-                'user' => $user,
-                'pass' => $pass,
-                'email' => $_POST['email'],
-                'foto' => $data1['upload_data']['file_name'],
-                'jenkel' => $jenkel,
-                'alamat' => $alamat,
-                'tgl_bergabung' => date('Y-m-d')
-            );
+			redirect(base_url('pengguna/tambah'));
+		} else {
+			// setting konfigurasi upload
+			$nmfile = "user_" . time();
+			$config['upload_path'] = './assets/images/pengguna/';
+			$config['allowed_types'] = 'gif|jpg|jpeg|png';
+			$config['file_name'] = $nmfile;
+			// load library upload
+			$this->load->library('upload', $config);
+			// upload foto 1
+			$this->upload->do_upload('foto');
+			$result1 = $this->upload->data();
+			$result = array('foto' => $result1);
+			$data1 = array('upload_data' => $this->upload->data());
+			$data = array(
+				'anggota_id' => $anggota_id,
+				'user' => $user,
+				'pass' => $pass,
+				'email' => $_POST['email'],
+				'foto' => $data1['upload_data']['file_name'],
+				'jenkel' => $jenkel,
+				'alamat' => $alamat,
+				'tgl_bergabung' => date('Y-m-d')
+			);
 			$result = $this->db->insert('tbl_login', $data);
 
-		if ($result) {
-			$response = [
-				'status' => 'success',
-				'message' => 'Registration Successful! Please login.'
-			];
-		} else {
-			$response = [
-				'status' => 'error',
-				'message' => 'Registration Failed! Please try again.'
-			];
-		}
+			if ($result) {
+				$response = [
+					'status' => 'success',
+					'message' => 'Registration Successful! Please login.'
+				];
+			} else {
+				$response = [
+					'status' => 'error',
+					'message' => 'Registration Failed! Please try again.'
+				];
+			}
 
-		echo json_encode($response);
+			echo json_encode($response);
+		}
 	}
-    }
 
 	public function logout()
 	{

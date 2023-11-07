@@ -61,6 +61,8 @@
                 <ul>
                     <li> <a href="<?php echo base_url("TransaksiBarang"); ?>"><i class='bx bx-radio-circle'></i>Peminjaman Barang</a>
                     </li>
+                    <li> <a href="<?php echo base_url("TransaksiBarang/kembali"); ?>"><i class='bx bx-radio-circle'></i>Pengembalian Barang</a>
+                    </li>
                     <li> <a href="<?php echo base_url("SolarTransaction"); ?>"><i class='bx bx-radio-circle'></i>Transaksi Solar</a>
                     </li>
                 </ul>
@@ -113,10 +115,10 @@
                 </a>
             </li>
 
-            <?php } ?>
-            <!-- Hak Akses User -->
-            <?php if ($this->session->userdata('level') == 'User') { ?> 
-                <li class="menu-label">Main navigation</li>
+        <?php } ?>
+        <!-- Hak Akses User -->
+        <?php if ($this->session->userdata('level') == 'User') { ?>
+            <li class="menu-label">Main navigation</li>
             <li>
                 <a href="<?php echo base_url("Dashboard"); ?>">
                     <div class="parent-icon"><i class='bx bx-home-alt'></i>
@@ -165,6 +167,23 @@
                     </li>
                 </ul>
             </li> -->
+            </a>
+            <li class="menu-label">Data Transaksi</li>
+            <li>
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class='bx bx-shuffle'></i>
+                    </div>
+                    <div class="menu-title">Transaksi</div>
+                </a>
+                <ul>
+                    <li> <a href="<?php echo base_url("TransaksiBarang"); ?>"><i class='bx bx-radio-circle'></i>Peminjaman Barang</a>
+                    </li>
+                    <li> <a href="<?php echo base_url("TransaksiBarang/kembali"); ?>"><i class='bx bx-radio-circle'></i>Pengembalian Barang</a>
+                    </li>
+                    <!-- <li> <a href="<?php echo base_url("SolarTransaction"); ?>"><i class='bx bx-radio-circle'></i>Transaksi Solar</a>
+                    </li> -->
+                </ul>
+            </li>
 
             <li>
             <li>
@@ -198,7 +217,7 @@
                 </a>
             </li>
 
-                <?php } ?>
+        <?php } ?>
     </ul>
     <!--end navigation-->
 </div>

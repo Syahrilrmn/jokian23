@@ -46,7 +46,7 @@
 							<div class="input-group mb-3">
 								<tr>
 									<td>
-										<div class="input-group"><span class="input-group-text" id="basic-addon3">Masukan ID Pengguna  :</span>
+										<div class="input-group"><span class="input-group-text" id="basic-addon3">Masukan ID Pengguna :</span>
 											<input type="text" class="form-control" required autocomplete="off" name="anggota_id" id="search-box" placeholder="Contoh ID Pengguna : AGT0001" type="text" value="<?= $d->anggota_id; ?>" aria-label="Recipient's username" aria-describedby="button-addon2">
 											<span class="input-group-btn">
 												<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#TableAnggota"><i class="fa fa-search"></i> Cari </button>
@@ -71,21 +71,9 @@
 									</table>
 								</div>
 							</div>
-
-							<!-- <div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<label class="input-group-text" for="inputTanggalPinjam">Tanggal Pinjam</label>
-									<input type="date"  name="Tanggal_Peminjaman" class="form-control" aria-label="Tanggal Pinjam" >
-								</div>
-								
-								<div class="input-group-prepend">
-									<span class="input-group-text">Tanggal Kembali</span>
-								</div>
-								<input type="date" class="form-control" name="Tanggal_Pengembalian" id="inputTanggalKembali" placeholder="Tanggal Kembali" aria-label="Tanggal Kembali">
-							</div> -->
 							<div class="col-md-6">
 								<label for="input1" class="form-label">Tanggal Pinjam</label>
-								<input type="date" name="Tanggal_Peminjaman" class="form-control" id="input1"  value="<?= date('Y-m-d'); ?>">
+								<input type="date" name="Tanggal_Peminjaman" class="form-control" id="input1" value="<?= date('Y-m-d'); ?>">
 							</div>
 							<div class="col-md-6">
 								<label for="input2" class="form-label">Tanggal Kembali</label>
@@ -108,7 +96,7 @@
 								<div class="input-group ">
 									<table class="table table-striped">
 										<tr>
-											<td>Biodata</td>
+											<td>Data Barang</td>
 											<td>:</td>
 											<td>
 												<div id="result_tunggu_barang">
@@ -161,36 +149,41 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php $no = 1;
+							<?php
+							$no = 1;
 							foreach ($user as $isi) {
+								// Periksa apakah level pengguna adalah 'User'
+								if ($isi['level'] == 'User') {
 							?>
-								<tr>
-									<td>
-										<?= $no; ?>
-									</td>
-									<td>
-										<?= $isi['anggota_id']; ?>
-									</td>
-									<td>
-										<?= $isi['user']; ?>
-									</td>
-									<td>
-										<?= $isi['alamat']; ?>
-									</td>
-									<td>
-										<?= $isi['jenkel']; ?>
-									</td>
-									<td style="width:20%;">
-										<button class="btn btn-primary" id="Select_File1" data-id="<?= $isi['anggota_id']; ?>">
-											<i class="fa fa-check"></i> Pilih
-										</button>
-									</td>
-
-								</tr>
-
-							<?php $no++;
-							} ?>
+									<tr>
+										<td>
+											<?= $no; ?>
+										</td>
+										<td>
+											<?= $isi['anggota_id']; ?>
+										</td>
+										<td>
+											<?= $isi['user']; ?>
+										</td>
+										<td>
+											<?= $isi['alamat']; ?>
+										</td>
+										<td>
+											<?= $isi['jenkel']; ?>
+										</td>
+										<td style="width:20%;">
+											<button class="btn btn-primary" id="Select_File1" data-id="<?= $isi['anggota_id']; ?>">
+												<i class="fa fa-check"></i> Pilih
+											</button>
+										</td>
+									</tr>
+							<?php
+									$no++;
+								}
+							}
+							?>
 						</tbody>
+
 					</table>
 				</div>
 				<div class="modal-footer">
