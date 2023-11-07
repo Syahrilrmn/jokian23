@@ -25,6 +25,9 @@
   <link href="<?php echo base_url(); ?>assets/css/icons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <title>Syndron - Bootstrap 5 Admin Dashboard Template</title>
+  <style>
+    
+  </style>
 </head>
 
 <body class="">
@@ -37,10 +40,10 @@
             <div class="card mb-0">
               <div class="card-body">
                 <div class="p-4">
-                  <div class="mb-3 text-center">
+                  <div class="mb-1 text-center">
                     <img src="<?php echo base_url(); ?>assets/images/logo-icon.png" width="60" alt="" />
                   </div>
-                  <div class="text-center mb-4">
+                  <div class="text-center mb-0">
                     <h5 class="">Syndron Admin</h5>
                     <p class="mb-0">Please Register to your account</p>
                   </div>
@@ -50,36 +53,28 @@
                         <label for="inputEmailAddress" class="form-label">NRP</label>
                         <input type="text" class="form-control" name="anggota_id" id="inputEmailAddress" placeholder="Masukan NRP ....">
                       </div>
-                     
-                      <br>
                       <div class="col-12">
                         <label for="inputEmailAddress" class="form-label">Masukan Nama </label>
                         <input type="text" class="form-control" name="user" id="inputEmailAddress" placeholder="Masukan Nama Anda....">
                       </div>
-                      <br>
                       <div class="col-12">
                         <label for="inputEmailAddress" class="form-label">Masukan tanggal lahir </label>
                         <input type="date" class="form-control" name="tanggal_lahir" id="inputEmailAddress" placeholder="Masukan Nama Anda....">
                       </div>
-                      <br>
-                      
                       <div class="col-12">
                         <label for="inputEmailAddress" class="form-label">Email</label>
                         <input type="email" class="form-control" name="email" id="inputEmailAddress" placeholder="Masukan Email Anda....">
                       </div>
-                      <br>
                       <div class="col-12">
                         <label for="inputChoosePassword" class="form-label">Password</label>
                         <div class="input-group" id="show_hide_password">
                           <input type="text" class="form-control border-end-0" name="pass" id="inputChoosePassword" placeholder="Enter Password"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
                         </div>
                       </div>
-                      <br>
                       <div class="col-12">
                         <label for="inputEmailAddress" class="form-label">Alamat</label>
                         <input type="text" class="form-control" name="alamat" id="inputEmailAddress" placeholder="Masukan Alamat Anda....">
                       </div>
-                      <br>
                       <div class="col-12">
                         <label for="inputGender" class="form-label">Jenis Kelamin</label>
                         <select class="form-select" id="inputGender" aria-label="Jenis Kelamin" name="jenkel">
@@ -87,15 +82,13 @@
                           <option value="Perempuan">Perempuan</option>
                         </select>
                       </div>
-                      <br>
                       <div class="col-12">
                         <label for="inputChoosePassword" class="form-label">Foto</label>
                         <div class="input-group">
                           <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" accept="image/*" name="foto">
                         </div>
-                      </div>
-                      <br>
-                      
+                      </div>            
+                      <br>          
                       <div class="col-12">
                         <div class="d-grid">
                           <button type="submit" class="btn btn-primary" id="registerButton">Register</button>
@@ -109,15 +102,7 @@
                       </div>
                     </form>
                   </div>
-                  <div class="login-separater text-center mb-5"> <span>OR SIGN IN WITH</span>
-                    <hr />
-                  </div>
-                  <div class="list-inline contacts-social text-center">
-                    <a href="javascript:;" class="list-inline-item bg-facebook text-white border-0 rounded-3"><i class="bx bxl-facebook"></i></a>
-                    <a href="javascript:;" class="list-inline-item bg-twitter text-white border-0 rounded-3"><i class="bx bxl-twitter"></i></a>
-                    <a href="javascript:;" class="list-inline-item bg-google text-white border-0 rounded-3"><i class="bx bxl-google"></i></a>
-                    <a href="javascript:;" class="list-inline-item bg-linkedin text-white border-0 rounded-3"><i class="bx bxl-linkedin"></i></a>
-                  </div>
+                 
 
                 </div>
               </div>
