@@ -74,6 +74,7 @@ class Login extends CI_Controller
 		$this->session->set_userdata('anggota_id', $hasil_login['anggota_id']);
 
 		$anggota_id = htmlentities($this->input->post('anggota_id', TRUE));
+		$tanggal_lahir = htmlentities($this->input->post('tanggal_lahir', TRUE));
 		$user = htmlentities($this->input->post('user', TRUE));
 		$pass = md5(htmlentities($this->input->post('pass', TRUE)));
 		$jenkel = htmlentities($this->input->post('jenkel', TRUE));
@@ -100,6 +101,7 @@ class Login extends CI_Controller
 			$data1 = array('upload_data' => $this->upload->data());
 			$data = array(
 				'anggota_id' => $anggota_id,
+				'tanggal_lahir' => $tanggal_lahir,
 				'user' => $user,
 				'pass' => $pass,
 				'email' => $_POST['email'],

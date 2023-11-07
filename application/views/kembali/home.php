@@ -18,6 +18,7 @@
                     echo $this->session->flashdata('pesan');
                 } ?>
             </span>
+            <!-- <?php if ($this->session->userdata('level') == 'Admin') { ?>
             <div class="ms-auto">
                 <div class="btn-group">
                     <a href="<?php echo base_url("Transaksibarang/pinjam"); ?>" class="btn btn-success px-5">
@@ -25,6 +26,7 @@
                     </a>
                 </div>
             </div>
+            <?php } ?> -->
 
         </div>
         <!--end breadcrumb-->

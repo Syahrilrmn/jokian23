@@ -179,7 +179,7 @@
 					<div id="modal_body" class="modal-body fileSelection2">
 						<table id="example2" class="table table-bordered table-striped">
 							<tr style="background:yellowgreen">
-								<td colspan="3">Data Peminjaman Buku</td>
+								<td colspan="3">Data Peminjaman Barang</td>
 							</tr>
 							<tr>
 								<td>No Peminjaman</td>
