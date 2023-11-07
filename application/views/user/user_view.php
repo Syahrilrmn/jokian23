@@ -109,12 +109,17 @@
 </div>
 <script>
     function closeAlert() {
-        document.getElementById('alertBerhasil').style.display = 'none';
-        document.getElementById('alertGagal').style.display = 'none';
+        try {
+            
+            document.getElementById('alertBerhasil').style.display = 'none';
+            document.getElementById('alertGagal').style.display = 'none';
+        } catch (error) {
+            
+        }
     }
 
     // Tambahkan kode untuk menutup otomatis setelah 3 detik
-    setTimeout(function() {
+    setTimeout(function () {
         closeAlert();
     }, 5000); // 5000 milidetik (5 detik)
 </script>

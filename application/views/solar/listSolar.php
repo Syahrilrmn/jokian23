@@ -23,16 +23,16 @@
                     <h5><i class="icon fas fa-ban"></i> Gagal!</h5>
                     <?= $this->session->flashdata('pesan'); ?>
                 </div>
-                <?php 
+            <?php
             }
         }
         ?>
 
-       
+
         <!--end breadcrumb-->
 
         <h6 class="mb-0 text-uppercase">DataTable Import</h6>
-        <hr /> 
+        <hr />
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
@@ -43,7 +43,7 @@
                                 <th>Jumlah Stok</th>
                                 <th>Updated At</th>
                                 <?php if ($this->session->userdata('level') == 'Admin') { ?>
-                                <th>Edit</th>
+                                    <th>Edit</th>
                                 <?php } ?>
                             </tr>
                         </thead>
@@ -59,20 +59,21 @@
                                         <?= $isi->Jumlah_Stok; ?>
                                     </td>
                                     <td>
-                                        <?= $isi->updatedat; ?>
+                                        <?= date('d-m-Y H:i:s', strtotime($isi->updatedat)); ?>
                                     </td>
                                     <?php if ($this->session->userdata('level') == 'Admin') { ?>
-                                    <td>
-                                        <center>
-                                            <a href="<?= base_url('solar/edit/' . $isi->ID_Solar); ?>"><button
-                                                    class="btn btn-success"><i class="fa fa-edit"></i></button></a>
-                                        </center>
-                                    </td>
-                                    <?php }?>
+                                        <td>
+                                            <center>
+                                                <a href="<?= base_url('solar/edit/' . $isi->ID_Solar); ?>"><button
+                                                        class="btn btn-success"><i class="fa fa-edit"></i></button></a>
+                                            </center>
+                                        </td>
+                                    <?php } ?>
                                 </tr>
                                 <?php $no++; endforeach; ?>
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
@@ -80,8 +81,17 @@
 </div>
 <script>
     function closeAlert() {
-        document.getElementById('alertBerhasil').style.display = 'none';
-        document.getElementById('alertGagal').style.display = 'none';
+        try {
+            const alertSuccess = document.getElementById('alertBerhasil');
+            const alertFailed = document.getElementById('alertGagal');
+            if (alertSuccess) {
+                alertSuccess.style.display = 'none';
+            } else if (alertFailed) {
+                alertFailed.style.display = 'none';
+            }
+        } catch (error) {
+            // Tangani kesalahan di sini jika diperlukan
+        }
     }
 
     // Tambahkan kode untuk menutup otomatis setelah 3 detik
