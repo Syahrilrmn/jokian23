@@ -110,15 +110,11 @@ class Barang extends CI_Controller
 	}
 	public function edit()
 	{
-		// $this->data['idbo'] = $this->session->userdata('ses_id');
+		$this->data['idbo'] = $this->session->userdata('ses_id');
 		$count = $this->M_Admin->CountTableId('barang', 'ID_Barang', $this->uri->segment('3'));
 		if ($count > 0) {
 
 			$this->data['databarang'] = $this->M_Admin->get_tableid_edit('barang', 'ID_Barang', $this->uri->segment('3'));
-
-			// $this->data['kats'] =  $this->db->query("SELECT * FROM tbl_kategori ORDER BY id_kategori DESC")->result_array();
-			// $this->data['rakbuku'] =  $this->db->query("SELECT * FROM tbl_rak ORDER BY id_rak DESC")->result_array();
-
 		} else {
 			echo '<script>alert("Barang TIDAK DITEMUKAN");window.location="' . base_url('barang') . '"</script>';
 		}
@@ -133,7 +129,7 @@ class Barang extends CI_Controller
 	public function tambah()
 	{
 
-		// $this->data['idbo'] = $this->session->userdata('ses_id');
+		$this->data['idbo'] = $this->session->userdata('ses_id');
 		$this->data['databarang'] = $this->M_Admin->get_table('barang');
 		$this->data['title_web'] = 'Tambah Barang';
 		$this->load->view('template/header_view', $this->data);
