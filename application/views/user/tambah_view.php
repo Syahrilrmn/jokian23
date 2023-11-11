@@ -34,37 +34,37 @@
                             <div class="row g-3">
                                 <div class="col-12 col-lg-6">
                                     <label for="Experience1" class="form-label">NRP</label>
-                                    <input type="text" class="form-control" id="Experience1" placeholder="Masukan NRP...." name="anggota_id">
+                                    <input type="text" class="form-control" id="Experience1" placeholder="Masukan NRP...." name="anggota_id" required>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Position1" class="form-label">Tanggal Lahir</label>
-                                    <input type="date" class="form-control" id="Position1"  required name="tanggal_lahir">
+                                    <input type="date" class="form-control" id="Position1"  required name="tanggal_lahir" required>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Experience1" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="Experience1" placeholder="Masukan Username" name="user">
+                                    <input type="text" class="form-control" id="Experience1" placeholder="Masukan Username" name="user" required>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Position1" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="Position1" placeholder="Masukkan Email...." required name="email">
+                                    <input type="email" class="form-control" id="Position1" placeholder="Masukkan Email...." required name="email" required>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Experience2" class="form-label">password</label>
-                                    <input type="text" class="form-control" id="Experience2" placeholder="Masukan Password ...." name="pass">
+                                    <input type="text" class="form-control" id="Experience2" placeholder="Masukan Password ...." name="pass" required>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="PhoneNumber" class="form-label">Alamat</label>
-                                    <input type="text" class="form-control" id="PhoneNumber" placeholder="Masukan Alamat..." name="alamat">
+                                    <input type="text" class="form-control" id="PhoneNumber" placeholder="Masukan Alamat..." name="alamat" required>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Experience3" class="form-label">Gambar</label>
-                                    <input type="file" class="form-control" id="Experience3" accept="image/*" name="foto">
+                                    <input type="file" class="form-control" id="Experience3" accept="image/*" name="foto" required>
                                     <!-- 'accept="image/*"' akan membatasi unggahan hanya pada file gambar -->
                                 </div>
 
                                 <div class="col-12 col-lg-6">
                                     <label for="Position" class="form-label">Jenis Kelamin</label>
-                                    <select class="form-select" id="Position" aria-label="Position" name="jenkel">
+                                    <select class="form-select" id="Position" aria-label="Position" name="jenkel" required>
                                         <option selected disabled>Pilih Jenis Kelamin</option>
                                         <option value="Laki-Laki">Laki-Laki</option>
                                         <option value="Perempuan">Perempuan</option>

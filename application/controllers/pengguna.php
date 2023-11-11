@@ -229,7 +229,7 @@ class Pengguna extends CI_Controller
             $result1 = $this->upload->data();
             $result = array('foto' => $result1);
             $data1 = array('upload_data' => $this->upload->data());
-            unlink('./assets_style/image/pengguna/' . $this->input->post('foto'));
+            unlink('./assets/images/pengguna/' . $this->input->post('foto'));
             if ($this->input->post('pass') !== '') {
                 $data = array(
                     'anggota_id' => $anggota_id,

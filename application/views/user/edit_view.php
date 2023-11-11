@@ -35,19 +35,19 @@
                              
                                 <div class="col-12 col-lg-6">
                                     <label for="NRP" class="form-label">NRP</label>
-                                    <input type="text" class="form-control" value="<?= $user->anggota_id; ?>" id="NRP" placeholder="NRP" name="anggota_id">
+                                    <input type="text" class="form-control" value="<?= $user->anggota_id; ?>" id="NRP" placeholder="NRP" name="anggota_id" required>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Position1" class="form-label">Tanggal Lahir</label>
-                                    <input type="date" class="form-control" value="<?= $user->tanggal_lahir; ?>" id="Position1"  required name="tanggal_lahir">
+                                    <input type="date" class="form-control" value="<?= $user->tanggal_lahir; ?>" id="Position1"  required name="tanggal_lahir" required>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" value="<?= $user->user; ?>" id="username" placeholder="Username..." name="user">
+                                    <input type="text" class="form-control" value="<?= $user->user; ?>" id="username" placeholder="Username..." name="user" required>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Position1" class="form-label">Email</label>
-                                    <input type="email" class="form-control" value="<?= $user->email; ?>" id="Position1" placeholder="Email..." required name="email">
+                                    <input type="email" class="form-control" value="<?= $user->email; ?>" id="Position1" placeholder="Email..." required name="email" required>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="pass" class="form-label">password</label>
@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="alamat" class="form-label">Alamat</label>
-                                    <input type="text" class="form-control" value="<?= $user->alamat; ?>" id="alamat" placeholder="Alamat" name="alamat">
+                                    <input type="text" class="form-control" value="<?= $user->alamat; ?>" id="alamat" placeholder="Alamat" name="alamat" required>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Experience3" class="form-label">Gambar</label>
@@ -65,7 +65,7 @@
 
                                 <div class="col-12 col-lg-6">
                                     <label for="Position" class="form-label">Jenis Kelamin</label>
-                                    <select class="form-select" id="Position" aria-label="Position" name="jenkel">
+                                    <select class="form-select" id="Position" aria-label="Position" name="jenkel" required>
                                         <option selected disabled>Pilih Jenis Kelamin</option>
                                         <option <?php if ($user->jenkel == 'Laki-Laki') {
                                                     echo 'selected';

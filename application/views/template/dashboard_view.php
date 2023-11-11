@@ -233,7 +233,7 @@
                     Pengumuman
                     <?= $dataPengumuman ? $dataPengumuman[0]->Tanggal : '' ?>
                 </h4>
-                <div class="name">
+                <div class="row gap-3">
                     <?php
                     if ($dataPengumuman) {
                         foreach ($dataPengumuman as $item) {
@@ -242,16 +242,19 @@
                                 $pegawaiTujuan = $pengumuman['Pegawai_Tujuan'];
                                 $isi = $pengumuman['Isi_Pengumuman'];
                                 ?>
-                                <details>
+                                <div>
+                                    
                                     <summary class="h6 text-light">
                                         <?= $pegawaiTujuan; ?>
                                     </summary>
                                     <div class="cardCustom">
                                         <p><span class="labelDesc">Deskripsi Job:</span>
-                                            <?= $isi; ?>
+                                            <div class="textLabel">
+                                                <?= $isi; ?>
+                                            </div>
                                         </p>
                                     </div>
-                                </details>
+                                </div>
                                 <?php
                             }
                             ?>

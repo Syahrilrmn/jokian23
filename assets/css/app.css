@@ -75,6 +75,7 @@
 }
 .labelDesc{
 	font-weight: 500;
+	font-size: 14px;
 	text-transform: capitalize;
 }
 .name {
@@ -127,7 +128,10 @@
 }
 
 
-
+.textLabel{
+	font-size: 14px;
+	font-weight: 400;
+}
 .button3 {
 	cursor: pointer;
 	padding: 10px 30px;
