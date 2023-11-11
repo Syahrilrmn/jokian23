@@ -132,29 +132,42 @@
 <!--app JS-->
 <script src="<?php echo base_url(); ?>assets/js/app.js"></script>
 <script>
-		$(document).ready(function() {
-			$('#example').DataTable();
-		  } );
-	</script>
-	<script>
-		$(document).ready(function() {
-			var table = $('#example2').DataTable( {
-				lengthChange: false,
-				buttons: [ 'copy', 'excel', 'pdf', 'print']
-			} );
-		 
-			table.buttons().container()
-				.appendTo( '#example2_wrapper .col-md-6:eq(0)' );
-		} );
-	</script>
-  <script>
-  // notifikasi gagal di hide
-  //$("#notifikasi").hide();
-  var logingagal = function () {
-    $("#notifikasi").fadeOut('slow');
-  };
-  setTimeout(logingagal, 4000);
+  $(document).ready(function() {
+    $('#example').DataTable();
+  });
 </script>
+<script>
+  $(document).ready(function() {
+    var table = $('#example2').DataTable({
+      lengthChange: false,
+      buttons: ['copy', 'excel', 'pdf', 'print']
+    });
+
+    table.buttons().container()
+      .appendTo('#example2_wrapper .col-md-6:eq(0)');
+  });
+</script>
+<script>
+    function closeAlert() {
+        try {
+            const alertSuccess = document.getElementById('alertBerhasil');
+            const alertFailed = document.getElementById('alertGagal');
+            if (alertSuccess) {
+                alertSuccess.style.display = 'none';
+            } else if (alertFailed) {
+                alertFailed.style.display = 'none';
+            }
+        } catch (error) {
+            // Tangani kesalahan di sini jika diperlukan
+        }
+    }
+
+    // Tambahkan kode untuk menutup otomatis setelah 3 detik
+    setTimeout(function () {
+        closeAlert();
+    }, 5000); // 5000 milidetik (5 detik)
+</script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 

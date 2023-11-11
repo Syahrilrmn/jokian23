@@ -204,3 +204,11 @@
         return true; // Lanjutkan dengan mengajukan formulir
     }
 </script>
+<script>
+  // notifikasi gagal di hide
+  //$("#notifikasi").hide();
+  var logingagal = function () {
+    $("#notifikasi").fadeOut('slow');
+  };
+  setTimeout(logingagal, 4000);
+</script>

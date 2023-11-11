@@ -269,18 +269,6 @@ class TransaksiBarang extends CI_Controller
 	}
 	
 
-	
-
-	
-	
-
-
-	
-	
-	
-
-	
-
 	public function kembalipinjam()
 	{
 		$this->data['nop'] = $this->M_Admin->buat_kode('peminjamanbarang', 'PJ', 'Pinjam_id', 'ORDER BY Pinjam_id DESC LIMIT 1');
