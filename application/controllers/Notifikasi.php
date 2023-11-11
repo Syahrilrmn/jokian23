@@ -1,6 +1,18 @@
 <?php
 class Notifikasi extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct(); 
+        $this->data['CI'] = &get_instance();
+        $this->load->helper(array('form', 'url'));
+        if ($this->session->userdata('masuk') != true) {
+            $url = base_url('login');
+            redirect($url);
+        }
+
+    }
+
     public function index()
     {
         $this->data['idbo'] = $this->session->userdata('ses_id');

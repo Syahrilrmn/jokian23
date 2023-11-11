@@ -99,6 +99,8 @@
                                                 <th>Tanggal Pengambilan</th>
                                                 <th>Jumlah Liter</th>
                                                 <th>Created At</th>
+                                                <th>Updated At</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -119,14 +121,26 @@
                                                         <?= $isi->kendaraan; ?>
                                                     </td>
                                                     <td>
-                                                    <?= date('d-m-Y', strtotime($isi->tanggal_pengambilan)); ?>
+                                                        <?= date('d-m-Y', strtotime($isi->tanggal_pengambilan)); ?>
                                                     </td>
                                                     <td>
                                                         <?= $isi->jumlah_liter; ?>
                                                     </td>
                                                     <td>
-                                                    <?= date('d-m-Y H:i:s', strtotime($isi->created_at)); ?>
+                                                        <?= date('d-m-Y H:i:s', strtotime($isi->created_at)); ?>
 
+                                                    </td>
+                                                    <td>
+                                                        <?= date('d-m-Y H:i:s', strtotime($isi->updated_at)); ?>
+                                                    </td>
+
+                                                    <td>
+                                                        
+                                                            <a
+                                                                href="<?= base_url('SolarTransaction/edit/' . $isi->id_transaksi_solar); ?>"><button
+                                                                    class="btn btn-success"><i
+                                                                        class="fa fa-edit"></i></button></a>
+                                                        
                                                     </td>
 
                                                 </tr>
@@ -135,7 +149,8 @@
                                     </table>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="<?php echo base_url("SolarTransaction"); ?>" class="btn btn-primary"><i class='bx bx-radio-circle'></i>Lihat Semua History Transaksi Anda </a>
+                                    <a href="<?php echo base_url("SolarTransaction"); ?>" class="btn btn-primary"><i
+                                            class='bx bx-radio-circle'></i>Lihat Semua History Transaksi Anda </a>
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Close</button>
                                 </div>
@@ -147,108 +162,109 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-        <div class="col">
-            <div class="card radius-10">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <p class="mb-0 text-secondary">Data Pengguna</p>
-                            <h4 class="my-5">
-                                <?= $count_pengguna ?>
-                            </h4>
-                            <!-- <p class="mb-0 font-13 text-success"><i class='bx bxs-up-arrow align-middle'></i>$34 Since last week</p> -->
+        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+            <div class="col">
+                <div class="card radius-10">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <p class="mb-0 text-secondary">Data Pengguna</p>
+                                <h4 class="my-5">
+                                    <?= $count_pengguna ?>
+                                </h4>
+                                <!-- <p class="mb-0 font-13 text-success"><i class='bx bxs-up-arrow align-middle'></i>$34 Since last week</p> -->
+                            </div>
+                            <div class="widgets-icons bg-light-success text-success ms-auto"><i
+                                    class='bx bxs-group'></i>
+                            </div>
                         </div>
-                        <div class="widgets-icons bg-light-success text-success ms-auto"><i class='bx bxs-group'></i>
-                        </div>
+                        <!-- <div id="chart1"></div> -->
                     </div>
-                    <!-- <div id="chart1"></div> -->
                 </div>
             </div>
-        </div>
-        <div class="col">
-            <div class="card radius-10">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <p class="mb-0 text-secondary">Data Barang</p>
-                            <h4 class="my-5">
-                                <?= $count_barang ?>
-                            </h4>
-                            <!-- <p class="mb-0 font-13 text-success"><i class='bx bxs-up-arrow align-middle'></i>14% Since last week</p> -->
+            <div class="col">
+                <div class="card radius-10">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <p class="mb-0 text-secondary">Data Barang</p>
+                                <h4 class="my-5">
+                                    <?= $count_barang ?>
+                                </h4>
+                                <!-- <p class="mb-0 font-13 text-success"><i class='bx bxs-up-arrow align-middle'></i>14% Since last week</p> -->
+                            </div>
+                            <div class="widgets-icons bg-light-warning text-warning ms-auto"><i
+                                    class='bx bxs-briefcase'></i>
+                            </div>
                         </div>
-                        <div class="widgets-icons bg-light-warning text-warning ms-auto"><i
-                                class='bx bxs-briefcase'></i>
-                        </div>
+                        <!-- <div id="chart2"></div> -->
                     </div>
-                    <!-- <div id="chart2"></div> -->
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card radius-10">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <p class="mb-0 text-secondary">Data Peminjaman</p>
+                                <h4 class="my-5">
+                                    <?= $count_pinjam ?>
+                                </h4>
+                                <!-- <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>12.4% Since last week</p> -->
+                            </div>
+                            <div class="widgets-icons bg-light-primary text-primary ms-auto"><i
+                                    class='bx bxs-bookmark-plus'></i>
+                            </div>
+                        </div>
+                        <!-- <div id="chart3"></div> -->
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="col">
-            <div class="card radius-10">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            <p class="mb-0 text-secondary">Data Peminjaman</p>
-                            <h4 class="my-5">
-                                <?= $count_pinjam ?>
-                            </h4>
-                            <!-- <p class="mb-0 font-13 text-danger"><i class='bx bxs-down-arrow align-middle'></i>12.4% Since last week</p> -->
-                        </div>
-                        <div class="widgets-icons bg-light-primary text-primary ms-auto"><i
-                                class='bx bxs-bookmark-plus'></i>
-                        </div>
-                    </div>
-                    <!-- <div id="chart3"></div> -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="e-card playing">
-        <div class="image"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="infotop">
-            <h4 class="text-light">
-                Pengumuman
-                <?= $dataPengumuman ? $dataPengumuman[0]->Tanggal : '' ?>
-            </h4>
-            <div class="name">
-                <?php
-                if ($dataPengumuman) {
-                    foreach ($dataPengumuman as $item) {
-                        $isiPengumuman = json_decode($item->Isi_Pengumuman, true);
-                        foreach ($isiPengumuman as $pengumuman) {
-                            $pegawaiTujuan = $pengumuman['Pegawai_Tujuan'];
-                            $isi = $pengumuman['Isi_Pengumuman'];
+        <div class="e-card playing">
+            <div class="image"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="infotop">
+                <h4 class="text-light">
+                    Pengumuman
+                    <?= $dataPengumuman ? $dataPengumuman[0]->Tanggal : '' ?>
+                </h4>
+                <div class="name">
+                    <?php
+                    if ($dataPengumuman) {
+                        foreach ($dataPengumuman as $item) {
+                            $isiPengumuman = json_decode($item->Isi_Pengumuman, true);
+                            foreach ($isiPengumuman as $pengumuman) {
+                                $pegawaiTujuan = $pengumuman['Pegawai_Tujuan'];
+                                $isi = $pengumuman['Isi_Pengumuman'];
+                                ?>
+                                <details>
+                                    <summary class="h6 text-light">
+                                        <?= $pegawaiTujuan; ?>
+                                    </summary>
+                                    <div class="cardCustom">
+                                        <p><span class="labelDesc">Deskripsi Job:</span>
+                                            <?= $isi; ?>
+                                        </p>
+                                    </div>
+                                </details>
+                                <?php
+                            }
                             ?>
-                            <details>
-                                <summary class="h6 text-light">
-                                    <?= $pegawaiTujuan; ?>
-                                </summary>
-                                <div class="cardCustom">
-                                    <p><span class="labelDesc">Deskripsi Job:</span>
-                                        <?= $isi; ?>
-                                    </p>
-                                </div>
-                            </details>
+
                             <?php
                         }
-                        ?>
-
+                    } else { ?>
+                        <h5 style="text-transform: capitalize;" class="text-light">Tidak Ada Pengumuman Bray</h5>
                         <?php
-                    }
-                } else { ?>
-                    <h5 style="text-transform: capitalize;" class="text-light">Tidak Ada Pengumuman Bray</h5>
-                    <?php
 
-                }
-                ?>
+                    }
+                    ?>
+                </div>
             </div>
         </div>
     </div>
@@ -257,7 +273,7 @@
 <?php $jumlahStokSolar = $count_solar->jumlah_stok; ?>
 <script>
     var jumlahStokSolar = <?= $jumlahStokSolar; ?>;
-    var maxJumlahStok = 10000; // Atur nilai maksimal yang sesuai
+    var maxJumlahStok = 100000; // Atur nilai maksimal yang sesuai
 
     var progres = jumlahStokSolar / maxJumlahStok;
 

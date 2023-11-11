@@ -1,6 +1,16 @@
 <?php
 class Solar extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct(); 
+        $this->data['CI'] = &get_instance();
+        $this->load->helper(array('form', 'url'));
+        if ($this->session->userdata('masuk') != true) {
+            $url = base_url('login');
+            redirect($url);
+        }
+    }
     public function index()
     {
         $role = $this->session->userdata('level');
@@ -47,7 +57,7 @@ class Solar extends CI_Controller
 
     public function edit($id)
     {
-        var_dump($this->session->userdata);
+       
         $role = $this->session->userdata('level');
         if ($role != 'Admin') {
             redirect('Dashboard'); 

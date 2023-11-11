@@ -9,7 +9,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--favicon-->
-	<link rel="icon" href="<?php echo base_url(); ?>assets/images/favicon-32x32.png" type="image/png" />
+	<link rel="icon" href="<?php echo base_url(); ?>assets/images/logo.png" type="image/png" />
 	<!--plugins-->
 	<link href="<?php echo base_url(); ?>assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
 	<link href="<?php echo base_url(); ?>assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
@@ -24,7 +24,7 @@
 	<link href="<?php echo base_url(); ?>assets/css/app.css" rel="stylesheet">
 	<link href="<?php echo base_url(); ?>assets/css/icons.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-	<title>Sistem Informasi Menajemen</title>
+	<title>Sistem Informasi Menajemen United Tractors</title>
 </head>
 
 <body class="">
@@ -38,11 +38,11 @@
 							<div class="card-body">
 								<div class="p-4">
 									<div class="mb-3 text-center">
-										<img src="<?php echo base_url(); ?>assets/images/logo-icon.png" width="60" alt="" />
+										<img src="<?php echo base_url(); ?>assets/images/logo.png" width="60" alt="" />
 									</div>
 									<div class="text-center mb-4">
-										<h5 class="">Syndron Admin</h5>
-										<p class="mb-0">Please log in to your account</p>
+										<h5 class="">Sistem Informasi Menjamen United Tractors</h5>
+										
 									</div>
 									<div class="form-body">
 										<form action="<?= base_url('login/auth'); ?>" method="POST" class="row g-3" id="loginForm">

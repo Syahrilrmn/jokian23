@@ -3,18 +3,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Pengguna extends CI_Controller
 {
-    function __construct()
+    public function __construct()
     {
-        parent::__construct();
+        parent::__construct(); 
         //validasi jika user belum login
         $this->data['CI'] = &get_instance();
         $this->load->helper(array('form', 'url'));
         $this->load->model('M_Admin');
-        //  	if($this->session->userdata('masuk_perpus') != TRUE){
-        // 		$url=base_url('eror');
-        // 		redirect($url);
-        // 	}
-        $this->load->library('pdf');
+        $this->load->model('Statistik');
+        $this->load->model('M_login');
+        if ($this->session->userdata('masuk') != true) {
+            $url = base_url('login');
+            redirect($url);
+        }
+
+        
     }
 
     public function index()
@@ -29,22 +32,8 @@ class Pengguna extends CI_Controller
         $this->load->view('user/user_view', $this->data);
         $this->load->view('template/footer_view', $this->data);
     }
-    public function laporan()
-    {
-        $this->data['idbo'] = $this->session->userdata('ses_id');
-        $this->data['user'] = $this->M_Admin->get_table("tbl_login WHERE level = 'Pengguna'");
-        $this->data['title_web'] = 'Data Pengguna ';
-        $this->load->view('header_view', $this->data);
-        $this->load->view('sidebar_view', $this->data);
-        $this->load->view('user/laporan_user', $this->data);
-        $this->load->view('footer_view', $this->data);
-    }
-    public function cetak()
-    {
-        $this->data['title_web'] = 'Cetak Pengguna ';
-        $this->data['user'] = $this->M_Admin->get_table("tbl_login WHERE level = 'Pengguna'");
-        $this->load->view('user/user_print', $this->data);
-    }
+    
+    
     public function tambah()
     {
         $this->data['idbo'] = $this->session->userdata('ses_id');
@@ -105,8 +94,6 @@ class Pengguna extends CI_Controller
     }
     public function add()
     {
-
-
         $anggota_id = htmlentities($this->input->post('anggota_id', TRUE));
         $tanggal_lahir = htmlentities($this->input->post('tanggal_lahir', TRUE));
         $user = htmlentities($this->input->post('user', TRUE));
@@ -181,7 +168,7 @@ class Pengguna extends CI_Controller
             if ($this->input->post('pass') !== '') {
                 $data = array(
                     'anggota_id' => $anggota_id,
-                'tanggal_lahir' => $tanggal_lahir,
+                    'tanggal_lahir' => $tanggal_lahir,
                     'user' => $user,
                     'pass' => md5($pass),
                     'email' => $_POST['email'],
@@ -192,7 +179,7 @@ class Pengguna extends CI_Controller
                 if ($this->session->userdata('level') == 'Admin') {
                     if ($this->db->affected_rows() > 0) {
                         $status = 'Berhasil';
-                        $pesan = 'Data pengguna Berhasil Di Update'  ;
+                        $pesan = 'Data pengguna Berhasil Di Update';
                     } else {
                         $status = 'Gagal';
                         $pesan = 'Data pengguna Gagal Di Update';
@@ -210,7 +197,7 @@ class Pengguna extends CI_Controller
             } else {
                 $data = array(
                     'anggota_id' => $anggota_id,
-                'tanggal_lahir' => $tanggal_lahir,
+                    'tanggal_lahir' => $tanggal_lahir,
                     'user' => $user,
                     'pass' => md5($pass),
                     'email' => $_POST['email'],
@@ -259,7 +246,7 @@ class Pengguna extends CI_Controller
                 if ($this->session->userdata('level') == 'Admin') {
                     if ($this->db->affected_rows() > 0) {
                         $status = 'Berhasil';
-                        $pesan = 'Data pengguna Berhasil Di Update' ;
+                        $pesan = 'Data pengguna Berhasil Di Update';
                     } else {
                         $status = 'Gagal';
                         $pesan = 'Data pengguna Gagal Di Update';
@@ -277,7 +264,7 @@ class Pengguna extends CI_Controller
             } else {
                 $data = array(
                     'anggota_id' => $anggota_id,
-                'tanggal_lahir' => $tanggal_lahir,
+                    'tanggal_lahir' => $tanggal_lahir,
                     'user' => $user,
                     'pass' => md5($pass),
                     'email' => $_POST['email'],
@@ -308,7 +295,7 @@ class Pengguna extends CI_Controller
             }
         }
     }
-    
+
     public function del()
     {
         if ($this->uri->segment('3') == '') {

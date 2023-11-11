@@ -65,25 +65,27 @@
     function print_d() {
         window.print();
     }
-    window.onfocus = function() {
+    window.onfocus = function () {
         window.close();
     }
 </script>
 
-<title>Laporan Barang</title>
+<title>Laporan Transakasi Solar</title>
 
 <div class="container-fluid">
     <center>
         <table class="kop">
             <tr style="margin-right: 10px;">
-                <td rowspan="5"><img src="<?php echo base_url('assets_style/image/logo-mts.png'); ?>" height="80" alt="" class="gambar"></td>
+                <td rowspan="5"><img src="<?php echo base_url('assets/images/logo.png'); ?>" height="80" alt=""
+                        class="gambar"></td>
             </tr>
 
             <tr style="margin-left: 20px;">
-                <td style="font-size: 20px; font-weight: bold;">PERPUSTAKAAN MTS SYEKH KHALID ASTAMBUL</td>
-            </tr>
+                <td style="font-size: 30px; font-weight: bold; ">PT UNITED TRACTORS Tbk</td>
+            </tr >
             <tr>
-                <td style=" font-style:italic">Alamat: Jl. Jembatan Gantung Pingaran Ilir RT.01 Kec. Astambul, Kab.Banjar, Kalimantan Selatan 70671</td>
+                <td style=" font-style:italic">Alamat: Jl. A. Yani No.Km 13,5
+                    RT.008, Gambut, Kec. Gambut, Banjar, Kalimantan Selatan 70652</td>
             </tr>
         </table>
     </center>
@@ -94,7 +96,7 @@
     <center>
         <br>
         <table class="kop">
-            <td style="font-size: 30px; font-weight: bold;">Laporan Data Barang</td>
+            <td style="font-size: 30px; font-weight: bold;">Laporan Transaksi Solar</td>
         </table>
     </center>
 
@@ -109,10 +111,14 @@
             <thead style="line-height: 20px;">
 
                 <tr>
-                <th>No</th>
-                                <th>Kode Barang</th>
-                                <th>Nama Barang</th>
-                                <th>Jumlah Stok</th>
+                    <th>No</th>
+                    <th>Id Transaksi</th>
+                    <th>Nama</th>
+                    <th>No Plat</th>
+                    <th>Kendaraan</th>
+                    <th>Tanggal Pengambilan</th>
+                    <th>Jumlah Liter</th>
+                    <th>Di Input Pada</th>
 
                 </tr>
 
@@ -134,26 +140,38 @@
                     11 => 'November',
                     12 => 'Desember'
                 ];
-                if (empty($databarang)) {
+                if (empty($data)) {
                     echo "<tr><td colspan='5'>Data tidak ada</td></tr>";
                 } else {
-                    foreach ($databarang as $isi) { ?>
+                    foreach ($data as $isi) { ?>
                         <tr>
-                        <td>
-                                        <?= $no; ?>
-                                    </td>
-                                    <td>
-                                        <?= $isi['kode_barang']; ?>
-                                    </td>
-                                    <td>
-                                        <?= $isi['Nama_Barang']; ?>
-                                    </td>
-                                    <td>
-                                        <?= $isi['Stok']; ?>
-                                    </td>
+                            <td>
+                                <?= $no; ?>
+                            </td>
+                            <td>
+                                <?= $isi->id_transaksi_solar; ?>
+                            </td>
+                            <td>
+                                <?= $isi->user; ?>
+                            </td>
+                            <td>
+                                <?= $isi->no_plat; ?>
+                            </td>
+                            <td>
+                                <?= $isi->kendaraan; ?>
+                            </td>
+                            <td>
+                                <?= date('d-m-Y', strtotime($isi->tanggal_pengambilan)); ?>
 
+                            </td>
+                            <td>
+                                <?= $isi->jumlah_liter; ?>
+                            </td>
+                            <td>
+                                <?= $isi->created_at; ?>
+                            </td>
                         </tr>
-                <?php $no++;
+                        <?php $no++;
                     }
                 } ?>
             </tbody>
@@ -166,7 +184,8 @@
         <br>
         <br>
         <br>
-        <span style="font-size:16px; font-weight:bold; font-family: Times New Roman; ">Astambul, <span id="tanggal"></span></span>
+        <span style="font-size:16px; font-weight:bold; font-family: Times New Roman; ">Astambul, <span
+                id="tanggal"></span></span>
         <br>
         <span style="font-size:16px; font-weight:bold; font-family: Times New Roman;">Penanggung Jawab</span>
         <br>
@@ -177,9 +196,11 @@
         <?php
         $d = $this->db->query("SELECT * FROM tbl_login WHERE id_login")->row();
         ?>
-        <span style="font-size:16px; font-weight:bold; font-family: Times New Roman;"><?= $d->user; ?></span>
+        <span style="font-size:16px; font-weight:bold; font-family: Times New Roman;">
+            <?= $d->user; ?>
+        </span>
         <hr size="2px" color="black" style="margin-top: 1px;">
-        <h4 style="margin-top: 1px; margin-right:120px;">NIP .</h4>
+        <h4 style="margin-top: 1px; margin-right:120px;">NRP .</h4>
 
     </div>
 

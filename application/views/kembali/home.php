@@ -31,10 +31,43 @@
         </div>
         <!--end breadcrumb-->
 
-        <h6 class="mb-0 text-uppercase">Semua Data </h6>
+        <h6 class="mb-0 text-uppercase">Data Barang Di Kembalikan </h6>
         <hr />
         <div class="card">
             <div class="card-body">
+                <?php
+                // Fungsi untuk mendapatkan nilai parameter dari URL
+                function getParameter($name)
+                {
+                    return isset($_GET[$name]) ? htmlspecialchars($_GET[$name]) : null;
+                }
+
+                // Mendapatkan nilai parameter dari URL
+                $startDateParam = getParameter('start_date');
+                $endDateParam = getParameter('end_date');
+                ?>
+                <form method="get" class="row gap-2 mb-2" onsubmit="return checkDate()">
+                    <div class="col-auto">
+                        <input type="date" class="form-control" name="start_date" required id="startDate"
+                            value="<?php echo $startDateParam; ?>">
+                    </div>
+                    <div class="col-auto">
+                        <input type="date" name="end_date" class="form-control" required id="endDate"
+                            value="<?php echo $endDateParam; ?>" onchange="checkDate()">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary">Filter</button>
+                    </div>
+                    <div class="col-auto">
+                        <div class="btn-group">
+                            <button onclick="printData()" href="<?php echo base_url("SolarTransaction/print"); ?>"
+                                type="button" target="_blank" class="btn btn-success px-5">
+                                <i class='fa fa-print mr-1'></i> Cetak Data
+                            </button>
+                        </div>
+                    </div>
+                    <p>Filter Berdasarkan Tanggal Kembali</p>
+                </form>
                 <div class="table-responsive">
                     <table id="example2" class="table table-striped table-bordered">
                         <thead>
@@ -68,16 +101,31 @@
                                         <?= $isi['Nama_Barang']; ?>
                                     </td>
                                     <td>
-                                        <?= $isi['Tanggal_Peminjaman']; ?>
+                                        <?= date('d-m-Y', strtotime($isi['Tanggal_Peminjaman'])); ?>
+
                                     </td>
                                     <td>
-                                        <?= $isi['Tanggal_Pengembalian']; ?>
+                                        <?= date('d-m-Y', strtotime($isi['Tanggal_Pengembalian'])); ?>
+
                                     </td>
                                     <td>
                                         <?= $isi['status']; ?>
                                     </td>
-                                    <td>
-                                        <?= $isi['tgl_kembali']; ?>
+                                    <?php
+                                    // Check if the Tanggal_Pengembalian is overdue
+                                    $tanggalPengembalian = strtotime($isi['Tanggal_Pengembalian']);
+                                    $currentDate = strtotime(date('Y-m-d'));
+                                    $daysOverdue = floor(($currentDate - $tanggalPengembalian) / (60 * 60 * 24));
+                                    ?>
+                                    <td class="<?= ($tanggalPengembalian < $currentDate) ? 'bg-danger text-light' : ''; ?>">
+                                        <?= date('d-m-Y', strtotime($isi['tgl_kembali'])); ?>
+                                        <?php if ($daysOverdue > 0): ?>
+                                            <br>
+                                            <small class=' text-light'>Di Kemablikan Dengan Telat, lewat
+                                                <?= $daysOverdue ?> hari
+                                            </small>
+                                        <?php endif; ?>
+
                                     </td>
                                     <td>
                                         <?= $isi['Jumlah']; ?>
@@ -85,9 +133,11 @@
 
                                     <td>
                                         <center>
-                                            
-                                            
-                                            <a href="<?= base_url('transaksibarang/prosespinjam?ID_Peminjaman=' . $isi['ID_Peminjaman']); ?>" onclick="return confirm('Anda yakin Peminjaman Ini akan dihapus ?');" class="btn btn-danger btn-sm" title="Batal">
+
+
+                                            <a href="<?= base_url('transaksibarang/prosespinjam?ID_Peminjaman=' . $isi['ID_Peminjaman']); ?>"
+                                                onclick="return confirm('Anda yakin Peminjaman Ini akan dihapus ?');"
+                                                class="btn btn-danger btn-sm" title="Batal">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </center>
@@ -96,7 +146,7 @@
                                         
                                     </td> -->
                                 </tr>
-                            <?php $no++;
+                                <?php $no++;
                             } ?>
                         </tbody>
 
@@ -107,3 +157,33 @@
     </div>
 
 </div>
+
+<script>
+    function printData() {
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
+
+        // Pemeriksaan untuk memastikan start_date tidak lebih besar dari end_date
+        const check = checkDate()
+        if (!check) {
+            return;
+        }
+
+        var printUrl = "<?php echo base_url('TransaksiBarang/printKembali'); ?>";
+        printUrl += "?start_date=" + startDate + "&end_date=" + endDate;
+
+        window.open(printUrl, '_blank');
+    }
+
+    function checkDate() {
+        var startDate = new Date(document.getElementById("startDate").value);
+        var endDate = new Date(document.getElementById("endDate").value);
+
+        // Pemeriksaan untuk memastikan start_date tidak lebih besar dari end_date
+        if (startDate > endDate) {
+            alert("Start Date tidak boleh lebih besar dari End Date");
+            return false;
+        }
+        return true; // Lanjutkan dengan mengajukan formulir
+    }
+</script>

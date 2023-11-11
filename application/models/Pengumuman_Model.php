@@ -68,7 +68,7 @@ class Pengumuman_Model extends CI_Model{
 
 
     public function update_pengumuman($id){
-        var_dump($id);
+    
         $pegawaiTujuan = $this->input->post('namaPegawai');
         $isiPengumuman = $this->input->post('isiPengumuman');
         $tanggal = $this->input->post('tanggal');

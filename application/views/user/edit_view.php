@@ -13,18 +13,7 @@
                     </ol>
                 </nav>
             </div>
-            <div class="ms-auto">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary">Settings</button>
-                    <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item" href="javascript:;">Action</a>
-                        <a class="dropdown-item" href="javascript:;">Another action</a>
-                        <a class="dropdown-item" href="javascript:;">Something else here</a>
-                        <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated link</a>
-                    </div>
-                </div>
-            </div>
+           
         </div>
         <!--end breadcrumb-->
 
@@ -43,29 +32,30 @@
                         <form form action="<?php echo base_url('pengguna/upd'); ?>" method="POST" enctype="multipart/form-data">
 
                             <div class="row g-3">
+                             
                                 <div class="col-12 col-lg-6">
-                                    <label for="Experience1" class="form-label">NRP</label>
-                                    <input type="text" class="form-control" value="<?= $user->anggota_id; ?>" id="Experience1" placeholder="Experience 1" name="anggota_id">
+                                    <label for="NRP" class="form-label">NRP</label>
+                                    <input type="text" class="form-control" value="<?= $user->anggota_id; ?>" id="NRP" placeholder="Experience 1" name="anggota_id">
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Position1" class="form-label">Tanggal Lahir</label>
-                                    <input type="date" class="form-control" value="<?= $user->tanggal_lahir; ?>" id="Position1" placeholder="masukan Gmail...." required name="tanggal_lahir">
+                                    <input type="date" class="form-control" value="<?= $user->tanggal_lahir; ?>" id="Position1"  required name="tanggal_lahir">
                                 </div>
                                 <div class="col-12 col-lg-6">
-                                    <label for="Experience1" class="form-label">Username</label>
-                                    <input type="text" class="form-control" value="<?= $user->user; ?>" id="Experience1" placeholder="Experience 1" name="user">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" value="<?= $user->user; ?>" id="username" placeholder="Username..." name="user">
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Position1" class="form-label">Email</label>
-                                    <input type="email" class="form-control" value="<?= $user->email; ?>" id="Position1" placeholder="masukan Gmail...." required name="email">
+                                    <input type="email" class="form-control" value="<?= $user->email; ?>" id="Position1" placeholder="Email..." required name="email">
                                 </div>
                                 <div class="col-12 col-lg-6">
-                                    <label for="Experience2" class="form-label">password</label>
-                                    <input type="text" class="form-control"  id="Experience2" placeholder="Experience 2" name="pass">
+                                    <label for="pass" class="form-label">password</label>
+                                    <input type="text" class="form-control"  id="Experience2" placeholder="Password..." name="pass">
                                 </div>
                                 <div class="col-12 col-lg-6">
-                                    <label for="PhoneNumber" class="form-label">Alamat</label>
-                                    <input type="text" class="form-control" value="<?= $user->alamat; ?>" id="PhoneNumber" placeholder="Position" name="alamat">
+                                    <label for="alamat" class="form-label">Alamat</label>
+                                    <input type="text" class="form-control" value="<?= $user->alamat; ?>" id="alamat" placeholder="Alamat" name="alamat">
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Experience3" class="form-label">Gambar</label>

@@ -84,15 +84,14 @@ class Solar_Transaction_Model extends CI_Model
         if ($query->num_rows() > 0) {
             $result = $query->row();
             $data['solar_terakhir'] = $result->jumlah_stok;
-            if ($data['solar_terakhir'] === "0") {
+            if ($result->jumlah_stok === "0") {
                 $response = [
                     'status' => false,
                     'message' => 'Stok Solar Sedang Habis',
-
                 ];
                 return $response;
             }
-            if ($data['solar_terakhir'] < $data['jumlah_liter']) {
+            if ($result->jumlah_stok < $data['jumlah_liter']) {
                 $response = [
                     'status' => false,
                     'message' => 'Stok Solar Tidak Mencukupi'
@@ -123,24 +122,58 @@ class Solar_Transaction_Model extends CI_Model
 
 
 
-    public function get_solar_by_id($id)
+    public function get_solar_transaction_by_id($id)
     {
-        return $this->db->get_where('solar', ['ID_Solar' => $id])->row();
+        return $this->db->get_where('transaksi_solar', ['id_transaksi_solar' => $id])->row();
     }
 
 
-    public function update_solar($id)
+    public function update_solar_transaction($id)
     {
         $data = [
-            'jumlah_stok' => $this->input->post('jumlahSolar')
+            'tanggal_pengambilan' => $this->input->post('tanggalPengambilan'),
+            'jumlah_liter' => $this->input->post('jumlahLiter'),
+            'no_plat' => $this->input->post('noPlat'),
+            'kendaraan' => $this->input->post('kendaraan'),
         ];
-        $this->db->update('solar', $data, ['ID_Solar' => $id]);
+
+        $this->db->select('jumlah_stok');
+        $this->db->from('solar');
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+            $data['solar_terakhir'] = $result->jumlah_stok;
+            if ($result->jumlah_stok === "0") {
+
+
+                $this->session->set_flashdata('status', 'gagal');
+                $this->session->set_flashdata('pesan', 'Stok Solar Sedang Habis');
+                return;
+            }
+            if ($result->jumlah_stok < $data['jumlah_liter']) {
+
+                $this->session->set_flashdata('status', 'gagal');
+                $this->session->set_flashdata('pesan', 'Stok Solar Tidak Mencukupi');
+
+                return;
+            } else {
+                $jumlahStokTerbaru = $data['solar_terakhir'] - $data['jumlah_liter'];
+                $this->db->set('jumlah_stok', $jumlahStokTerbaru);
+                $this->db->update('solar');
+            }
+        } else {
+            $data['solar_terakhir'] = 0;
+        }
+
+
+        $this->db->update('transaksi_solar', $data, ['id_transaksi_solar' => $id]);
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('status', 'Berhasil');
-            $this->session->set_flashdata('pesan', 'Data Solar Berhasil Di Edit');
+            $this->session->set_flashdata('pesan', 'Data Transaksi Di Edit');
         } else {
             $this->session->set_flashdata('status', 'Gagal');
-            $this->session->set_flashdata('pesan', 'Data Solar Gagal diTambahkan');
+            $this->session->set_flashdata('pesan', 'Data Transaksi Gagal Di Edit');
         }
     }
 

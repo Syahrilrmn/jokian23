@@ -3,26 +3,13 @@
 class M_Admin extends CI_Model
 {
   private $tabel = "tbl_anggota";
-  public function get_anggotaa()
-  {
-    return $this->db->get($this->tabel)->result();
-  }
+  
   private $tabel2 = "tbl_login";
-  public function get_userr()
-  {
-    return $this->db->get($this->tabel2)->result();
-  }
+  
   private $tabel3 = "tbl_buku";
-  public function get_bukuu()
-  {
-    return $this->db->get($this->tabel3)->result();
-  }
+  
   private $tabel4 = "tbl_pinjam";
-  public function get_pinjamm()
-  {
-    return $this->db->get($this->tabel4)->result();
-  }
-
+  
 
   public function __construct()
   {
@@ -69,11 +56,7 @@ class M_Admin extends CI_Model
     }
   }
 
-  public function insertTable($table_name, $data)
-  {
-    $tambah = $this->db->insert($table_name, $data);
-    return $tambah;
-  }
+ 
 
   public function LastinsertId($table_name, $data)
   {
@@ -185,11 +168,7 @@ class M_Admin extends CI_Model
     return $return->result_array();
   }
 
-  public function rp($angka)
-  {
-    $hasil_rupiah = "Rp" . number_format($angka, 0, ',', '.') . ',-';
-    return $hasil_rupiah;
-  }
+
 
 
   public function buat_kode($table_name, $kodeawal, $idkode, $orderbylimit)
@@ -213,36 +192,8 @@ class M_Admin extends CI_Model
 }
 
 
-  public function buat_kode_join($table_name, $kodeawal, $idkode)
-  {
-    $query = $this->db->query($table_name); // cek dulu apakah ada sudah ada kode di tabel.
-    if ($query->num_rows() > 0) {
-      //jika kode ternyata sudah ada.
-      $hasil = $query->row();
-      $kd = $hasil->$idkode;
-      $cd = $kd;
-      $kode = $cd + 1;
-      $kodejadi = $kodeawal . "00" . $kode;    // hasilnya CUS-0001 dst.
-      $kdj = $kodejadi;
-    } else {
-      //jika kode belum ada
-      $kode = 0 + 1;
-      $kodejadi = $kodeawal . "00" . $kode;    // hasilnya CUS-0001 dst.
-      $kdj = $kodejadi;
-    }
-    return $kdj;
-  }
-
-  public function acak($panjang)
-  {
-    $karakter = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789';
-    $string = '';
-    for ($i = 0; $i < $panjang; $i++) {
-      $pos = rand(0, strlen($karakter) - 1);
-      $string .= $karakter[$pos];
-    }
-    return $string;
-  }
+  
+  
 
 
   // -------------------------------------new revisi-------------------------------------------
@@ -255,101 +206,14 @@ class M_Admin extends CI_Model
     $kode_barang = "BRG" . $kode_max;
     return $kode_barang;
   }
-  public function generate_kode_bukumasuk()
-  {
-    $query = $this->db->query("SELECT MAX(RIGHT(buku_id,3)) as max_kode FROM tbl_bukumasuk");
-    $kode = intval($query->row()->max_kode);
-    $kode = $kode + 1;
-    $kode_max = str_pad($kode, 3, "0", STR_PAD_LEFT);
-    $kode_barang = "BKM" . $kode_max;
-    return $kode_barang;
-  }
-  public function generate_kode_anggota()
-  {
-    $query = $this->db->query("SELECT MAX(RIGHT(kode_anggota,4)) as max_kode FROM tbl_anggota");
-    $kode = intval($query->row()->max_kode);
-    $kode = $kode + 1;
-    $kode_max = str_pad($kode, 4, "0", STR_PAD_LEFT);
-    $kode_barang = "AGT" . $kode_max;
-    return $kode_barang;
-  }
-  public function generate_kode_pengguna()
-  {
-    $query = $this->db->query("SELECT MAX(RIGHT(anggota_id,4)) as max_kode FROM tbl_login");
-    $kode = intval($query->row()->max_kode);
-    $kode = $kode + 1;
-    $kode_max = str_pad($kode, 4, "0", STR_PAD_LEFT);
-    $kode_barang = "AGT" . $kode_max;
-    return $kode_barang;
-  }
-  public function getDataBuku()
-  {
-    // $this->db->join('t_kth c', 'c.id = b.kth', 'inner');
-    // $this->db->order_by('b.id', 'ASC');
-    $this->db->select('tbl_buku.*, tbl_kategori.nama_kategori, tbl_rak.nama_rak');
-    $this->db->from('tbl_buku');
-    $this->db->join('tbl_kategori', 'tbl_buku.id_kategori = tbl_kategori.id_kategori');
-    $this->db->join('tbl_rak', 'tbl_buku.id_rak = tbl_rak.id_rak');
-    $return = $this->db->get();
-    return $return->result_array();
-  }
-  public function getDataview()
-  {
-    $this->db->select('tbl_buku.*, tbl_kategori.nama_kategori, tbl_rak.nama_rak');
-    $this->db->from('tbl_buku');
-    $this->db->join('tbl_kategori', 'tbl_buku.id_kategori = tbl_kategori.id_kategori');
-    $this->db->join('tbl_rak', 'tbl_buku.id_rak = tbl_rak.id_rak');
+  
 
-    // Menggunakan CAST untuk mengonversi jumlah_view menjadi angka sebelum pengurutan
-    $this->db->select('tbl_buku.*, tbl_kategori.nama_kategori, tbl_rak.nama_rak, CAST(tbl_buku.jumlah_view AS SIGNED) AS numeric_view', false);
+  
+  
+  
 
-    // Mengurutkan berdasarkan numeric_view yang sudah dikonversi
-    $this->db->order_by('numeric_view', 'DESC');
+  
 
-    $return = $this->db->get();
-    return $return->result_array();
-  }
 
-  public function generate_kode_buku()
-  {
-    $query = $this->db->query("SELECT MAX(RIGHT(buku_id,3)) as max_kode FROM tbl_buku");
-    $kode = intval($query->row()->max_kode);
-    $kode = $kode + 1;
-    $kode_max = str_pad($kode, 3, "0", STR_PAD_LEFT);
-    $kode_barang = "BK" . $kode_max;
-    return $kode_barang;
-  }
-
-  // statistik
-
-  public function getVisitorStatistics()
-  {
-    // Query untuk mengambil statistik pengunjung per bulan
-    $query = $this->db->query("SELECT DATE_FORMAT(tgl_kunjung, '%Y-%m') AS month, COUNT(*) AS count
-                             FROM tbl_pengunjung
-                             GROUP BY month
-                             ORDER BY month");
-
-    return $query->result();
-  }
-  public function getGenderStatistics()
-  {
-      // Query untuk mengambil statistik anggota berdasarkan jenis kelamin
-      $query = $this->db->query("SELECT jenkel, COUNT(*) AS count
-                             FROM tbl_login
-                             GROUP BY jenkel");
-
-      return $query->result();
-  }
-
-  // new 
-  public function get_pengguna_by_id($id_login) {
-    // Ambil data pengguna dari tabel 'tbl_login' berdasarkan 'id_login'
-    $this->db->where('id_login', $id_login);
-    $query = $this->db->get('tbl_login');
-
-    // Kembalikan hasil query sebagai objek
-    return $query->row();
-}
 
 }

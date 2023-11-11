@@ -14,24 +14,12 @@
 					</ol>
 				</nav>
 			</div>
-			<div class="ms-auto">
-				<div class="btn-group">
-					<button type="button" class="btn btn-primary">Settings</button>
-					<button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
-					</button>
-					<div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item" href="javascript:;">Action</a>
-						<a class="dropdown-item" href="javascript:;">Another action</a>
-						<a class="dropdown-item" href="javascript:;">Something else here</a>
-						<div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated
-							link</a>
-					</div>
-				</div>
-			</div>
+			
 		</div>
 		<!--end breadcrumb-->
 		<div class="row">
 			<div class="col-xl-9 mx-auto">
-				<h6 class="mb-0 text-uppercase">Tamabah Transaksi Peminjaman</h6>
+				<h6 class="mb-0 text-uppercase">Tambah Transaksi Peminjaman</h6>
 				<hr />
 				<div class="card">
 					<div class="card-body">
@@ -73,11 +61,11 @@
 							</div>
 							<div class="col-md-6">
 								<label for="input1" class="form-label">Tanggal Pinjam</label>
-								<input type="date" name="Tanggal_Peminjaman" class="form-control" id="input1" value="<?= date('Y-m-d'); ?>">
+								<input type="date" name="Tanggal_Peminjaman" class="form-control" id="input1" value="<?= date('Y-m-d'); ?>" required>
 							</div>
 							<div class="col-md-6">
 								<label for="input2" class="form-label">Tanggal Kembali</label>
-								<input type="date" name="Tanggal_Pengembalian" class="form-control" id="input2" placeholder="Last Name">
+								<input type="date" name="Tanggal_Pengembalian" class="form-control" id="input2" placeholder="Last Name" required>
 							</div>
 							<div class="input-group mb-3">
 
@@ -109,7 +97,7 @@
 								</div>
 							</div>
 							<div class="input-group"> <span class="input-group-text">Jumlah</span>
-								<input type="text" class="form-control" name="Jumlah" id="inputjumlah" placeholder="Jumlah......" aria-label="Jumlah">
+								<input type="text" class="form-control" name="Jumlah" id="inputjumlah" placeholder="Jumlah......" aria-label="Jumlah" required>
 							</div>
 							<div class="col-md-12">
 								<div class="d-md-flex d-grid align-items-center gap-3">

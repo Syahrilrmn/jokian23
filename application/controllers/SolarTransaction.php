@@ -1,6 +1,17 @@
 <?php
 class SolarTransaction extends CI_Controller
 {
+
+    public function __construct()
+    {
+        parent::__construct(); 
+        $this->data['CI'] = &get_instance();
+        $this->load->helper(array('form', 'url'));
+        if ($this->session->userdata('masuk') != true) {
+            $url = base_url('login');
+            redirect($url);
+        }
+    }
     public function index()
     {
         // TransactionController.php
@@ -8,9 +19,9 @@ class SolarTransaction extends CI_Controller
         $data = [];
         $this->load->model('Solar_Transaction_Model');
 
-        if ($this->input->post()) {
-            $start_date = $this->input->post('start_date');
-            $end_date = $this->input->post('end_date');
+        if ($this->input->get()) {
+            $start_date = $this->input->get('start_date');
+            $end_date = $this->input->get('end_date');
             $data = $this->Solar_Transaction_Model->getDataByDateRange($start_date, $end_date);
         } else {
             $data = $this->Solar_Transaction_Model->get_solar_transaction_list();
@@ -39,22 +50,38 @@ class SolarTransaction extends CI_Controller
     {
         $this->load->model('Solar_Transaction_Model');
         if (isset($_POST['simpan'])) {
-            $this->Solar_Transaction_Model->update_solar($id);
-            redirect('solar');
+            $this->Solar_Transaction_Model->update_solar_transaction($id);
+            redirect('SolarTransaction');
         } else {
-            $data = $this->Solar_Transaction_Model->get_solar_by_id($id);
-            $this->data['title_web'] = 'Edit Data Solar';
+            $this->data['count_solar'] = $this->db->query("SELECT jumlah_stok FROM solar")->row();
+            $data = $this->Solar_Transaction_Model->get_solar_transaction_by_id($id);
+            $this->data['title_web'] = 'Edit Data Transaksi Solar';
             $this->load->view('template/header_view', $this->data);
             $this->load->view('template/sidebar_view');
-            $this->load->view('solar/editSolar', ['data' => $data]);
+            $this->load->view('transactionSolar/transaction_edit', ['data' => $data]);
             $this->load->view('template/footer_view');
         }
     }
 
-    public function delete($id)
-    {
+    
+
+
+    public function print(){
+        $data = [];
         $this->load->model('Solar_Transaction_Model');
-        $this->Solar_Transaction_Model->delete_solar($id);
-        redirect('solar');
+
+        if ($this->input->get() && $this->input->get('start_date')) {
+            $start_date = $this->input->get('start_date');
+            $end_date = $this->input->get('end_date');
+            $data = $this->Solar_Transaction_Model->getDataByDateRange($start_date, $end_date);
+        } else {
+            $data = $this->Solar_Transaction_Model->get_solar_transaction_list();
+        }
+
+        $this->data['idbo'] = $this->session->userdata('ses_id');
+        $this->data['title_web'] = 'Data Transaksi Solar';
+       
+        $this->load->view('transactionSolar/transaction_print', ['data' => $data]);
+        
     }
 }

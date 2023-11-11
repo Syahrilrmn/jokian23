@@ -9,7 +9,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--favicon-->
-  <link rel="icon" href="<?php echo base_url(); ?>assets/images/favicon-32x32.png" type="image/png" />
+  <link rel="icon" href="<?php echo base_url(); ?>assets/images/logo.png" type="image/png" />
   <!--plugins-->
   <link href="<?php echo base_url(); ?>assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
   <link href="<?php echo base_url(); ?>assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
@@ -24,56 +24,63 @@
   <link href="<?php echo base_url(); ?>assets/css/app.css" rel="stylesheet">
   <link href="<?php echo base_url(); ?>assets/css/icons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-  <title>Syndron - Bootstrap 5 Admin Dashboard Template</title>
+  <title>Sistem Informasi Menajemen United Tractors</title>
   <style>
-    
+
   </style>
 </head>
 
 <body class="">
   <!--wrapper-->
   <div class="wrapper">
-    <div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
-      <div class="container">
-        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-          <div class="col mx-auto">
+    <div class="section-authentication-signin my-5">
+      <div class="container" >
+        <div class="row-cols-1  " >
+          <div class="col " style="padding-top:5px;">
             <div class="card mb-0">
-              <div class="card-body">
+              <div class="card-body mt-10">
                 <div class="p-4">
-                  <div class="mb-1 text-center">
-                    <img src="<?php echo base_url(); ?>assets/images/logo-icon.png" width="60" alt="" />
+                  <div class="mb-3 text-center">
+                    <img src="<?php echo base_url(); ?>assets/images/logo.png" width="60" alt="" />
                   </div>
-                  <div class="text-center mb-0">
-                    <h5 class="">Syndron Admin</h5>
-                    <p class="mb-0">Please Register to your account</p>
+                  <div class="text-center mb-4">
+                    <h5 class="">Sistem Informasi Menjamen United Tractors</h5>
                   </div>
                   <div class="form-body">
-                    <form form action="<?php echo base_url('login/do_register'); ?>" method="POST" enctype="multipart/form-data" id="registerForm">
+                    <form form action="<?php echo base_url('login/do_register'); ?>" method="POST"
+                      enctype="multipart/form-data" id="registerForm">
                       <div class="col-12">
                         <label for="inputEmailAddress" class="form-label">NRP</label>
-                        <input type="text" class="form-control" name="anggota_id" id="inputEmailAddress" placeholder="Masukan NRP ....">
+                        <input type="text" class="form-control" name="anggota_id" id="inputEmailAddress"
+                          placeholder="Masukan NRP ....">
                       </div>
                       <div class="col-12">
                         <label for="inputEmailAddress" class="form-label">Masukan Nama </label>
-                        <input type="text" class="form-control" name="user" id="inputEmailAddress" placeholder="Masukan Nama Anda....">
+                        <input type="text" class="form-control" name="user" id="inputEmailAddress"
+                          placeholder="Masukan Nama Anda....">
                       </div>
                       <div class="col-12">
                         <label for="inputEmailAddress" class="form-label">Masukan tanggal lahir </label>
-                        <input type="date" class="form-control" name="tanggal_lahir" id="inputEmailAddress" placeholder="Masukan Nama Anda....">
+                        <input type="date" class="form-control" name="tanggal_lahir" id="inputEmailAddress"
+                          placeholder="Masukan Nama Anda....">
                       </div>
                       <div class="col-12">
                         <label for="inputEmailAddress" class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" id="inputEmailAddress" placeholder="Masukan Email Anda....">
+                        <input type="email" class="form-control" name="email" id="inputEmailAddress"
+                          placeholder="Masukan Email Anda....">
                       </div>
                       <div class="col-12">
                         <label for="inputChoosePassword" class="form-label">Password</label>
                         <div class="input-group" id="show_hide_password">
-                          <input type="text" class="form-control border-end-0" name="pass" id="inputChoosePassword" placeholder="Enter Password"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                          <input type="text" class="form-control border-end-0" name="pass" id="inputChoosePassword"
+                            placeholder="Enter Password"> <a href="javascript:;"
+                            class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
                         </div>
                       </div>
                       <div class="col-12">
                         <label for="inputEmailAddress" class="form-label">Alamat</label>
-                        <input type="text" class="form-control" name="alamat" id="inputEmailAddress" placeholder="Masukan Alamat Anda....">
+                        <input type="text" class="form-control" name="alamat" id="inputEmailAddress"
+                          placeholder="Masukan Alamat Anda....">
                       </div>
                       <div class="col-12">
                         <label for="inputGender" class="form-label">Jenis Kelamin</label>
@@ -85,10 +92,11 @@
                       <div class="col-12">
                         <label for="inputChoosePassword" class="form-label">Foto</label>
                         <div class="input-group">
-                          <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" accept="image/*" name="foto">
+                          <input type="file" class="form-control" id="inputGroupFile04"
+                            aria-describedby="inputGroupFileAddon04" aria-label="Upload" accept="image/*" name="foto">
                         </div>
-                      </div>            
-                      <br>          
+                      </div>
+                      <br>
                       <div class="col-12">
                         <div class="d-grid">
                           <button type="submit" class="btn btn-primary" id="registerButton">Register</button>
@@ -102,54 +110,53 @@
                       </div>
                     </form>
                   </div>
-                 
+
 
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <!--end row-->
       </div>
     </div>
   </div>
   <!-- ... Bagian HTML lainnya ... -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-<script>
-    document.getElementById('registerForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        var formData = new FormData(this);
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      var formData = new FormData(this);
 
-        // Kirim data formulir menggunakan Ajax
-        fetch('<?= base_url('login/do_register'); ?>', {
-            method: 'POST',
-            body: formData
-        })
+      // Kirim data formulir menggunakan Ajax
+      fetch('<?= base_url('login/do_register'); ?>', {
+        method: 'POST',
+        body: formData
+      })
         .then(response => response.json())
         .then(data => {
-            if (data.status === 'success') {
-                Swal.fire({
-                    title: 'Registrasi Berhasil!',
-                    text: data.message,
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then(function() {
-                    window.location.href = '<?= base_url('login'); ?>';
-                });
-            } else {
-                Swal.fire({
-                    title: 'Registrasi Gagal!',
-                    text: data.message,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
+          if (data.status === 'success') {
+            Swal.fire({
+              title: 'Registrasi Berhasil!',
+              text: data.message,
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then(function () {
+              window.location.href = '<?= base_url('login'); ?>';
+            });
+          } else {
+            Swal.fire({
+              title: 'Registrasi Gagal!',
+              text: data.message,
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }
         })
         .catch(error => {
-            console.error('Error:', error);
+          console.error('Error:', error);
         });
     });
-</script>
+  </script>
 
   <!-- ... Bagian HTML lainnya ... -->
 
@@ -163,8 +170,8 @@
   <script src="<?php echo base_url(); ?>assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
   <!--Password show & hide js -->
   <script>
-    $(document).ready(function() {
-      $("#show_hide_password a").on('click', function(event) {
+    $(document).ready(function () {
+      $("#show_hide_password a").on('click', function (event) {
         event.preventDefault();
         if ($('#show_hide_password input').attr("type") == "text") {
           $('#show_hide_password input').attr('type', 'password');
