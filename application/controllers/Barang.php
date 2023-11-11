@@ -15,7 +15,6 @@ class Barang extends CI_Controller
 			$url = base_url('login');
 			redirect($url);
 		}
-		$this->load->library('pdf');
 	}
 
 	public function index()

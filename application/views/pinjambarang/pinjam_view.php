@@ -32,7 +32,7 @@
             <?php if ($this->session->userdata('level') == 'Admin') { ?>
                 <div class="ms-auto">
                     <div class="btn-group">
-                        <a href="<?php echo base_url("Transaksibarang/pinjam"); ?>" class="btn btn-success px-5">
+                        <a href="<?php echo base_url("TransaksiBarang/pinjam"); ?>" class="btn btn-success px-5">
                             <i class='fa fa-plus mr-1'></i> Tambah Data
                         </a>
                     </div>
@@ -144,14 +144,14 @@
                                         <td>
                                             <center>
 
-                                                <a href="<?= base_url('transaksibarang/kembalipinjam/' . $isi['Pinjam_id']); ?>"
+                                                <a href="<?= base_url('TransaksiBarang/kembalipinjam/' . $isi['Pinjam_id']); ?>"
                                                     class="btn btn-warning btn-sm" title="pengembalian buku">
                                                     <i class="fa fa-sign-out"></i> Kembalikan
                                                 </a>
                                                 <!-- <a href="<?= base_url('transaksibarang/prosespinjam?ID_Peminjaman=' . $isi['ID_Peminjaman']); ?>" onclick="return confirm('Anda yakin Peminjaman Ini akan dihapus ?');" class="btn btn-primary btn-sm" title="Batal">
                                                 <i class="fa fa-edit"></i>
                                             </a> -->
-                                                <a href="<?= base_url('transaksibarang/prosespinjam?ID_Peminjaman=' . $isi['ID_Peminjaman']); ?>"
+                                                <a href="<?= base_url('TransaksiBarang/prosespinjam?ID_Peminjaman=' . $isi['ID_Peminjaman']); ?>"
                                                     onclick="return confirm('Anda yakin Peminjaman Ini akan dihapus ?');"
                                                     class="btn btn-danger btn-sm" title="Batal">
                                                     <i class="fa fa-trash"></i>

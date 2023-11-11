@@ -26,7 +26,7 @@
 						<?php
 						$d = $this->db->query("SELECT * FROM tbl_login WHERE id_login")->row();
 						?>
-						<form form action="<?php echo base_url('transaksibarang/prosespinjam'); ?>" method="POST" enctype="multipart/form-data" class="row g-3">
+						<form form action="<?php echo base_url('TransaksiBarang/prosespinjam'); ?>" method="POST" enctype="multipart/form-data" class="row g-3">
 							<div class="input-group">
 								<span class="input-group-text" id="basic-addon3">Nomor Peminjaman</span>
 								<input type="text" name="Pinjam_id" value="<?= $nop; ?>" class="form-control" readonly>
@@ -243,14 +243,14 @@
 			$('#TableBarang').modal('hide');
 			$.ajax({
 				type: "POST",
-				url: "<?php echo base_url('transaksibarang/barang'); ?>",
+				url: "<?php echo base_url('TransaksiBarang/barang'); ?>",
 				data: 'kode_buku=' + $(this).attr("data-id"),
 				beforeSend: function() {
 					$("#result_barang").html("");
 					$("#result_tunggu_barang").html('<p style="color:green"><blink>tunggu sebentar</blink></p>');
 				},
 				success: function(html) {
-					$("#result_barang").load("<?= base_url('transaksibarang/barang_list'); ?>");
+					$("#result_barang").load("<?= base_url('TransaksiBarang/barang_list'); ?>");
 					$("#result_tunggu_barang").html('');
 				}
 			});
@@ -263,13 +263,13 @@
 			$("#barang-search").keyup(function() {
 				$.ajax({
 					type: "POST",
-					url: "<?php echo base_url('transaksibarang/barang'); ?>",
+					url: "<?php echo base_url('TransaksiBarang/barang'); ?>",
 					data: 'kode_buku=' + $(this).val(),
 					beforeSend: function() {
 						$("#result_tunggu_barang").html('<p style="color:green"><blink>tunggu sebentar</blink></p>');
 					},
 					success: function(html) {
-						$("#result_barang").load("<?= base_url('transaksibarang/barang_list'); ?>");
+						$("#result_barang").load("<?= base_url('TransaksiBarang/barang_list'); ?>");
 						$("#result_tunggu_barang").html('');
 					}
 				});
@@ -283,7 +283,7 @@
 			$('#TableAnggota').modal('hide');
 			$.ajax({
 				type: "POST",
-				url: "<?php echo base_url('transaksibarang/result'); ?>",
+				url: "<?php echo base_url('TransaksiBarang/result'); ?>",
 				data: 'kode_anggota=' + $(this).attr("data-id"),
 				beforeSend: function() {
 					$("#result").html("");
@@ -303,7 +303,7 @@
 			$("#search-box").keyup(function() {
 				$.ajax({
 					type: "POST",
-					url: "<?php echo base_url('transaksibarang/result'); ?>",
+					url: "<?php echo base_url('TransaksiBarang/result'); ?>",
 					data: 'kode_anggota=' + $(this).val(),
 					beforeSend: function() {
 						$("#result").html("");

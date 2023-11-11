@@ -135,7 +135,7 @@
                                         <center>
 
 
-                                            <a href="<?= base_url('transaksibarang/prosespinjam?ID_Peminjaman=' . $isi['ID_Peminjaman']); ?>"
+                                            <a href="<?= base_url('TransaksiBarang/prosespinjam?ID_Peminjaman=' . $isi['ID_Peminjaman']); ?>"
                                                 onclick="return confirm('Anda yakin Peminjaman Ini akan dihapus ?');"
                                                 class="btn btn-danger btn-sm" title="Batal">
                                                 <i class="fa fa-trash"></i>

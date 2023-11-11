@@ -60,7 +60,7 @@
 							<?php
 							$d = $this->db->query("SELECT * FROM tbl_login WHERE id_login")->row();
 							?>
-							<form form action="<?php echo base_url('transaksibarang/prosespinjam'); ?>" method="POST" enctype="multipart/form-data" class="row g-3">
+							<form form action="<?php echo base_url('TransaksiBarang/prosespinjam'); ?>" method="POST" enctype="multipart/form-data" class="row g-3">
 								<div class="input-group">
 									<span class="input-group-text" id="basic-addon3">Nomor Peminjaman</span>
 									<input type="text" name="Pinjam_id" value="<?= $this->data['pinjam']->Pinjam_id; ?>" class="form-control" readonly>
@@ -154,7 +154,7 @@
 
 										<!-- <input type="hidden" name="tambah" value="tambah">
 										<button type="submit" class="btn btn-primary px-4">Submit</button> -->
-										<a href="<?= base_url('Transaksibarang'); ?>" class="btn btn-danger  px-4">Kembali</a>
+										<a href="<?= base_url('TransaksiBarang'); ?>" class="btn btn-danger  px-4">Kembali</a>
 										<span class="input-group-btn">
 											<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#TableBarang"><i class="fa fa-sign-out"></i> Kembalikan </button>
 										</span>
@@ -229,7 +229,7 @@
 					</div>
 					<div class="modal-footer">
 						<!--  -->
-						<a href="<?= base_url('transaksibarang/prosespinjam?kembali=' . $this->data['pinjam']->Pinjam_id); ?>">
+						<a href="<?= base_url('TransaksiBarang/prosespinjam?kembali=' . $this->data['pinjam']->Pinjam_id); ?>">
 							<button class="btn btn-primary"> Proses Pengembalian</button></a>
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
 					</div>

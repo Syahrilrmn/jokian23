@@ -318,10 +318,10 @@ class TransaksiBarang extends CI_Controller
 				// Menyimpan hasil query ke dalam $this->data['pinjam']
 				$this->data['pinjam'] = $query->row();
 			} else {
-				echo '<script>alert("DETAIL TIDAK DITEMUKAN");window.location="' . base_url('transaksibarang') . '"</script>';
+				echo '<script>alert("DETAIL TIDAK DITEMUKAN");window.location="' . base_url('TransaksiBarang') . '"</script>';
 			}
 		} else {
-			echo '<script>alert("DETAIL TIDAK DITEMUKAN");window.location="' . base_url('transaksibarang') . '"</script>';
+			echo '<script>alert("DETAIL TIDAK DITEMUKAN");window.location="' . base_url('TransaksiBarang') . '"</script>';
 		}
 
 
@@ -387,7 +387,7 @@ class TransaksiBarang extends CI_Controller
 			}
 			$this->session->set_flashdata('status', $status);
 			$this->session->set_flashdata('pesan', $pesan);
-			redirect(base_url('transaksibarang'));
+			redirect(base_url('TransaksiBarang'));
 		}
 
 
@@ -462,12 +462,12 @@ class TransaksiBarang extends CI_Controller
 			}
 			$this->session->set_flashdata('status', $status);
 			$this->session->set_flashdata('pesan', $pesan);
-			redirect(base_url('transaksibarang'));
+			redirect(base_url('TransaksiBarang'));
 		}
 		// kembali barang
 		if ($this->input->get('kembali')) {
 			$id = $this->input->get('kembali');
-			$pinjam = $this->db->query("SELECT * FROM Peminjamanbarang WHERE Pinjam_id = '$id'")->row();
+			$pinjam = $this->db->query("SELECT * FROM peminjamanbarang WHERE Pinjam_id = '$id'")->row();
 
 			if ($pinjam) {
 				// Ubah status dan tanggal kembali
@@ -478,7 +478,7 @@ class TransaksiBarang extends CI_Controller
 
 				// Update data peminjaman
 				$this->db->where('Pinjam_id', $id);
-				$this->db->update('Peminjamanbarang', $data);
+				$this->db->update('peminjamanbarang', $data);
 				if ($this->db->affected_rows() > 0) {
 					$status = 'Berhasil';
 					$pesan = 'Data pengembalian Barang Berhasil ';
@@ -500,14 +500,14 @@ class TransaksiBarang extends CI_Controller
 			}
 
 			// Redirect ke halaman 'transaksibarang'
-			redirect(base_url('transaksibarang'));
+			redirect(base_url('TransaksiBarang'));
 		} else {
 			// Jika parameter 'kembali' tidak ditemukan, tampilkan pesan error
 			$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-danger">
 			<p> Parameter Pengembalian Tidak Valid!</p>
 			</div></div>');
 			// Redirect ke halaman 'transaksibarang'
-			redirect(base_url('transaksibarang'));
+			redirect(base_url('TransaksiBarang'));
 		}
 
 
@@ -699,7 +699,7 @@ class TransaksiBarang extends CI_Controller
 		unset($cart[$index]);
 		$this->session->set_userdata('cart', serialize($cart));
 		// redirect('jual/tambah');
-		echo '<script>$("#result_barang").load("' . base_url('transaksibarang/barang_list') . '");</script>';
+		echo '<script>$("#result_barang").load("' . base_url('TransaksiBarang/barang_list') . '");</script>';
 	}
 
 	private function exists($id)

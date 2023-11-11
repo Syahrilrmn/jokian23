@@ -35,7 +35,7 @@
                              
                                 <div class="col-12 col-lg-6">
                                     <label for="NRP" class="form-label">NRP</label>
-                                    <input type="text" class="form-control" value="<?= $user->anggota_id; ?>" id="NRP" placeholder="Experience 1" name="anggota_id">
+                                    <input type="text" class="form-control" value="<?= $user->anggota_id; ?>" id="NRP" placeholder="NRP" name="anggota_id">
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Position1" class="form-label">Tanggal Lahir</label>
