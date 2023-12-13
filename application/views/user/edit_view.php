@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Position1" class="form-label">Tanggal Lahir</label>
-                                    <input type="date" class="form-control" value="<?= $user->tanggal_lahir; ?>" id="Position1"  required name="tanggal_lahir" required>
+                                    <input type="date" class="form-control" value="<?= $user->tanggal_lahir; ?>" id="Position1"   name="tanggal_lahir" required>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="username" class="form-label">Username</label>
@@ -47,11 +47,11 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Position1" class="form-label">Email</label>
-                                    <input type="email" class="form-control" value="<?= $user->email; ?>" id="Position1" placeholder="Email..." required name="email" required>
+                                    <input type="email" class="form-control" value="<?= $user->email; ?>" id="Position1" placeholder="Email..."  name="email" required>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="pass" class="form-label">password</label>
-                                    <input type="text" class="form-control"  id="Experience2" placeholder="Password..." name="pass">
+                                    <input type="password" class="form-control"  placeholder="Password..." name="pass">
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="alamat" class="form-label">Alamat</label>
@@ -96,29 +96,30 @@
                     <form form action="<?php echo base_url('pengguna/upd'); ?>" method="POST" enctype="multipart/form-data">
 
                             <div class="row g-3">
+                               
                                 <div class="col-12 col-lg-6">
                                     <label for="Experience1" class="form-label">NRP</label>
-                                    <input type="text" class="form-control" value="<?= $user->anggota_id; ?>" id="Experience1" placeholder="Experience 1" name="anggota_id" readonly>
+                                    <input type="text" class="form-control" value="<?= $user->anggota_id; ?>" id="Experience1" placeholder="Experience 1" name="anggota_id"  disabled>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Position1" class="form-label">Tanggal Lahir</label>
-                                    <input type="date" class="form-control" value="<?= $user->tanggal_lahir; ?>" id="Position1" placeholder="masukan Gmail...." required name="tanggal_lahir" readonly>
+                                    <input type="date" class="form-control" value="<?= $user->tanggal_lahir; ?>" id="Position1" placeholder="masukan Gmail...." required name="tanggal_lahir" disabled>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Experience1" class="form-label">Username</label>
-                                    <input type="text" class="form-control" value="<?= $user->user; ?>" id="Experience1" placeholder="Experience 1" name="user" readonly>
+                                    <input type="text" class="form-control" value="<?= $user->user; ?>" id="Experience1" placeholder="Experience 1" name="user" disabled>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Position1" class="form-label">Email</label>
-                                    <input type="email" class="form-control" value="<?= $user->email; ?>" id="Position1" placeholder="masukan Gmail...." required name="email" readonly>
+                                    <input type="email" class="form-control" value="<?= $user->email; ?>" id="Position1" placeholder="masukan Gmail...." required name="email" disabled>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Experience2" class="form-label">password</label>
-                                    <input type="text" class="form-control"  id="Experience2" placeholder="Experience 2" name="pass" >
+                                    <input type="password" class="form-control"  id="Experience2" placeholder="Password..." name="pass" >
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="PhoneNumber" class="form-label">Alamat</label>
-                                    <input type="text" class="form-control" value="<?= $user->alamat; ?>" id="PhoneNumber" placeholder="Position" name="alamat" readonly>
+                                    <input type="text" class="form-control" value="<?= $user->alamat; ?>" id="PhoneNumber" placeholder="Position" name="alamat" disabled>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="Experience3" class="form-label">Gambar</label>
@@ -128,8 +129,8 @@
 
                                 <div class="col-12 col-lg-6">
                                     <label for="Position" class="form-label">Jenis Kelamin</label>
-                                    <select class="form-select" id="Position" aria-label="Position" name="jenkel" readonly>
-                                        <option selected disabled>Pilih Jenis Kelamin</option>
+                                    <select class="form-select" id="Position" aria-label="Position" name="jenkel" required>
+                                        <option selected disabled value="">Pilih Jenis Kelamin</option>
                                         <option <?php if ($user->jenkel == 'Laki-Laki') {
                                                     echo 'selected';
                                                 } ?>>Laki-Laki</option>

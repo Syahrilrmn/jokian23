@@ -5,7 +5,7 @@ class Pengguna extends CI_Controller
 {
     public function __construct()
     {
-        parent::__construct(); 
+        parent::__construct();
         //validasi jika user belum login
         $this->data['CI'] = &get_instance();
         $this->load->helper(array('form', 'url'));
@@ -16,15 +16,15 @@ class Pengguna extends CI_Controller
             $url = base_url('login');
             redirect($url);
         }
-
-        
     }
 
     public function index()
     {
         $this->data['idbo'] = $this->session->userdata('ses_id');
-        $this->data['user'] = $this->M_Admin->get_table('tbl_login');
-        // $this->data['user'] = $this->M_Admin->get_table("tbl_login WHERE level = 'Pengguna'");
+       
+      
+        $this->db->where('status', 'active');
+        $this->data['user'] = $this->db->get('tbl_login')->result_array();
 
         $this->data['title_web'] = 'Data Pengguna ';
         $this->load->view('template/header_view', $this->data);
@@ -32,8 +32,8 @@ class Pengguna extends CI_Controller
         $this->load->view('user/user_view', $this->data);
         $this->load->view('template/footer_view', $this->data);
     }
-    
-    
+
+
     public function tambah()
     {
         $this->data['idbo'] = $this->session->userdata('ses_id');
@@ -47,16 +47,16 @@ class Pengguna extends CI_Controller
     }
 
 
-    public function edit()
+    public function edit($id)
     {
         // if($this->session->userdata('level') == 'Petugas'){
         if ($this->uri->segment('3') == '') {
             echo '<script>alert("halaman tidak ditemukan");window.location="' . base_url('user') . '";</script>';
         }
         $this->data['idbo'] = $this->session->userdata('ses_id');
-        $count = $this->M_Admin->CountTableId('tbl_login', 'id_login', $this->uri->segment('3'));
+        $count = $this->M_Admin->CountTableId('tbl_login', 'id_login', $id);
         if ($count > 0) {
-            $this->data['user'] = $this->M_Admin->get_tableid_edit('tbl_login', 'id_login', $this->uri->segment('3'));
+            $this->data['user'] = $this->M_Admin->get_tableid_edit('tbl_login', 'id_login', $id);
         } else {
             echo '<script>alert("Pengguna TIDAK DITEMUKAN");window.location="' . base_url('pengguna') . '"</script>';
         }
@@ -103,10 +103,12 @@ class Pengguna extends CI_Controller
         $email = $_POST['email'];
         $dd = $this->db->query("SELECT * FROM tbl_login WHERE user = '$user' OR email = '$email'");
         if ($dd->num_rows() > 0) {
-            $this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-warning">
-			<p> Gagal Update Pengguna : ' . $user . ' !, Username / Email Anda Sudah Terpakai</p>
-			</div></div>');
+            $status = 'Gagal';
+            $pesan = 'Username Atau Email sudah digunakan';
+            $this->session->set_flashdata('status', $status);
+            $this->session->set_flashdata('pesan', $pesan);
             redirect(base_url('pengguna/tambah'));
+            return;
         } else {
             // setting konfigurasi upload
             $nmfile = "user_" . time();
@@ -302,9 +304,10 @@ class Pengguna extends CI_Controller
             echo '<script>alert("halaman tidak ditemukan");window.location="' . base_url('pengguna') . '";</script>';
         }
 
-        $user = $this->M_Admin->get_tableid_edit('tbl_login', 'id_login', $this->uri->segment('3'));
-        unlink('./assets/images/pengguna/' . $user->foto);
-        $this->M_Admin->delete_table('tbl_login', 'id_login', $this->uri->segment('3'));
+      
+        $this->db->set('status', 'inactive');
+        $this->db->where('id_login', $this->uri->segment('3'));
+        $this->db->update('tbl_login');
         if ($this->db->affected_rows() > 0) {
             $status = 'Berhasil';
             $pesan = 'Data Pengguna Berhasil DiHapus';

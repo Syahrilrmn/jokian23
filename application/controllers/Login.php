@@ -27,15 +27,24 @@ class Login extends CI_Controller
 	{
 		// $this->data['idbo'] = $this->session->userdata('ses_id');
 		$this->data['count_pengguna'] = $this->db->query("SELECT * FROM tbl_login")->num_rows();
-		$email = htmlspecialchars($this->input->post('email', TRUE), ENT_QUOTES);
+		$username = htmlspecialchars($this->input->post('username', TRUE), ENT_QUOTES);
 		$pass = htmlspecialchars($this->input->post('pass', TRUE), ENT_QUOTES);
 
 		// Authenticate user
-		$proses_login = $this->M_login->GET_LOGIN($email, md5($pass)); // assuming the password is stored as MD5 hash in the database
+		$proses_login = $this->M_login->GET_LOGIN($username, md5($pass)); // assuming the password is stored as MD5 hash in the database
 		$row = $proses_login->num_rows();
 
 		if ($row > 0) {
 			$hasil_login = $proses_login->row_array();
+
+			if($hasil_login['status'] === 'inactive'){
+				$response = [
+					'status' => 'error',
+					'message' => 'Akun Anda Sudah Di Nonaktifkan Admin !!!'
+				];
+				echo json_encode($response);
+				return;
+			}
 			$nama_pengguna = $hasil_login['user'];
 
 			// Create session
@@ -45,7 +54,7 @@ class Login extends CI_Controller
 			$this->session->set_userdata('last_activity', time()); // Set waktu login terakhir
 			$this->session->set_userdata('anggota_id', $hasil_login['anggota_id']);
 
-			$d = $this->db->query("SELECT * FROM tbl_login WHERE id_login='" . $hasil_login['id_login'] . "'")->row();
+			
 
 			$response = [
 				'status' => 'success',
@@ -66,12 +75,7 @@ class Login extends CI_Controller
 
 	public function do_register()
 	{
-		// Create session
-		$this->session->set_userdata('masuk', TRUE);
-		$this->session->set_userdata('level', $hasil_login['level']);
-		$this->session->set_userdata('ses_id', $hasil_login['id_login']);
-		$this->session->set_userdata('last_activity', time()); // Set waktu login terakhir
-		$this->session->set_userdata('anggota_id', $hasil_login['anggota_id']);
+		
 
 		$anggota_id = htmlentities($this->input->post('anggota_id', TRUE));
 		$tanggal_lahir = htmlentities($this->input->post('tanggal_lahir', TRUE));
@@ -82,10 +86,12 @@ class Login extends CI_Controller
 		$email = $_POST['email'];
 		$dd = $this->db->query("SELECT * FROM tbl_login WHERE user = '$user' OR email = '$email'");
 		if ($dd->num_rows() > 0) {
-			$this->session->set_flashdata('pesan', '<div id="notifikasi"><div class="alert alert-warning">
-			<p> Gagal Update Pengguna : ' . $user . ' !, Username / Email Anda Sudah Terpakai</p>
-			</div></div>');
-			redirect(base_url('pengguna/tambah'));
+			$response = [
+				'status' => 'error',
+				'message' => 'Username atau Email sudah digunakan sudah digunakan !!!'
+			];
+			echo json_encode($response);
+			return;
 		} else {
 			// setting konfigurasi upload
 			$nmfile = "user_" . time();

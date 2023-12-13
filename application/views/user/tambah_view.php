@@ -1,6 +1,32 @@
 <?php if (!defined('BASEPATH')) exit('No direct script acess allowed'); ?>
 <div class="page-wrapper">
+
     <div class="page-content">
+    <?php
+        if (!empty($this->session->flashdata('pesan'))) {
+            if ($this->session->flashdata('status') == 'Berhasil') { ?>
+                <div class="alert alert-success alert-dismissible" id="alertBerhasil">
+                    <div class="close" data-dismiss="alert" aria-hidden="true" onclick="closeAlert(this)"
+                        style="cursor:pointer;font-size:20px;text-align:end;">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                    <h5><i class="icon fas fa-check"></i> Berhasil!</h5>
+                    <?= $this->session->flashdata('pesan'); ?>
+                </div>
+                <?php
+            } else { ?>
+                <div class="alert alert-danger alert-dismissible" id="alertGagal">
+                    <div class="close" data-dismiss="alert" aria-hidden="true" onclick="closeAlert(this)"
+                        style="cursor:pointer;font-size:20px;text-align:end;">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                    <h5><i class="icon fas fa-ban"></i> Gagal!</h5>
+                    <?= $this->session->flashdata('pesan'); ?>
+                </div>
+                <?php
+            }
+        }
+        ?>
         <!--breadcrumb-->
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
             <div class="breadcrumb-title pe-3">Forms</div>

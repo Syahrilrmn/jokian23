@@ -117,7 +117,7 @@
     </div>
   </div>
 </div>
-<!--end switcher-->
+<!--end switcher--> 
 <!-- Bootstrap JS -->
 <script src="<?php echo base_url(); ?>assets/js/bootstrap.bundle.min.js"></script>
 <!--plugins-->
@@ -127,6 +127,7 @@
 <script src="<?php echo base_url(); ?>assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
 <script src="<?php echo base_url(); ?>assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+
 <script src="https://kit.fontawesome.com/66202fe557.js" crossorigin="anonymous"></script>
 <!-- <script src="<?php echo base_url(); ?>assets/jquery-circle-progress-1.2.2/dist/circle-progress.js"></script> -->
 <!--app JS-->

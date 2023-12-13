@@ -276,7 +276,7 @@
 <?php $jumlahStokSolar = $count_solar->jumlah_stok; ?>
 <script>
     var jumlahStokSolar = <?= $jumlahStokSolar; ?>;
-    var maxJumlahStok = 100000; // Atur nilai maksimal yang sesuai
+    var maxJumlahStok = 5000; // Atur nilai maksimal yang sesuai
 
     var progres = jumlahStokSolar / maxJumlahStok;
 

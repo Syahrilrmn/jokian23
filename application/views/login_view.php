@@ -47,8 +47,8 @@
 									<div class="form-body">
 										<form action="<?= base_url('login/auth'); ?>" method="POST" class="row g-3" id="loginForm">
 											<div class="col-12">
-												<label for="inputEmailAddress" class="form-label">Email</label>
-												<input type="email" class="form-control" name="email" id="inputEmailAddress" placeholder="Masukan Gmail Anda.......">
+												<label for="inputEmailAddress" class="form-label">Username</label>
+												<input type="text" class="form-control" name="username" id="inputEmailAddress" placeholder="Masukan Username Anda.......">
 											</div>
 											<div class="col-12">
 												<label for="inputChoosePassword" class="form-label">Password</label>

@@ -34,8 +34,8 @@
   <!--wrapper-->
   <div class="wrapper">
     <div class="section-authentication-signin my-5">
-      <div class="container" >
-        <div class="row-cols-1  " >
+      <div class="container">
+        <div class="row-cols-1  ">
           <div class="col " style="padding-top:5px;">
             <div class="card mb-0">
               <div class="card-body mt-10">
@@ -47,53 +47,44 @@
                     <h5 class="">Sistem Informasi Menjamen United Tractors</h5>
                   </div>
                   <div class="form-body">
-                    <form form action="<?php echo base_url('login/do_register'); ?>" method="POST"
-                      enctype="multipart/form-data" id="registerForm">
+                    <form method="POST" enctype="multipart/form-data" id="registerForm">
                       <div class="col-12">
                         <label for="inputEmailAddress" class="form-label">NRP</label>
-                        <input type="text" class="form-control" name="anggota_id" id="inputEmailAddress"
-                          placeholder="Masukan NRP ....">
+                        <input type="text" class="form-control" name="anggota_id" id="inputEmailAddress" placeholder="Masukan NRP ...." required>
                       </div>
                       <div class="col-12">
-                        <label for="inputEmailAddress" class="form-label">Masukan Nama </label>
-                        <input type="text" class="form-control" name="user" id="inputEmailAddress"
-                          placeholder="Masukan Nama Anda....">
+                        <label for="inputEmailAddress" class="form-label">Masukan Username / Nama </label>
+                        <input type="text" class="form-control" name="user" id="inputEmailAddress" placeholder="Masukan Username / Nama Anda...." required>
                       </div>
                       <div class="col-12">
                         <label for="inputEmailAddress" class="form-label">Masukan tanggal lahir </label>
-                        <input type="date" class="form-control" name="tanggal_lahir" id="inputEmailAddress"
-                          placeholder="Masukan Nama Anda....">
+                        <input type="date" class="form-control" name="tanggal_lahir" id="inputEmailAddress" placeholder="Masukan Nama Anda...." required>
                       </div>
                       <div class="col-12">
                         <label for="inputEmailAddress" class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" id="inputEmailAddress"
-                          placeholder="Masukan Email Anda....">
+                        <input type="email" class="form-control" name="email" id="inputEmailAddress" placeholder="Masukan Email Anda...." require>
                       </div>
                       <div class="col-12">
                         <label for="inputChoosePassword" class="form-label">Password</label>
                         <div class="input-group" id="show_hide_password">
-                          <input type="text" class="form-control border-end-0" name="pass" id="inputChoosePassword"
-                            placeholder="Enter Password"> <a href="javascript:;"
-                            class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                          <input type="text" class="form-control border-end-0" name="pass" id="inputChoosePassword" placeholder="Enter Password" required> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
                         </div>
                       </div>
                       <div class="col-12">
                         <label for="inputEmailAddress" class="form-label">Alamat</label>
-                        <input type="text" class="form-control" name="alamat" id="inputEmailAddress"
-                          placeholder="Masukan Alamat Anda....">
+                        <input type="text" class="form-control" name="alamat" id="inputEmailAddress" placeholder="Masukan Alamat Anda...." required>
                       </div>
                       <div class="col-12">
                         <label for="inputGender" class="form-label">Jenis Kelamin</label>
-                        <select class="form-select" id="inputGender" aria-label="Jenis Kelamin" name="jenkel">
+                        <select class="form-select" id="inputGender" aria-label="Jenis Kelamin" name="jenkel" required>
                           <option value="Laki-Laki">Laki-Laki</option>
                           <option value="Perempuan">Perempuan</option>
                         </select>
                       </div>
                       <div class="col-12">
-                        <label for="inputChoosePassword" class="form-label">Foto</label>
+                        <label for="inputChoosePassword" class="form-label">Foto (gif, jpg, jpeg, png)</label>
                         <div class="input-group">
-                          <input type="file" class="form-control" id="inputGroupFile04"
-                            aria-describedby="inputGroupFileAddon04" aria-label="Upload" accept="image/*" name="foto">
+                          <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" accept=".gif, .jpg, .jpeg, .png" name="foto" required>
                         </div>
                       </div>
                       <br>
@@ -104,14 +95,12 @@
                       </div>
                       <div class="col-12">
                         <div class="text-center ">
-                          <p class="mb-0">Don't have an account yet? <a href="<?= base_url('login'); ?>">login</a>
+                          <p class="mb-0">Sudah Punya Akun <a href="<?= base_url('Login'); ?>">login</a>
                           </p>
                         </div>
                       </div>
                     </form>
                   </div>
-
-
                 </div>
               </div>
             </div>
@@ -123,15 +112,15 @@
   <!-- ... Bagian HTML lainnya ... -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
   <script>
-    document.getElementById('registerForm').addEventListener('submit', function (event) {
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
       event.preventDefault();
       var formData = new FormData(this);
 
       // Kirim data formulir menggunakan Ajax
-      fetch('<?= base_url('login/do_register'); ?>', {
-        method: 'POST',
-        body: formData
-      })
+      fetch('<?= base_url('Login/do_register'); ?>', {
+          method: 'POST',
+          body: formData
+        })
         .then(response => response.json())
         .then(data => {
           if (data.status === 'success') {
@@ -140,7 +129,7 @@
               text: data.message,
               icon: 'success',
               confirmButtonText: 'OK'
-            }).then(function () {
+            }).then(function() {
               window.location.href = '<?= base_url('login'); ?>';
             });
           } else {
@@ -170,8 +159,8 @@
   <script src="<?php echo base_url(); ?>assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
   <!--Password show & hide js -->
   <script>
-    $(document).ready(function () {
-      $("#show_hide_password a").on('click', function (event) {
+    $(document).ready(function() {
+      $("#show_hide_password a").on('click', function(event) {
         event.preventDefault();
         if ($('#show_hide_password input').attr("type") == "text") {
           $('#show_hide_password input').attr('type', 'password');
